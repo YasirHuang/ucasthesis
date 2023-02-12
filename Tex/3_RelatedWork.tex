@@ -1,115 +1,31 @@
 \chapter{研究现状综述}\label{chap:relatedwork}
 
+% 2.1 引言
 \section{引言}
 % 任务背景
-得益于神经网络方法的快速发展，在自然语言处理任务中融入视觉信息成为了可能。融入图片信息的机器翻译方法的研究历程就是紧随着纯文本的神经机器翻译(Neural Machine Translation，NMT)方法的脚步而发展。
+% 可以介绍统计机器翻译到神经机器翻译的变革，带来了哪些影响，例如在多模态融合等方面的影响
+机器翻译是一种利用计算机算法将一种语言翻译到另一种语言的技术。从统计机器翻译时代，到神经机器翻译时代，机器翻译相关技术一直作为行业的风向标引领着整个自然语言处理领域的发展。其基础模型从做到打破语言壁垒突破至跨越模态整合，能够在计算机视觉、语音信号处理以及多模态信息融合等领域都得到广泛的应用。
 % 任务起源
-然而，相关研究则最早起源于图像描述生成任务。有部分学者将文本作为一个外源信息来辅助图片描述的生成，但这种方式的本质则是在翻译任务中融入视觉信息。2016年WMT将多模态机器翻译(Multi-modal Machine Translation，MMT)引入作为共享任务后，MMT受到了广泛的关注。在之后的WMT17和WMT18，MMT任务延续并奠定了在机器翻译中融合图片信息作为多模态机器翻译研究的主要范式。
+% 可以提到机器翻译的缺陷，比如歧义、信息不充足等问题试图通过外源信息来解决
+多模态机器翻译(Multi-modal Machine Translation，MMT)就是一种在机器翻译的基础上，融合图像信息、语音信息或者文档上下文信息的一类方法。这些引入的外源信息，在理论上具有解决歧义、转录错误以及指代不明等问题的意义。
 
 % 任务形式
-融合图片信息的机器翻译任务所采用的是平行句对加图片的三元组形式，即一张图片对应一句描述和一句翻译。可根据将图片信息融合到翻译模型中的方式将主流的方法分为三类：全局视觉语义特征融合法、空间视觉语义特征融合法以及视觉目标特征融合法。这些特征均是从预训练的卷积神经网络中提取得到(Convolutional Neural Networks，CNN)，区别在于不同的提取方式所包含的语义信息的粒度和特征维度有所不同。将这些不同形式的视觉特征整合到NMT模型后，模型进行跨模态语义融合的难易程度则取决于模型的设计。本章将简要介绍NMT模型的发展过程，以及融合图片信息的机器翻译模型随着这些NMT模型的发展而进行改进与进化。
+% 讲讲与机器翻译的区别、如何将其分为了两大类。
+融合图片信息的神经机器翻译是一种将图片作为外源辅助信息输入到神经机器翻译模型中，以实现提升翻译准确率的一类方法。因此，与一般的机器翻译相似的是，相关研究所使用的语料同样需要平行翻译句对的形式，区别在于增加了与文本内容高度相关的图片输入。根据图片信息的作用方式，可以将相关方法分为图片信息辅助式、图片信息增强式和图片搜索式三类。本章将简要介绍神经机器翻译的发展过程，然后按照图片信息辅助式、图片信息增强式和图片搜索式的分类，分别介绍融合图片信息的机器翻译随着神经机器翻译的发展而进行改进与进化。
 
-\section{神经机器翻译模型}
-在融合图片信息的机器翻译任务中，平行翻译句对的原文与译文之间一般具有很强的对齐关系，而图片主要起到补充信息的作用。因此，该任务所使用的模型多数是以NMT的模型作为基础框架，视觉特征作为模型的额外输入。本节将介绍MMT在模型设计发展过程中所应用到的NMT基础模型框架，这其中包含：基于循环神经网络(Recurrent Neural Network，RNN)方法的NMT模型、增加注意力机制的基于RNN的NMT模型以及基于自注意力机制的Transformer。另外，还有基于CNN的NMT模型\cite{6_DBLP:journals/corr/GehringAGYD17}，但其很快被自注意力机制取代，也没有在MMT任务上的应用，因此本节忽略这部分内容的介绍。
+% 2.2 神经机器翻译
+\input{Tex/3_RelatedWork/3_2_NMT.tex}
+% 2.3 visual guided MMT
+\input{Tex/3_RelatedWork/3_3_visual_guided_MMT.tex}
+% 2.4 visual enhanced MMT
+\input{Tex/3_RelatedWork/3_4_visual_enhanced_MMT.tex}
+% 2.5 retrieval based MMT
+\input{Tex/3_RelatedWork/3_5_retrival_based_MMT.tex}
 
-\subsection{循环神经网络}
-神经机器翻译是一种序列到序列的生成任务，其源端序列与目标端序列的长度往往是不同的。因此，编码器-解码器结构成为了神经机器翻译的常用模型框架。编码器和解码器分别用于编码源端序列和解码到目标端序列。循环神经网络就是一种用于解决序列建模的一类方法。图1为基于循环神经网络的神经机器翻译(RNN-based NMT，RNMT)框架。编码器将不定长的源语言句子编码为单个固定维度的隐层向量，该隐层向量可作为整个句子语义的特征表示。解码器负责根据该特征表示生成目标语言句子。形式化地，给定待翻译的源语言句子$X=\{x_1,x_2,…,x_n\}$，在编码端首先需要将$X$中的词转化为词向量$E=\{\boldsymbol{e}_1,\boldsymbol{e}_2,…,\boldsymbol{e}_n\}$，其中：
-\begin{equation}
-    \boldsymbol{e}_i=\mathrm{Emb}(x_i)
-\end{equation}
 
-源语言句子中的每个词$x_i$均有一个对应的词向量表示$\boldsymbol{e}_i$。然后编码器按照句子中词的顺序将句子编码到一个隐层状态序列$\overrightarrow{\boldsymbol{H}}={\overrightarrow{\boldsymbol{h}}_1,\overrightarrow{\boldsymbol{h}}_2,…,\overrightarrow{\boldsymbol{h}}_n}$，其中，$\overrightarrow{\boldsymbol{h}}_i$中编码了输入序列中前$i$项的信息，即：
-\begin{equation}
-    \overrightarrow{\boldsymbol{h}}_i=\mathrm{RNN}(\overrightarrow{\boldsymbol{h}}_{i-1},\boldsymbol{e}_i)
-\end{equation}
-为了使每个位置的编码结果融合到整个输入序列的信息，可采用双向编码器将句子$X$同时编码到$\overrightarrow{\boldsymbol{H}}$和$\overleftarrow{\boldsymbol{H}}$，其中，$\overleftarrow{\boldsymbol{H}}=\{\overleftarrow{\boldsymbol{h}}_1,\overleftarrow{\boldsymbol{h}}_2,…,\overleftarrow{\boldsymbol{h}}_n\}$为$X$的逆序编码结果，即：
-\begin{equation}
-    \overleftarrow{\boldsymbol{h}}_i=\mathrm{RNN}(\overleftarrow{\boldsymbol{h}}_{i+1},\boldsymbol{e}_i)
-\end{equation}
-将$\overrightarrow{\boldsymbol{H}}$和$\overleftarrow{\boldsymbol{H}}$拼接得到$\boldsymbol{H}=\{\boldsymbol{h}_1,\boldsymbol{h}_2,\cdots,\boldsymbol{h}_n\}$, 其中：
-\begin{equation}
-    \boldsymbol{h}_i=[\overrightarrow{\boldsymbol{h}}_i;\overleftarrow{\boldsymbol{h}}_i]
-\end{equation}
 
-RNMT的解码器同样采用循环神经网络来生成目标语言文本。该生成翻译的过程是自回归的，即在时刻$t$，解码器需要根据$0$至$t-1$时刻的解码结果及源语言所提供的上下文信息来生成当前时刻的预测结果:
-\begin{equation}
-    \boldsymbol{s}_t=\mathrm{RNN}(\boldsymbol{s}_{t-1},y_{t-1})
-\end{equation}
-\begin{equation}
-    P(y_t|y_{<t},X)=\mathrm{softmax}(g(\boldsymbol{s}_t, y_{t-1}, \boldsymbol{c}_t))
-\end{equation}
-该过程中，源端上下文信息的作用方式有很多种。文献\cite{1_DBLP:journals/corr/SutskeverVL14}将$\overrightarrow{\boldsymbol{h}}_n$传递给解码器作为初始状态$\boldsymbol{s}_0$。文献\cite{2_cho-etal-2014-learning}将$0$至$t-1$时刻的解码结果编码，并连同源端上下文信息$\boldsymbol{H}$预测当前时刻单词：
-\begin{equation}
-    \boldsymbol{c}_t=f(\boldsymbol{H})
-\end{equation}
-其中，$f(\cdot)$表示选用平均池化(average pooling)对$\boldsymbol{H}$取平均，或直接选取$\boldsymbol{H}$的最后一项$\boldsymbol{h}_n$。
+\section{本文研究思路}
+（在这里提到模型对视觉信息不敏感的问题，然后循序渐进讲为什么我们的研究以增强式为主，后又如何补充辅助式）
 
-尽管基于循环神经网络的神经机器翻译还没有实现对传统统计机器翻译在翻译准确率上的全面超越，但其采用的编码器-解码器框架已经展现了能够将文本数据进行分布式表示并从这种表示中解码到目标语言译文的能力。这种分布式表示方法也为跨模态信息的融合提供了极大的便利。
+\section{本章小结}
 
-\subsection{注意力机制}
-基于编码器-解码器结构的神经翻译模型利用编码器将源语言编码为一个固定的特征向量，再利用解码器中的循环神经网络编码已生成的目标端词元，从而指导新的目标端词元的生成。在该过程中，编码的源语言特征向量作为句子级语义的完整表示，一方面丢失了源语言中的句长信息，另一方面无法指导在当前时刻$t$生成目标端词元时，应该更多地关注源端的哪些信息。为了解决该问题，文献\cite{3_DBLP:journals/corr/BahdanauCB14}提出在编码器与解码器之间增加注意力机制(attention mechanism)。
-
-图2为增加了注意力机制的神经机器翻译，其编码器和解码器保留原来的工作方式，而两者之间的注意力模块为解码器提供了动态的源语言上下文信息。对于每个时刻$t$，源语言上下文向量$\boldsymbol{c}_t$由固定的特征向量替换为与$t$相关的表示：
-\begin{equation}
-    \boldsymbol{c}_t = f_t(\boldsymbol{H})=\sum_{i=1}^{n}{\alpha}_{ti}\boldsymbol{h}_i
-\end{equation}
-\begin{equation}
-    {\alpha}_{ti}=\frac{\mathrm{exp}(a_{ti})}{\sum_{j=1}^{n}\mathrm{exp}(a_{tj}}
-\end{equation}
-文献\cite{DBLP:journals/corr/BahdanauCB14}中：
-\begin{equation}
-    a_{ti} = \mathrm{score}(\boldsymbol{s}_{t-1},\boldsymbol{h}_i)
-\end{equation}
-其中$\mathrm{score}(\cdot)$是打分函数，计算两个向量所携带信息的相关程度，可采用点积或多层感知机等方法。上式对$\boldsymbol{s}_{t-1}$和$\boldsymbol{h}_i$进行打分，表示根据已生成的目标文本的编码表示$\boldsymbol{s}_{t-1}$，来计算源语言中第$i$项对当前时刻$t$的重要程度。因此，$a_{ti}$代表着生成$t$时刻的目标端词元时，对源语言中第$i$项的“关注”度，${\alpha}_{ti}$就是该“关注”度的归一化的结果，$\boldsymbol{c}_t$就是根据“关注”度对特征向量的加权表示。
-
-值得注意的是，$t-1$时刻的输出结果$y_{t-1}$是由$\boldsymbol{s}_{t-1}$得到的，因此上式中丢失了$y_{t-1}$的信息，因此文献\cite{4_luong-etal-2015-effective}提出了改进方案：
-\begin{equation}
-    a_{ti} = \mathrm{score}(\boldsymbol{s}_{t},\boldsymbol{h}_i)
-\end{equation}
-并规定了$\mathrm{score}(\cdot)$的三种计算方式，综合文献\cite{3_DBLP:journals/corr/BahdanauCB14}，可得到以下四种方法：
-\begin{equation}
-    \mathrm{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = 
-    \begin{cases}
-        \boldsymbol{s}_t^T \boldsymbol{h}_i & \mathrm{点积法} \\
-        \boldsymbol{s}_t^T \boldsymbol{W}_a \boldsymbol{h}_i & \mathrm{通用点积法} \\
-        \boldsymbol{W}_a[\boldsymbol{s}_t; \boldsymbol{h}_i] & \mathrm{连接法} \\
-        \boldsymbol{v}_a^T \mathrm{tanh}(\boldsymbol{W}_a \boldsymbol{s}_t+\boldsymbol{U}_a \boldsymbol{h}_i) & \mathrm{多层感知机法} 
-    \end{cases}
-\end{equation}
-其中$\boldsymbol{v}_a$、$\boldsymbol{W}_a$和$\boldsymbol{U}_a$是网络参数，$T$表示对向量进行转置。
-
-%（注意力机制在视觉领域的应用，以及在跨模态领域的应用。）
-
-\subsection{Transformer}
-在注意力机制的帮助下，基于循环神经网络的机器翻译得到了显著的性能提升。这说明基于动态上下文的解码方法能够更准确地捕捉上下文信息，从而得到更忠于原文的译文。而注意力机制相当于二次编码，为下游模块提供动态上下文。既然注意力机制同样具有编码能力，那么是否可以用于替换循环神经网络呢？谷歌提出的Transformer\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}就是一种基于这种假设的模型。图3展示了Transformer的模型结构，其保留了编码器-解码器的基础框架，利用内置的多头注意力机制(multi-head attention mechanism)实现编码过程。
-
-区别于一般的注意力机制，多头注意力机制采用了一种更具泛化性的模型设计。如图4所示，多头注意力机制的输入分为查询(Query，$\boldsymbol{Q}$)、键(Key，$\boldsymbol{K}$)以及值(Value，$\boldsymbol{V}$)三部分，并结合了缩放点积注意力(scaled dot-product attention)和多头注意力(multi-head attention)两种方法。
-
-缩放点积注意力：与一般的点积法相比，缩放点积注意力增加了一个缩放因子$d_k^{-0.5}$：
-\begin{equation}
-    \mathrm{Attention}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = \mathrm{softmax} \left( \frac{\boldsymbol{Q}\boldsymbol{K}^T}{\sqrt{d_k}} \right) \boldsymbol{V}
-\end{equation}
-其中，$d_k$代表$\boldsymbol{Q}$、$\boldsymbol{K}$和$\boldsymbol{V}$的隐层维度。采用点积法的优点在于点积是以矩阵乘的形式进行计算，通过代码优化等方法可以很好地对矩阵乘进行硬件加速。引入缩放因子则是为了防止$d_k$较大时，点积的数值膨胀导致$\mathrm{softmax}(\cdot)$函数逼近梯度消失的数值范围。
-
-多头注意力：为了丰富动态上下文所承载的信息，文献\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}将多个注意力模块拼接组成多头注意力机制：
-\begin{equation}
-    \mathrm{MultiHead}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = \mathrm{Concat}(\boldsymbol{head}_1, \cdots, \boldsymbol{head}_n)\boldsymbol{W}^O
-\end{equation}
-\begin{equation}
-    \boldsymbol{head}_i = \mathrm{Attention}(\boldsymbol{Q}\boldsymbol{W}_i^Q,\boldsymbol{K}\boldsymbol{W}_i^K,\boldsymbol{V}\boldsymbol{W}_i^V)
-\end{equation}
-其中，$\boldsymbol{W}_O$，$\boldsymbol{W}_i^Q$，$\boldsymbol{W}_i^K$和$\boldsymbol{W}_i^V$是模型参数。$\boldsymbol{Q}$、$\boldsymbol{K}$和$\boldsymbol{V}$经过不同的参数映射到不同的表示空间，再由注意力机制编码得到的不同的上下文特征表示。该过程相当于在不增加额外参数的情况下，将多个模型集成到一个模型中，从而提升模型的学习能力。
-
-多头注意力机制在Transformer中的用途分为三种：
-\begin{itemize}
-    \item 位于编码器的多头自注意力机制用于编码源语言句子，此时Transformer编码器第一层的$\boldsymbol{Q}$、$\boldsymbol{K}$和$\boldsymbol{V}$均为源语言句子经映射后的词向量序列，其它层的$\boldsymbol{Q}$、$\boldsymbol{K}$和$\boldsymbol{V}$为前一层的输出。
-    \item 位于解码器中带有掩码的多头自注意力机制用于编码目标端已经解码出来的部分句子。掩码的作用是为了保持自回归解码过程中后面位置词元的解码只能用到前面位置的信息的特性。
-    \item 连接编码器与解码器的多头交叉注意力机制的作用和一般的注意力机制一致。此时$\boldsymbol{Q}$为解码器中带有掩码的多头自注意力机制的输出，$\boldsymbol{K}$和$\boldsymbol{V}$为编码器的隐层输出。交叉注意力机制输出的是融合了源端信息的目标端句子的表示。
-\end{itemize}
-值得注意的是，基于注意力机制的编码与循环神经网络相比丢失了对输入序列位置信息的建模。因此，文献\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}提出了位置编码，为每个词向量增加位置信息。%文献\cite{DBLP:journals/corr/GehringAGYD17}则提出了更为方便的位置词向量的方案。
-
-尽管近年来针对Transformer框架的改动层出不穷，但广泛应用的模型基本保持了最原始的设计方案。常见的改动如文献\cite{7_DBLP:conf/naacl/DevlinCLT19}提出了使用位置词向量的方式替换位置编码，文献\cite{8_DBLP:journals/corr/abs-1803-02155,9_DBLP:journals/corr/abs-1901-02860}为了加强Transformer长序列编码能力提出了相对位置编码。而这些创新性的改动基本都保留了Transformer中的自注意力机制和交叉注意力机制的基本结构。在大规模预训练任务的表现上，Transformer更是充分展现了其应用场景的灵活性。针对不同规模的数据，通过增减参数规模的方式就可以使其适应相应的任务。相比于基于循环神经网络的模型，Transformer能够容纳更长的输入序列和更大规模的网络参数。
-
-Transformer出色的编码能力不仅在自然语言处理任务大放异彩，还在计算机视觉以及多模态信息融合等领域展现了不俗的潜能。文献\cite{10_DBLP:journals/corr/abs-1802-05751,11_DBLP:conf/iclr/DosovitskiyB0WZ21,12_DBLP:conf/iccv/LiuL00W0LG21,13_DBLP:conf/iccv/0007CWYSJTFY21}摒弃了传统基于卷积神经网络的方法，直接采用Transformer作为图像分类、目标检测以及语义分割等计算机视觉任务的基础模型，并得到了进一步的性能提升。文献\cite{14_DBLP:conf/nips/LuBPL19,15_DBLP:conf/eccv/ChenLYK0G0020,16_DBLP:journals/corr/abs-2004-00849,17_DBLP:conf/icml/KimSK21}则是在大规模文本预训练模型的基础上，在输入序列中增加图片输入或从图片中提取的视觉目标，来提升Transformer在跨模态自然语言理解(cross-modal natural language understanding)任务上的能力。
-
-%（Transformer已经在业界产生的影响力，自注意力替换循环神经网络的必要性，解决了哪些问题）
