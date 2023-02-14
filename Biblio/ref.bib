@@ -551,30 +551,68 @@
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 %20
-@inproceedings{20_DBLP:conf/acl/WuKBLK20,
-  author    = {Zhiyong Wu and
-               Lingpeng Kong and
-               Wei Bi and
-               Xiang Li and
-               Ben Kao},
-  editor    = {Chengqing Zong and
-               Fei Xia and
-               Wenjie Li and
-               Roberto Navigli},
-  title     = {Good for Misconceived Reasons: An Empirical Revisiting on the Need
-               for Visual Context in Multimodal Machine Translation},
-  booktitle = {Proceedings of the 59th Annual Meeting of the Association for Computational
-               Linguistics and the 11th International Joint Conference on Natural
-               Language Processing, {ACL/IJCNLP} 2021, (Volume 1: Long Papers), Virtual
-               Event, August 1-6, 2021},
-  pages     = {6153--6166},
-  publisher = {Association for Computational Linguistics},
-  year      = {2021},
-  url       = {https://doi.org/10.18653/v1/2021.acl-long.480},
-  doi       = {10.18653/v1/2021.acl-long.480},
-  timestamp = {Sat, 25 Dec 2021 22:29:59 +0100},
-  biburl    = {https://dblp.org/rec/conf/acl/WuKBLK20.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{20_wu-etal-2021-good,
+    title = "Good for Misconceived Reasons: An Empirical Revisiting on the Need for Visual Context in Multimodal Machine Translation",
+    author = "Wu, Zhiyong  and
+      Kong, Lingpeng  and
+      Bi, Wei  and
+      Li, Xiang  and
+      Kao, Ben",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-long.480",
+    doi = "10.18653/v1/2021.acl-long.480",
+    pages = "6153--6166",
+    abstract = "A neural multimodal machine translation (MMT) system is one that aims to perform better translation by extending conventional text-only translation models with multimodal information. Many recent studies report improvements when equipping their models with the multimodal module, despite the controversy of whether such improvements indeed come from the multimodal part. We revisit the contribution of multimodal information in MMT by devising two interpretable MMT models. To our surprise, although our models replicate similar gains as recently developed multimodal-integrated systems achieved, our models learn to ignore the multimodal information. Upon further investigation, we discover that the improvements achieved by the multimodal models over text-only counterparts are in fact results of the regularization effect. We report empirical findings that highlight the importance of MMT models{'} interpretability, and discuss how our findings will benefit future research.",
+}
+
+%21
+@inproceedings{21_dutta-chowdhury-elliott-2019-understanding,
+    title = "Understanding the Effect of Textual Adversaries in Multimodal Machine Translation",
+    author = "Dutta Chowdhury, Koel  and
+      Elliott, Desmond",
+    booktitle = "Proceedings of the Beyond Vision and LANguage: inTEgrating Real-world kNowledge (LANTERN)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-6406",
+    doi = "10.18653/v1/D19-6406",
+    pages = "35--40",
+    abstract = "It is assumed that multimodal machine translation systems are better than text-only systems at translating phrases that have a direct correspondence in the image. This assumption has been challenged in experiments demonstrating that state-of-the-art multimodal systems perform equally well in the presence of randomly selected images, but, more recently, it has been shown that masking entities from the source language sentence during training can help to overcome this problem. In this paper, we conduct experiments with both visual and textual adversaries in order to understand the role of incorrect textual inputs to such systems. Our results show that when the source language sentence contains mistakes, multimodal translation systems do not leverage the additional visual signal to produce the correct translation. We also find that the degradation of translation performance caused by textual adversaries is significantly higher than by visual adversaries.",
+}
+%22
+@inproceedings{22_li-etal-2021-vision,
+    title = "Vision Matters When It Should: Sanity Checking Multimodal Machine Translation Models",
+    author = "Li, Jiaoda  and
+      Ataman, Duygu  and
+      Sennrich, Rico",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.673",
+    doi = "10.18653/v1/2021.emnlp-main.673",
+    pages = "8556--8562",
+    abstract = "Multimodal machine translation (MMT) systems have been shown to outperform their text-only neural machine translation (NMT) counterparts when visual context is available. However, recent studies have also shown that the performance of MMT models is only marginally impacted when the associated image is replaced with an unrelated image or noise, which suggests that the visual context might not be exploited by the model at all. We hypothesize that this might be caused by the nature of the commonly used evaluation benchmark, also known as Multi30K, where the translations of image captions were prepared without actually showing the images to human translators. In this paper, we present a qualitative study that examines the role of datasets in stimulating the leverage of visual modality and we propose methods to highlight the importance of visual signals in the datasets which demonstrate improvements in reliance of models on the source images. Our findings suggest the research on effective MMT architectures is currently impaired by the lack of suitable datasets and careful consideration must be taken in creation of future MMT datasets, for which we also provide useful insights.",
+}
+%23
+@inproceedings{23_elliott-2018-adversarial,
+    title = "Adversarial Evaluation of Multimodal Machine Translation",
+    author = "Elliott, Desmond",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D18-1329",
+    doi = "10.18653/v1/D18-1329",
+    pages = "2974--2978",
+    abstract = "The promise of combining language and vision in multimodal machine translation is that systems will produce better translations by leveraging the image data. However, the evidence surrounding whether the images are useful is unconvincing due to inconsistencies between text-similarity metrics and human judgements. We present an adversarial evaluation to directly examine the utility of the image data in this task. Our evaluation tests whether systems perform better when paired with congruent images or incongruent images. This evaluation shows that only one out of three publicly available systems is sensitive to this perturbation of the data. We recommend that multimodal translation systems should be able to pass this sanity check in the future.",
 }
 
 %---------------------------------------------------------------------------%
