@@ -26,6 +26,7 @@
 \end{equation}
 
 \subsection{多任务学习}
+\label{sec:3_multitask}
 图2中所展示的重构模型与一般的神经机器翻译模型相似，都是基于编码器-解码器结构的端到端生成模型。其中翻译模型的目标函数也与公式\ref{eq:3_reconstruction_x,eq:3_reconstruction_y}相近：
 \begin{equation}
     L_R(\theta, \phi)=-\sum_j^M \log p(y_j|y_{<j},X)
