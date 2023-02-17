@@ -5,6 +5,7 @@
 本文使用了英-德图像描述的Multi30K翻译数据集。该数据集每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的新测试机，包含Multi30K 2017测试集和针对歧义词的ambiguous MSCOCO 2017测试集。这两个测试集同样是每张图片配有一个英文句子和德文翻译。本文采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对数据进行分词(tokenization)和归一化(normalization)处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双节编码技术\cite{27_sennrich-etal-2016-neural}(byte pair encoding, BPE)或WordPiece\cite{28_DBLP:journals/corr/WuSCLNMKCGMKSJL16}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
 
 \subsection{实体提取}
+\label{sec:3_setup_entity_extraction}
 实体提取采用的是\ref{sec:entity_extraction}节所介绍的方法。其中名词和名词短语提取模块采用的是spaCy\footnote{https://spacy.io/}提供的提取名词短语和词性标注功能。在采用词级替换规则时，所替换的名词占训练集和测试集单词统计量的32.6\%。采用短语级替换规则时，提取的名词短语占单词统计量的45.1\%。同时，我们观察了在词级和短语级替换规则中，所涉及单词的词频情况。两种替换规则下，所涉及单词的词频中位数都是2，这意味着这些词中多数都是低频词。提前视觉实体采用的是\cite{24_DBLP:conf/iccv/YangGWHYL19}所提方法。理论上，只有实体短语可以从图片中检测到，没有在图片中检测到对应视觉目标的名词短语不被列为短语实体。另一种得到对齐的名词短语与视觉目标的方法是使用已标注的数据，Flickr30K Entities\cite{29_DBLP:conf/iccv/PlummerWCCHL15,30_DBLP:journals/ijcv/PlummerWCCHL17}就是标注了图片与文本中实体对应关系的数据集。该数据集与Multi30K高度重合，因此可以直接利用到本章所提方法上。对于从图片中截取到的视觉目标图片，本章利用在ImageNet\cite{31_DBLP:journals/ijcv/RussakovskyDSKS15}上预训练的ResNet-50\cite{32_DBLP:conf/cvpr/HeZRS16}提取2048维的全局特征。
 
 \subsection{基于RNN的模型设置}
