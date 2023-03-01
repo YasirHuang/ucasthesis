@@ -1,0 +1,34 @@
+
+\begin{table}[!htbp]
+    \bicaption{在Multi30K Test2016英德翻译上消融实验}{Ablation study on the EN-DE of Multi30K Test2016}
+    \label{tab:4_ablation_study}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{8pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+\begin{tabular}{cccccc}
+\hline
+\multirow{2}{*}{序号} & NMT & VER & TER & TNER & \multirow{2}{*}{BLEU} \\
+\cline{2-5}
+   & $\omega$ & $\omega \times \alpha$ & $\omega \times \beta$ & $\omega \times \gamma$ & \\
+\hline
+0  & 0.70 & 0.12 & 0.12 & 0.06 & 40.2 \\
+\hline
+1  & 0.76 & 0.12 & 0.12 &  -   & 40.0 \\
+2  & 0.82 & 0.12 & -    & 0.06 & 39.5 \\
+3  & 0.82 & -    & 0.12 & 0.06 & 39.6 \\
+\hline
+4  & 0.70 & 0.15 & 0.15 & -    & 39.9 \\
+5  & 0.70 & 0.20 & -    & 0.10 & 39.2 \\
+6  & 0.70 & -    & 0.20 & 0.10 & 39.3 \\
+\hline
+7  & 0.88 & 0.12 & -    & -    & 38.8 \\
+8  & 0.88 & -    & 0.12 & -    & 38.8 \\
+9  & 0.94 & -    & -    & 0.06 & 39.0 \\
+\hline
+10 & 0.70 & 0.30 & -    & -    & 39.2 \\
+11 & 0.70 & -    & 0.30 & -    & 39.4 \\
+12 & 0.70 & -    & -    & 0.30 & 39.0 \\
+\hline
+\end{tabular}
+\end{table}

@@ -1,0 +1,36 @@
+
+\begin{table}[!htbp]
+    \bicaption{在Multi30K英德翻译上的结果。}{Translation results on Multi30K EN-DE.}
+    \label{tab:4_ende_enfr}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{4pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+\begin{tabular}{ccccccccc}
+\hline
+ \multirow{3}{*}{模型} & \multicolumn{6}{c}{英译德} & \multicolumn{2}{c}{英译法} \\
+\cmidrule(r){2-7} \cmidrule(r){8-9}%\hline
+       & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} & \multicolumn{2}{c}{Test2016} \\
+\cline{2-9}%\cmidrule(r){2-7} \cmidrule(r){8-9} %\cline{2-9}
+              &    BLEU & METEOR &     BLEU & METEOR &     BLEU & METEOR &     BLEU & METEOR \\
+\hline
+\multicolumn{9}{c}{图片信息辅助式方法} \\
+\hline
+SerialAtt      & 38.7 & 57.2 & - & - & - & - & 60.8 & 75.1 \\
+DelMMT           & 38.0 & 55.6 & - & - & - & - & 59.8 & 74.4 \\
+GAMMT      & 39.2 & {\textbf{57.8}} & 31.4 & 51.2 & 26.9 & 46.0 & - & - \\
+GMMT             & 39.8 & 57.6 & 32.2 & 51.9 & 28.7 & {\textbf{47.6}} & 60.9 & 74.9 \\
+\hline
+\multicolumn{9}{c}{图片信息增强式方法} \\
+\hline
+Imagination      & 36.8 & 55.8 & - & - & - & - & - & - \\
+ImagiT   & 38.6 & 55.7 & 32.1 & {\textbf{52.4}} & - & - & 59.9 & 74.3 \\
+CTR-NMT             & 39.7 & 57.5 & {\textbf{32.9}} & 51.7 & {\textbf{29.1}} & 47.5 & 61.1 & 75.8 \\
+\hline
+\multicolumn{9}{c}{本章所提方法} \\
+\hline
+Transformer             & 38.5 & 57.5 & 31.0 & 51.9 & 27.5 & 47.4 & 60.5 & 75.6 \\
+CER-NMT          & {\textbf{40.2}} & {\textbf{57.8}} & 32.5 & 52.0 & 28.3 & 47.1 & {\textbf{61.6}} & {\textbf{76.1}} \\
+\bottomrule
+\end{tabular}
+\end{table}
