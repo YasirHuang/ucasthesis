@@ -4,37 +4,40 @@
 
 \subsection{实体替换的多模态序列}
 \label{sec:3_entity_replacement}
+
+\input{Tex/4_mywork_1/figure_example}
 本章所提的文本-图片融合方法将作用于文本中的实体，为此我们以两种语义粒度定义文本实体：
 
-（1）{\sffamily 短语实体：}一个短语实体是一个视觉可描述短语，其能够完整的描述一个视觉目标图片。例如，图【】中红框中的人“<E0>”在句子$X_0$中被描述为“A man”。其中，“man”是视觉目标，“A”为“man”的数量修饰词，两个词对于所描述的视觉目标均是有明确意义的。
+（1）{\sffamily 短语实体：}一个短语实体是一个视觉可描述短语，其能够完整的描述一个视觉目标图片。例如，图\ref{fig:3_example}中红框中的人“<E0>”在句子$X_1$中被描述为“A man”。其中，“man”是视觉目标，“A”为“man”的数量修饰词，两个词对于所描述的视觉目标均是有明确意义的。
 
-（2）{\sffamily 词实体：}一个词实体是短语实体中的名词实体。对于不同的描述者，视觉目标图像可以被描述为不同的短语。如图1中，同样是实体“<E0>”，在句子$X_1$中则被描述为“Man”，并未使用修饰词。为了消除修饰词所带来的影响，在此方案中只考虑名词作为文本实体。
+（2）{\sffamily 词实体：}一个词实体是短语实体中的名词实体。对于不同的描述者，视觉目标图像可以被描述为不同的短语。如图\ref{fig:3_example}中，同样是视觉目标“<E0>”，在句子$X_2$中则被描述为“Man”，对视觉目标“<E1>”，$X_1$中描述为“a hat”，在$X_2$中则使用了修饰词“orange hat”。为了消除修饰词所带来的影响，在此方案中只考虑名词作为文本实体。
 
 本章所提的明确的图片信息融合方法，就是将源语言句子中的文本实体直接替换为图片中与文本实体相对应的视觉目标。
-由于存在两种文本实体，因此本文设置两种针对文本-图片融合方法的替换规则：短语级和词级。在短语级的替换规则中，将短语内部的所有词逐个用该短语所对应的视觉目标图像替换。例如图【】中，$X_{0,MMp}$中的“A”和“man”均被替换为“<E0>”对应的视觉目标。词级别的替换规则与上述方法相似。如图【】中$X_{0,MMw}$仅名词部分（“man”，“boy”和“beach”）被替换为对应的视觉目标(“<E0>”，“<E1>”和“<E2>”)。最后的输入为该退化的句子与视觉目标图像的混合序列。
+由于存在两种文本实体，因此本文设置两种针对文本-图片融合方法的替换规则：短语级替换规则（phrase-level replacement rule，PRR）和词级替换规则（word-level replacement rule，WRR）。在PRR中，将短语内部的所有词逐个用该短语所对应的视觉目标图像替换。例如图\ref{fig:3_example}中，$Z_{1,p}$中的“A”和“man”均被替换为“<E0>”对应的视觉目标。WRR与上述方法相似。如图\ref{fig:3_example}中$Z_{1,w}$仅名词部分（“man”，“hat”）被替换为对应的视觉目标(“<E0>”，“<E1>”)。最后的输入为该退化的句子与视觉目标图像的混合序列。
 
 \subsection{文本重构模型}
 \label{sec:3_sentence_reconstruction}
-为了充分利用文本模态和视觉模态的信息，本章设计了文本重构模型使显式跨模态信息融合方法有效。如图【】所示，左侧为利用图【】中的方法提取出视觉目标后，再通过预训练的卷积神经网络提取得视觉目标的全局特征，并利用一个前馈神经网络(feedforward neural network, FNN)映射到所需要的维度。图【】右侧的 “重建模型”为一个与“翻译模型”相似的序列到序列的生成模型。其多模态序列输入$X_{MMw}$为利用词级替换规则得到的退化文本与视觉目标图像的混合序列。该序列的向量表示为$\{\boldsymbol{e}_0,\boldsymbol{v}_1,\boldsymbol{e}_2,\boldsymbol{e}_3,\boldsymbol{v}_4,\boldsymbol{e}_5,\boldsymbol{e}_6,\boldsymbol{e}_7,\boldsymbol{v}_8,\boldsymbol{e}_9\}$。重建任务负责从$X_{MMw}$重构回原始文本$X=\{x_0,x_1,…,x_N\}$。模型因此可以分别在编码阶段的视觉特征空间和在解码阶段从语言特征空间学习到实体信息。重建模型的训练方式为最小化以下对数似然方程：
+\input{Tex/4_mywork_1/figure_reconstruction_model}
+为了充分利用文本模态和视觉模态的信息，本章设计了文本重构模型使显式跨模态信息融合方法有效。如图\ref{fig:3_reconstruction_model}所示，左侧为利用图\ref{fig:3_entity_extraction}中的方法提取出视觉目标后，再通过预训练的卷积神经网络提取得视觉目标的全局特征，并利用一个前馈神经网络（feedforward neural network, FNN）映射到所需要的维度。图\ref{fig:3_reconstruction_model}右侧的 “重构模型”是一个与“翻译模型”相似的序列到序列的生成模型。其多模态输入序列$Z_{w}$是利用WRR得到的退化文本与视觉目标图像的混合序列。该序列的向量表示为$\{\Vector{e_1,v_1,e_3,e_4,v_2,e_6}\}$。重建任务负责从$Z_{w}$重构回原始文本$X=\{x_0,x_1,…,x_N\}$。模型因此可以分别在编码阶段的视觉特征空间和在解码阶段从语言特征空间学习到实体信息。重建模型的训练方式为最小化以下对数似然方程：
 \begin{equation}
-    L_R(\theta, \psi)=-\sum_i^N \log p(x_i|x_{<i},X_{MM})
+    L_R(\theta, \psi)=-\sum_i^N \log p(x_i|x_{<i},Z)
     \label{eq:3_reconstruction_x}
 \end{equation}
-其中$X_{MM}=X_{MMw}$或$X_{MMp}$，$\theta$为重构模型的编码器参数，$\psi$为重构模型的解码器参数。
+其中$Z$可以是使用WRR的$Z_{w}$或是采用了PRR的$Z_{p}$，$\theta$为重构模型的编码器参数，$\psi$为重构模型的解码器参数。
 考虑到重构目标语言$Y=\{y_0,y_1,\cdots,y_M\}$也是一种可行方案。此时，目标函数调整为：
 \begin{equation}
-    L_R(\theta, \psi)=-\sum_j^M \log p(y_j|y_{<j},X_{MM})
+    L_R(\theta, \psi)=-\sum_j^M \log p(y_j|y_{<j},Z)
     \label{eq:3_reconstruction_y}
 \end{equation}
 
 \subsection{多任务学习}
 \label{sec:3_multitask}
-图2中所展示的重构模型与一般的神经机器翻译模型相似，都是基于编码器-解码器结构的端到端生成模型。其中翻译模型的目标函数也与公式\ref{eq:3_reconstruction_x,eq:3_reconstruction_y}相近：
+图\ref{fig:3_reconstruction_model}中所展示的重构模型与一般的神经机器翻译模型相似，都是基于编码器-解码器结构的端到端生成模型。其中翻译模型的目标函数也与公式\ref{eq:3_reconstruction_x}和公式\ref{eq:3_reconstruction_y}相近：
 \begin{equation}
-    L_R(\theta, \phi)=-\sum_j^M \log p(y_j|y_{<j},X)
+    L_T(\theta, \phi)=-\sum_j^M \log p(y_j|y_{<j},X)
     \label{eq:3_translation}
 \end{equation}
-其中$\phi$为神经翻译模型的解码器参数。为了结合重构任务和翻译任务，本章按照文献【】的方式将两者的目标函数结合：
+其中$\phi$为神经翻译模型的解码器参数。为了结合重构任务和翻译任务，本章按照文献\cite{37_elliott-kadar-2017-imagination}的方式将两者的目标函数结合：
 \begin{equation}
     L(\theta, \psi, \phi)=\omega L_T(\theta, \phi) + (1-\omega)L_R(\theta, \psi)
     \label{eq:3_combine_sr}
@@ -43,6 +46,7 @@
 
 \subsection{参数共享策略}
 \label{sec:3_parameter_sharing}
+\input{Tex/4_mywork_1/figure_sr_ss_t}
 正如前面章节所提到，重构模型与翻译模型在结构上有高度的相似性，因此可以利用参数共享的方法将重构模型学习到的视觉信息融合到翻译模型中，从而达到提升翻译质量的目的。因此，由编码器-解码器结构的灵活性与两种重构目标可组合得到多种参数共享方案。本文采用了以下三种参数共享方案。
 
 （1）{\sffamily 独享解码器重构源语言}
