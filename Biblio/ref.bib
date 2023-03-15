@@ -1378,6 +1378,362 @@
     pages = "5738--5748",
     abstract = "There are common semantics shared across text and images. Given a sentence in a source language, whether depicting the visual scene helps translation into a target language? Existing multimodal neural machine translation methods (MNMT) require triplets of bilingual sentence - image for training and tuples of source sentence - image for inference. In this paper, we propose ImagiT, a novel machine translation method via visual imagination. ImagiT first learns to generate visual representation from the source sentence, and then utilizes both source sentence and the {``}imagined representation{''} to produce a target translation. Unlike previous methods, it only needs the source sentence at the inference time. Experiments demonstrate that ImagiT benefits from visual imagination and significantly outperforms the text-only neural machine translation baselines. Further analysis reveals that the imagination process in ImagiT helps fill in missing information when performing the degradation strategy.",
 }
-
+%52
+@article{52_DBLP:journals/corr/ElliottFH15,
+  author    = {Desmond Elliott and
+               Stella Frank and
+               Eva Hasler},
+  title     = {Multi-Language Image Description with Neural Sequence Models},
+  journal   = {CoRR},
+  volume    = {abs/1510.04709},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1510.04709},
+  eprinttype = {arXiv},
+  eprint    = {1510.04709},
+  timestamp = {Mon, 13 Aug 2018 16:46:09 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/ElliottFH15.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%53
+@inproceedings{53_caglayan-etal-2019-probing,
+    title = "Probing the Need for Visual Context in Multimodal Machine Translation",
+    author = {Caglayan, Ozan  and
+      Madhyastha, Pranava  and
+      Specia, Lucia  and
+      Barrault, Lo{\"\i}c},
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N19-1422",
+    doi = "10.18653/v1/N19-1422",
+    pages = "4159--4170",
+    abstract = "Current work on multimodal machine translation (MMT) has suggested that the visual modality is either unnecessary or only marginally beneficial. We posit that this is a consequence of the very simple, short and repetitive sentences used in the only available dataset for the task (Multi30K), rendering the source text sufficient as context. In the general case, however, we believe that it is possible to combine visual and textual information in order to ground translations. In this paper we probe the contribution of the visual modality to state-of-the-art MMT models by conducting a systematic analysis where we partially deprive the models from source-side textual context. Our results show that under limited textual context, models are capable of leveraging the visual input to generate better translations. This contradicts the current belief that MMT models disregard the visual modality because of either the quality of the image features or the way they are integrated into the model.",
+}
+%54
+@article{54_DBLP:journals/mt/NakayamaN17,
+  author    = {Hideki Nakayama and
+               Noriki Nishida},
+  title     = {Zero-resource machine translation by multimodal encoder-decoder network
+               with multimedia pivot},
+  journal   = {Mach. Transl.},
+  volume    = {31},
+  number    = {1-2},
+  pages     = {49--64},
+  year      = {2017},
+  url       = {https://doi.org/10.1007/s10590-017-9197-z},
+  doi       = {10.1007/s10590-017-9197-z},
+  timestamp = {Sat, 05 Sep 2020 17:50:05 +0200},
+  biburl    = {https://dblp.org/rec/journals/mt/NakayamaN17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%55
+@inproceedings{55_DBLP:conf/ijcai/ChenJF19,
+  author    = {Shizhe Chen and
+               Qin Jin and
+               Jianlong Fu},
+  editor    = {Sarit Kraus},
+  title     = {From Words to Sentences: {A} Progressive Learning Approach for Zero-resource
+               Machine Translation with Visual Pivots},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on
+               Artificial Intelligence, {IJCAI} 2019, Macao, China, August 10-16,
+               2019},
+  pages     = {4932--4938},
+  publisher = {ijcai.org},
+  year      = {2019},
+  url       = {https://doi.org/10.24963/ijcai.2019/685},
+  doi       = {10.24963/ijcai.2019/685},
+  timestamp = {Tue, 20 Aug 2019 16:19:19 +0200},
+  biburl    = {https://dblp.org/rec/conf/ijcai/ChenJF19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%56
+@inproceedings{56_zhou-etal-2018-visual,
+    title = "A Visual Attention Grounding Neural Model for Multimodal Machine Translation",
+    author = "Zhou, Mingyang  and
+      Cheng, Runxiang  and
+      Lee, Yong Jae  and
+      Yu, Zhou",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D18-1400",
+    doi = "10.18653/v1/D18-1400",
+    pages = "3643--3653",
+    abstract = "We introduce a novel multimodal machine translation model that utilizes parallel visual and textual information. Our model jointly optimizes the learning of a shared visual-language embedding and a translator. The model leverages a visual attention grounding mechanism that links the visual semantics with the corresponding textual semantics. Our approach achieves competitive state-of-the-art results on the Multi30K and the Ambiguous COCO datasets. We also collected a new multilingual multimodal product description dataset to simulate a real-world international online shopping scenario. On this dataset, our visual attention grounding model outperforms other methods by a large margin.",
+}
+%57 visual_bert
+@article{57_visual_bert,
+  author    = {Liunian Harold Li and
+               Mark Yatskar and
+               Da Yin and
+               Cho{-}Jui Hsieh and
+               Kai{-}Wei Chang},
+  title     = {VisualBERT: {A} Simple and Performant Baseline for Vision and Language},
+  journal   = {CoRR},
+  volume    = {abs/1908.03557},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1908.03557},
+  eprinttype = {arXiv},
+  eprint    = {1908.03557},
+  timestamp = {Mon, 19 Aug 2019 13:21:03 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1908-03557.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%58 unicoder-vl
+@inproceedings{58_unicoder_vl,
+  author    = {Gen Li and
+               Nan Duan and
+               Yuejian Fang and
+               Ming Gong and
+               Daxin Jiang},
+  title     = {Unicoder-VL: {A} Universal Encoder for Vision and Language by Cross-Modal
+               Pre-Training},
+  booktitle = {The Thirty-Fourth {AAAI} Conference on Artificial Intelligence, {AAAI}
+               2020, The Thirty-Second Innovative Applications of Artificial Intelligence
+               Conference, {IAAI} 2020, The Tenth {AAAI} Symposium on Educational
+               Advances in Artificial Intelligence, {EAAI} 2020, New York, NY, USA,
+               February 7-12, 2020},
+  pages     = {11336--11344},
+  publisher = {{AAAI} Press},
+  year      = {2020},
+  url       = {https://ojs.aaai.org/index.php/AAAI/article/view/6795},
+  timestamp = {Mon, 07 Mar 2022 16:57:57 +0100},
+  biburl    = {https://dblp.org/rec/conf/aaai/LiDFGJ20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%59 vl-bert
+@inproceedings{59_vl_bert,
+  author    = {Weijie Su and
+               Xizhou Zhu and
+               Yue Cao and
+               Bin Li and
+               Lewei Lu and
+               Furu Wei and
+               Jifeng Dai},
+  title     = {{VL-BERT:} Pre-training of Generic Visual-Linguistic Representations},
+  booktitle = {8th International Conference on Learning Representations, {ICLR} 2020,
+               Addis Ababa, Ethiopia, April 26-30, 2020},
+  publisher = {OpenReview.net},
+  year      = {2020},
+  url       = {https://openreview.net/forum?id=SygXPaEYvH},
+  timestamp = {Tue, 12 Apr 2022 21:46:12 +0200},
+  biburl    = {https://dblp.org/rec/conf/iclr/SuZCLLWD20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%60 uniter
+@inproceedings{60_uniter,
+  author    = {Yen{-}Chun Chen and
+               Linjie Li and
+               Licheng Yu and
+               Ahmed El Kholy and
+               Faisal Ahmed and
+               Zhe Gan and
+               Yu Cheng and
+               Jingjing Liu},
+  editor    = {Andrea Vedaldi and
+               Horst Bischof and
+               Thomas Brox and
+               Jan{-}Michael Frahm},
+  title     = {{UNITER:} UNiversal Image-TExt Representation Learning},
+  booktitle = {Computer Vision - {ECCV} 2020 - 16th European Conference, Glasgow,
+               UK, August 23-28, 2020, Proceedings, Part {XXX}},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12375},
+  pages     = {104--120},
+  publisher = {Springer},
+  year      = {2020},
+  url       = {https://doi.org/10.1007/978-3-030-58577-8\_7},
+  doi       = {10.1007/978-3-030-58577-8\_7},
+  timestamp = {Sun, 02 Oct 2022 15:59:30 +0200},
+  biburl    = {https://dblp.org/rec/conf/eccv/ChenLYK0G0020.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%61 vilbert
+@inproceedings{61_vilbert,
+  author    = {Jiasen Lu and
+               Dhruv Batra and
+               Devi Parikh and
+               Stefan Lee},
+  editor    = {Hanna M. Wallach and
+               Hugo Larochelle and
+               Alina Beygelzimer and
+               Florence d'Alch{\'{e}}{-}Buc and
+               Emily B. Fox and
+               Roman Garnett},
+  title     = {ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations
+               for Vision-and-Language Tasks},
+  booktitle = {Advances in Neural Information Processing Systems 32: Annual Conference
+               on Neural Information Processing Systems 2019, NeurIPS 2019, December
+               8-14, 2019, Vancouver, BC, Canada},
+  pages     = {13--23},
+  year      = {2019},
+  url       = {https://proceedings.neurips.cc/paper/2019/hash/c74d97b01eae257e44aa9d5bade97baf-Abstract.html},
+  timestamp = {Mon, 16 May 2022 15:41:51 +0200},
+  biburl    = {https://dblp.org/rec/conf/nips/LuBPL19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%62 lxmert
+@inproceedings{62_lxmert,
+    title = "{LXMERT}: Learning Cross-Modality Encoder Representations from Transformers",
+    author = "Tan, Hao  and
+      Bansal, Mohit",
+    booktitle = "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-1514",
+    doi = "10.18653/v1/D19-1514",
+    pages = "5100--5111",
+    abstract = "Vision-and-language reasoning requires an understanding of visual concepts, language semantics, and, most importantly, the alignment and relationships between these two modalities. We thus propose the LXMERT (Learning Cross-Modality Encoder Representations from Transformers) framework to learn these vision-and-language connections. In LXMERT, we build a large-scale Transformer model that consists of three encoders: an object relationship encoder, a language encoder, and a cross-modality encoder. Next, to endow our model with the capability of connecting vision and language semantics, we pre-train the model with large amounts of image-and-sentence pairs, via five diverse representative pre-training tasks: masked language modeling, masked object prediction (feature regression and label classification), cross-modality matching, and image question answering. These tasks help in learning both intra-modality and cross-modality relationships. After fine-tuning from our pre-trained parameters, our model achieves the state-of-the-art results on two visual question answering datasets (i.e., VQA and GQA). We also show the generalizability of our pre-trained cross-modality model by adapting it to a challenging visual-reasoning task, NLVR2, and improve the previous best result by 22{\%} absolute (54{\%} to 76{\%}). Lastly, we demonstrate detailed ablation studies to prove that both our novel model components and pre-training strategies significantly contribute to our strong results. Code and pre-trained models publicly available at: https://github.com/airsplay/lxmert",
+}
+%63 albef
+@inproceedings{63_albef,
+  author    = {Junnan Li and
+               Ramprasaath R. Selvaraju and
+               Akhilesh Gotmare and
+               Shafiq R. Joty and
+               Caiming Xiong and
+               Steven Chu{-}Hong Hoi},
+  editor    = {Marc'Aurelio Ranzato and
+               Alina Beygelzimer and
+               Yann N. Dauphin and
+               Percy Liang and
+               Jennifer Wortman Vaughan},
+  title     = {Align before Fuse: Vision and Language Representation Learning with
+               Momentum Distillation},
+  booktitle = {Advances in Neural Information Processing Systems 34: Annual Conference
+               on Neural Information Processing Systems 2021, NeurIPS 2021, December
+               6-14, 2021, virtual},
+  pages     = {9694--9705},
+  year      = {2021},
+  url       = {https://proceedings.neurips.cc/paper/2021/hash/505259756244493872b7709a8a01b536-Abstract.html},
+  timestamp = {Tue, 03 May 2022 16:20:47 +0200},
+  biburl    = {https://dblp.org/rec/conf/nips/LiSGJXH21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%64 pixel-bert
+@article{64_pixel_bert,
+  author    = {Zhicheng Huang and
+               Zhaoyang Zeng and
+               Bei Liu and
+               Dongmei Fu and
+               Jianlong Fu},
+  title     = {Pixel-BERT: Aligning Image Pixels with Text by Deep Multi-Modal Transformers},
+  journal   = {CoRR},
+  volume    = {abs/2004.00849},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2004.00849},
+  eprinttype = {arXiv},
+  eprint    = {2004.00849},
+  timestamp = {Fri, 13 Aug 2021 14:56:28 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-2004-00849.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%65 vilt
+@inproceedings{65_vilt,
+  author    = {Wonjae Kim and
+               Bokyung Son and
+               Ildoo Kim},
+  editor    = {Marina Meila and
+               Tong Zhang},
+  title     = {ViLT: Vision-and-Language Transformer Without Convolution or Region
+               Supervision},
+  booktitle = {Proceedings of the 38th International Conference on Machine Learning,
+               {ICML} 2021, 18-24 July 2021, Virtual Event},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {139},
+  pages     = {5583--5594},
+  publisher = {{PMLR}},
+  year      = {2021},
+  url       = {http://proceedings.mlr.press/v139/kim21k.html},
+  timestamp = {Wed, 25 Aug 2021 17:11:17 +0200},
+  biburl    = {https://dblp.org/rec/conf/icml/KimSK21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%66 show and tell
+@inproceedings{66_DBLP:conf/cvpr/VinyalsTBE15,
+  author    = {Oriol Vinyals and
+               Alexander Toshev and
+               Samy Bengio and
+               Dumitru Erhan},
+  title     = {Show and tell: {A} neural image caption generator},
+  booktitle = {{IEEE} Conference on Computer Vision and Pattern Recognition, {CVPR}
+               2015, Boston, MA, USA, June 7-12, 2015},
+  pages     = {3156--3164},
+  publisher = {{IEEE} Computer Society},
+  year      = {2015},
+  url       = {https://doi.org/10.1109/CVPR.2015.7298935},
+  doi       = {10.1109/CVPR.2015.7298935},
+  timestamp = {Wed, 16 Oct 2019 14:14:50 +0200},
+  biburl    = {https://dblp.org/rec/conf/cvpr/VinyalsTBE15.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%67 show attend and tell
+@inproceedings{67_DBLP:conf/icml/XuBKCCSZB15,
+  author    = {Kelvin Xu and
+               Jimmy Ba and
+               Ryan Kiros and
+               Kyunghyun Cho and
+               Aaron C. Courville and
+               Ruslan Salakhutdinov and
+               Richard S. Zemel and
+               Yoshua Bengio},
+  editor    = {Francis R. Bach and
+               David M. Blei},
+  title     = {Show, Attend and Tell: Neural Image Caption Generation with Visual
+               Attention},
+  booktitle = {Proceedings of the 32nd International Conference on Machine Learning,
+               {ICML} 2015, Lille, France, 6-11 July 2015},
+  series    = {{JMLR} Workshop and Conference Proceedings},
+  volume    = {37},
+  pages     = {2048--2057},
+  publisher = {JMLR.org},
+  year      = {2015},
+  url       = {http://proceedings.mlr.press/v37/xuc15.html},
+  timestamp = {Wed, 29 May 2019 08:41:46 +0200},
+  biburl    = {https://dblp.org/rec/conf/icml/XuBKCCSZB15.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%68
+@article{68_DBLP:journals/corr/KirosSZ14,
+  author    = {Ryan Kiros and
+               Ruslan Salakhutdinov and
+               Richard S. Zemel},
+  title     = {Unifying Visual-Semantic Embeddings with Multimodal Neural Language
+               Models},
+  journal   = {CoRR},
+  volume    = {abs/1411.2539},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1411.2539},
+  eprinttype = {arXiv},
+  eprint    = {1411.2539},
+  timestamp = {Mon, 13 Aug 2018 16:47:15 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/KirosSZ14.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%69 
+@inproceedings{69_DBLP:conf/cvpr/LuXPS17,
+  author    = {Jiasen Lu and
+               Caiming Xiong and
+               Devi Parikh and
+               Richard Socher},
+  title     = {Knowing When to Look: Adaptive Attention via a Visual Sentinel for
+               Image Captioning},
+  booktitle = {2017 {IEEE} Conference on Computer Vision and Pattern Recognition,
+               {CVPR} 2017, Honolulu, HI, USA, July 21-26, 2017},
+  pages     = {3242--3250},
+  publisher = {{IEEE} Computer Society},
+  year      = {2017},
+  url       = {https://doi.org/10.1109/CVPR.2017.345},
+  doi       = {10.1109/CVPR.2017.345},
+  timestamp = {Wed, 16 Oct 2019 14:14:50 +0200},
+  biburl    = {https://dblp.org/rec/conf/cvpr/LuXPS17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
 %---------------------------------------------------------------------------%
 

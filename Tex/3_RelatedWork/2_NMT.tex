@@ -1,7 +1,9 @@
 \section{神经机器翻译模型}
+\label{sec:2_nmt}
 在融合图片信息的神经机器翻译中，平行翻译句对的源语言句子与目标语言句子之间一般具有很强的语义对齐关系，而图片主要起到补充信息的作用。因此，ImgNMT所使用的模型多数是以神经机器翻译的模型作为基础框架，视觉特征作为模型的额外输入。本节将介绍ImgNMT在模型设计发展过程中所应用到的神经机器翻译基础模型框架，这其中包含：基于循环神经网络（recurrent neural network，RNN）方法的神经机器翻译（RNN-based neural machine translation，RNMT）模型\cite{1_DBLP:journals/corr/SutskeverVL14,2_cho-etal-2014-learning}、增加注意力机制的RNMT模型\cite{3_DBLP:journals/corr/BahdanauCB14,4_luong-etal-2015-effective}以及基于自注意力机制的Transformer\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}。另外，还有基于卷积神经网络（convolutional neural networks，CNN）的NMT模型\cite{6_DBLP:journals/corr/GehringAGYD17}，但其很快被自注意力机制取代，也没有在ImgNMT任务上得到应用，因此本节忽略这部分内容的介绍。
 
 \subsection{循环神经网络}
+\label{sec:2_rnn}
 \input{Tex/3_RelatedWork/figure_rnmt}
 神经机器翻译是一种序列到序列的生成任务，其源端序列与目标端序列的长度往往是不同的。因此，编码器-解码器结构成为了神经机器翻译的常用模型框架。编码器和解码器分别用于编码源端序列和解码到目标端序列。循环神经网络就是一种用于解决序列建模的一类方法。图\ref{fig:2_rnmt}为基于循环神经网络的神经机器翻译框架。编码器将不定长的源语言句子编码为单个固定维度的隐层向量，该隐层向量可作为整个句子语义的特征表示。解码器负责根据该特征表示生成目标语言句子。形式化地，给定待翻译的源语言句子$X=\{x_1,x_2,…,x_N\}$，在编码端首先需要将$X$中的词转化为词向量$E=\{\Vector{e_1,e_2,…,e_n}\}$，其中：
 \begin{equation}
@@ -37,6 +39,7 @@ RNMT的解码器同样采用循环神经网络来生成目标语言文本。该�
 虽然基于循环神经网络的神经机器翻译还没有实现对传统统计机器翻译在翻译准确率上的全面超越，但其采用的编码器-解码器框架已经展现了能够将文本数据进行分布式表示并从这种表示中解码到目标语言译文的能力。这种分布式表示方法也为跨模态信息的融合提供了极大的便利。
 
 \subsection{注意力机制}
+\label{sec:2_attention}
 基于编码器-解码器结构的神经翻译模型利用编码器将源语言编码为一个固定的特征向量，再利用解码器中的循环神经网络编码已生成的目标端单词，从而指导新的目标端单词的生成。在该过程中，编码的源语言特征向量作为句子级语义的完整表示，一方面丢失了源语言中的句长信息，另一方面无法指导在当前时刻$t$生成目标端单词时应该更多地关注源端的哪些信息。为了解决这个问题，文献\cite{3_DBLP:journals/corr/BahdanauCB14}提出在编码器与解码器之间增加注意力机制（attention mechanism）。
 
 \input{Tex/3_RelatedWork/figure_att_rnmt}
@@ -72,6 +75,7 @@ RNMT的解码器同样采用循环神经网络来生成目标语言文本。该�
 %（注意力机制在视觉领域的应用，以及在跨模态领域的应用。）
 
 \subsection{Transformer}
+\label{sec:2_transformer}
 在注意力机制的帮助下，基于循环神经网络的神经机器翻译得到了显著的性能提升。这说明基于动态上下文的解码方法能够更准确地捕捉上下文信息，从而得到更忠于原文的译文。而注意力机制相当于二次编码，为下游模块提供动态上下文。既然注意力机制同样具有编码能力，那么是否可以用于替换循环神经网络呢？谷歌提出的Transformer\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}就是一种基于这种假设的模型。图\ref{fig:2_transformer}展示了Transformer的模型结构，其保留了编码器-解码器的基础框架，利用内置的多头注意力机制（multi-head attention mechanism）实现编码过程。
 
 

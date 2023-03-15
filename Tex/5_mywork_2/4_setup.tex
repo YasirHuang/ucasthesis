@@ -38,7 +38,7 @@
 
 图片信息增强式方法的介绍如下：
 \begin{itemize}
-\item \textbf{Transformer：}基于Transformer的纯文本神经翻译模型，其模型配置与\ref{sec:4_model_setup}小节所保持一致。
+\item \textbf{Transformer：}基于Transformer的纯文本神经机器翻译模型，其模型配置与\ref{sec:4_model_setup}小节保持一致。
 \item \textbf{Imagination\cite{37_elliott-kadar-2017-imagination}：}该方法将源语言句子编码后，利用编码后的隐层表示生成与图片的全局特征相近的向量表示，该过程称为“想象力”机制。该方法同样使用了多任务的方式。
 \item \textbf{ImagiT\cite{51_long-etal-2021-generative}：}该方法同样采用了“想象力”机制，区别在于ImagiT采用了生成对抗网络，尝试从对原文的编码中“想象”出像素级的图片。
 \item \textbf{CTR-NMT：}该模型为本文第3章所设计的方法，采用了词级实体替换方案利用独享解码器重构源语言，是一种图片增强式神经翻译模型。
