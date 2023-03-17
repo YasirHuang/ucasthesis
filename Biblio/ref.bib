@@ -2407,6 +2407,304 @@
     pages = "3222--3233",
     abstract = "This paper addresses the problem of simultaneous machine translation (SiMT) by exploring two main concepts: (a) adaptive policies to learn a good trade-off between high translation quality and low latency; and (b) visual information to support this process by providing additional (visual) contextual information which may be available before the textual input is produced. For that, we propose a multimodal approach to simultaneous machine translation using reinforcement learning, with strategies to integrate visual and textual information in both the agent and the environment. We provide an exploration on how different types of visual information and integration strategies affect the quality and latency of simultaneous translation models, and demonstrate that visual cues lead to higher quality while keeping the latency low.",
 }
+%112
+@inproceedings{112_specia-etal-2016-shared,
+    title = "A Shared Task on Multimodal Machine Translation and Crosslingual Image Description",
+    author = "Specia, Lucia  and
+      Frank, Stella  and
+      Sima{'}an, Khalil  and
+      Elliott, Desmond",
+    booktitle = "Proceedings of the First Conference on Machine Translation: Volume 2, Shared Task Papers",
+    month = aug,
+    year = "2016",
+    address = "Berlin, Germany",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W16-2346",
+    doi = "10.18653/v1/W16-2346",
+    pages = "543--553",
+}
+%113
+@inproceedings{113_elliott-etal-2017-findings,
+    title = "Findings of the Second Shared Task on Multimodal Machine Translation and Multilingual Image Description",
+    author = {Elliott, Desmond  and
+      Frank, Stella  and
+      Barrault, Lo{\"\i}c  and
+      Bougares, Fethi  and
+      Specia, Lucia},
+    booktitle = "Proceedings of the Second Conference on Machine Translation",
+    month = sep,
+    year = "2017",
+    address = "Copenhagen, Denmark",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W17-4718",
+    doi = "10.18653/v1/W17-4718",
+    pages = "215--233",
+}
+%114
+@inproceedings{114_barrault-etal-2018-findings,
+    title = "Findings of the Third Shared Task on Multimodal Machine Translation",
+    author = {Barrault, Lo{\"\i}c  and
+      Bougares, Fethi  and
+      Specia, Lucia  and
+      Lala, Chiraag  and
+      Elliott, Desmond  and
+      Frank, Stella},
+    booktitle = "Proceedings of the Third Conference on Machine Translation: Shared Task Papers",
+    month = oct,
+    year = "2018",
+    address = "Belgium, Brussels",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W18-6402",
+    doi = "10.18653/v1/W18-6402",
+    pages = "304--323",
+    abstract = "We present the results from the third shared task on multimodal machine translation. In this task a source sentence in English is supplemented by an image and participating systems are required to generate a translation for such a sentence into German, French or Czech. The image can be used in addition to (or instead of) the source sentence. This year the task was extended with a third target language (Czech) and a new test set. In addition, a variant of this task was introduced with its own test set where the source sentence is given in multiple languages: English, French and German, and participating systems are required to generate a translation in Czech. Seven teams submitted 45 different systems to the two variants of the task. Compared to last year, the performance of the multimodal submissions improved, but text-only systems remain competitive.",
+}
+%115
+@inproceedings{115_saha-etal-2016-correlational,
+    title = "A Correlational Encoder Decoder Architecture for Pivot Based Sequence Generation",
+    author = "Saha, Amrita  and
+      Khapra, Mitesh M.  and
+      Chandar, Sarath  and
+      Rajendran, Janarthanan  and
+      Cho, Kyunghyun",
+    booktitle = "Proceedings of {COLING} 2016, the 26th International Conference on Computational Linguistics: Technical Papers",
+    month = dec,
+    year = "2016",
+    address = "Osaka, Japan",
+    publisher = "The COLING 2016 Organizing Committee",
+    url = "https://aclanthology.org/C16-1011",
+    pages = "109--118",
+    abstract = "Interlingua based Machine Translation (MT) aims to encode multiple languages into a common linguistic representation and then decode sentences in multiple target languages from this representation. In this work we explore this idea in the context of neural encoder decoder architectures, albeit on a smaller scale and without MT as the end goal. Specifically, we consider the case of three languages or modalities X, Z and Y wherein we are interested in generating sequences in Y starting from information available in X. However, there is no parallel training data available between X and Y but, training data is available between X {\&} Z and Z {\&} Y (as is often the case in many real world applications). Z thus acts as a pivot/bridge. An obvious solution, which is perhaps less elegant but works very well in practice is to train a two stage model which first converts from X to Z and then from Z to Y. Instead we explore an interlingua inspired solution which jointly learns to do the following (i) encode X and Z to a common representation and (ii) decode Y from this common representation. We evaluate our model on two tasks: (i) bridge transliteration and (ii) bridge captioning. We report promising results in both these applications and believe that this is a right step towards truly interlingua inspired encoder decoder architectures.",
+}
+%116
+@inproceedings{116_DBLP:conf/naacl/HirasawaYMK19,
+  author    = {Tosho Hirasawa and
+               Hayahide Yamagishi and
+               Yukio Matsumura and
+               Mamoru Komachi},
+  editor    = {Sudipta Kar and
+               Farah Nadeem and
+               Laura Burdick and
+               Greg Durrett and
+               Na{-}Rae Han},
+  title     = {Multimodal Machine Translation with Embedding Prediction},
+  booktitle = {Proceedings of the 2019 Conference of the North American Chapter of
+               the Association for Computational Linguistics: Human Language Technologies,
+               {NAACL-HLT} 2019, Minneapolis, MN, USA, June 3-5, 2019, Student Research
+               Workshop},
+  pages     = {86--91},
+  publisher = {Association for Computational Linguistics},
+  year      = {2019},
+  url       = {https://doi.org/10.18653/v1/n19-3012},
+  doi       = {10.18653/v1/n19-3012},
+  timestamp = {Fri, 06 Aug 2021 00:41:30 +0200},
+  biburl    = {https://dblp.org/rec/conf/naacl/HirasawaYMK19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%117
+@article{117_DBLP:journals/corr/abs-1910-02766,
+  author    = {Jean{-}Benoit Delbrouck and
+               St{\'{e}}phane Dupont},
+  title     = {Adversarial reconstruction for Multi-modal Machine Translation},
+  journal   = {CoRR},
+  volume    = {abs/1910.02766},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1910.02766},
+  eprinttype = {arXiv},
+  eprint    = {1910.02766},
+  timestamp = {Wed, 09 Oct 2019 14:07:58 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1910-02766.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%118
+@inproceedings{118_DBLP:conf/iclr/0001C0USLZ20,
+  author    = {Zhuosheng Zhang and
+               Kehai Chen and
+               Rui Wang and
+               Masao Utiyama and
+               Eiichiro Sumita and
+               Zuchao Li and
+               Hai Zhao},
+  title     = {Neural Machine Translation with Universal Visual Representation},
+  booktitle = {8th International Conference on Learning Representations, {ICLR} 2020,
+               Addis Ababa, Ethiopia, April 26-30, 2020},
+  publisher = {OpenReview.net},
+  year      = {2020},
+  url       = {https://openreview.net/forum?id=Byl8hhNYPS},
+  timestamp = {Thu, 21 Jan 2021 17:36:45 +0100},
+  biburl    = {https://dblp.org/rec/conf/iclr/0001C0USLZ20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%119
+@inproceedings{119_fang-feng-2022-neural,
+    title = "Neural Machine Translation with Phrase-Level Universal Visual Representations",
+    author = "Fang, Qingkai  and
+      Feng, Yang",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.390",
+    doi = "10.18653/v1/2022.acl-long.390",
+    pages = "5687--5698",
+    abstract = "Multimodal machine translation (MMT) aims to improve neural machine translation (NMT) with additional visual information, but most existing MMT methods require paired input of source sentence and image, which makes them suffer from shortage of sentence-image pairs. In this paper, we propose a phrase-level retrieval-based method for MMT to get visual information for the source input from existing sentence-image data sets so that MMT can break the limitation of paired sentence-image input. Our method performs retrieval at the phrase level and hence learns visual information from pairs of source phrase and grounded region, which can mitigate data sparsity. Furthermore, our method employs the conditional variational auto-encoder to learn visual representations which can filter redundant visual information and only retain visual information related to the phrase. Experiments show that the proposed method significantly outperforms strong baselines on multiple MMT datasets, especially when the textual context is limited.",
+}
+%120
+@inproceedings{120_tang-etal-2022-multimodal,
+    title = "Multimodal Neural Machine Translation with Search Engine Based Image Retrieval",
+    author = "Tang, ZhenHao  and
+      Zhang, XiaoBing  and
+      Long, Zi  and
+      Fu, XiangHua",
+    booktitle = "Proceedings of the 9th Workshop on Asian Translation",
+    month = oct,
+    year = "2022",
+    address = "Gyeongju, Republic of Korea",
+    publisher = "International Conference on Computational Linguistics",
+    url = "https://aclanthology.org/2022.wat-1.11",
+    pages = "89--98",
+    abstract = "Recently, numbers of works shows that the performance of neural machine translation (NMT) can be improved to a certain extent with using visual information. However, most of these conclusions are drawn from the analysis of experimental results based on a limited set of bilingual sentence-image pairs, such as Multi30K.In these kinds of datasets, the content of one bilingual parallel sentence pair must be well represented by a manually annotated image,which is different with the actual translation situation. we propose an open-vocabulary image retrieval methods to collect descriptive images for bilingual parallel corpus using image search engine, and we propose text-aware attentive visual encoder to filter incorrectly collected noise images. Experiment results on Multi30K and other two translation datasets show that our proposed method achieves significant improvements over strong baselines.",
+}
+%121
+@inproceedings{121_DBLP:conf/icml/GuuLTPC20,
+  author    = {Kelvin Guu and
+               Kenton Lee and
+               Zora Tung and
+               Panupong Pasupat and
+               Ming{-}Wei Chang},
+  title     = {Retrieval Augmented Language Model Pre-Training},
+  booktitle = {Proceedings of the 37th International Conference on Machine Learning,
+               {ICML} 2020, 13-18 July 2020, Virtual Event},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {119},
+  pages     = {3929--3938},
+  publisher = {{PMLR}},
+  year      = {2020},
+  url       = {http://proceedings.mlr.press/v119/guu20a.html},
+  timestamp = {Tue, 15 Dec 2020 17:40:18 +0100},
+  biburl    = {https://dblp.org/rec/conf/icml/GuuLTPC20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%122
+@inproceedings{122_DBLP:conf/emnlp/WestonDM18,
+  author    = {Jason Weston and
+               Emily Dinan and
+               Alexander H. Miller},
+  editor    = {Aleksandr Chuklin and
+               Jeff Dalton and
+               Julia Kiseleva and
+               Alexey Borisov and
+               Mikhail S. Burtsev},
+  title     = {Retrieve and Refine: Improved Sequence Generation Models For Dialogue},
+  booktitle = {Proceedings of the 2nd International Workshop on Search-Oriented Conversational
+               AI, SCAI@EMNLP 2018, Brussels, Belgium, October 31, 2018},
+  pages     = {87--92},
+  publisher = {Association for Computational Linguistics},
+  year      = {2018},
+  url       = {https://doi.org/10.18653/v1/w18-5713},
+  doi       = {10.18653/v1/w18-5713},
+  timestamp = {Fri, 06 Aug 2021 00:40:25 +0200},
+  biburl    = {https://dblp.org/rec/conf/emnlp/WestonDM18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%123
+@inproceedings{123_DBLP:conf/iclr/KhandelwalLJZL20,
+  author    = {Urvashi Khandelwal and
+               Omer Levy and
+               Dan Jurafsky and
+               Luke Zettlemoyer and
+               Mike Lewis},
+  title     = {Generalization through Memorization: Nearest Neighbor Language Models},
+  booktitle = {8th International Conference on Learning Representations, {ICLR} 2020,
+               Addis Ababa, Ethiopia, April 26-30, 2020},
+  publisher = {OpenReview.net},
+  year      = {2020},
+  url       = {https://openreview.net/forum?id=HklBjCEKvH},
+  timestamp = {Thu, 07 May 2020 17:11:47 +0200},
+  biburl    = {https://dblp.org/rec/conf/iclr/KhandelwalLJZL20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%124
+@inproceedings{124_DBLP:conf/aaai/GuWCL18,
+  author    = {Jiatao Gu and
+               Yong Wang and
+               Kyunghyun Cho and
+               Victor O. K. Li},
+  editor    = {Sheila A. McIlraith and
+               Kilian Q. Weinberger},
+  title     = {Search Engine Guided Neural Machine Translation},
+  booktitle = {Proceedings of the Thirty-Second {AAAI} Conference on Artificial Intelligence,
+               (AAAI-18), the 30th innovative Applications of Artificial Intelligence
+               (IAAI-18), and the 8th {AAAI} Symposium on Educational Advances in
+               Artificial Intelligence (EAAI-18), New Orleans, Louisiana, USA, February
+               2-7, 2018},
+  pages     = {5133--5140},
+  publisher = {{AAAI} Press},
+  year      = {2018},
+  url       = {https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17282},
+  timestamp = {Tue, 08 Mar 2022 21:46:35 +0100},
+  biburl    = {https://dblp.org/rec/conf/aaai/GuWCL18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%125
+@inproceedings{125_DBLP:conf/aaai/ChenLL18,
+  author    = {Yun Chen and
+               Yang Liu and
+               Victor O. K. Li},
+  editor    = {Sheila A. McIlraith and
+               Kilian Q. Weinberger},
+  title     = {Zero-Resource Neural Machine Translation with Multi-Agent Communication
+               Game},
+  booktitle = {Proceedings of the Thirty-Second {AAAI} Conference on Artificial Intelligence,
+               (AAAI-18), the 30th innovative Applications of Artificial Intelligence
+               (IAAI-18), and the 8th {AAAI} Symposium on Educational Advances in
+               Artificial Intelligence (EAAI-18), New Orleans, Louisiana, USA, February
+               2-7, 2018},
+  pages     = {5086--5093},
+  publisher = {{AAAI} Press},
+  year      = {2018},
+  url       = {https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/16709},
+  timestamp = {Tue, 08 Mar 2022 21:46:35 +0100},
+  biburl    = {https://dblp.org/rec/conf/aaai/ChenLL18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%126
+@inproceedings{126_DBLP:conf/cvpr/SuFBKH19,
+  author    = {Yuanhang Su and
+               Kai Fan and
+               Nguyen Bach and
+               C.{-}C. Jay Kuo and
+               Fei Huang},
+  title     = {Unsupervised Multi-Modal Neural Machine Translation},
+  booktitle = {{IEEE} Conference on Computer Vision and Pattern Recognition, {CVPR}
+               2019, Long Beach, CA, USA, June 16-20, 2019},
+  pages     = {10482--10491},
+  publisher = {Computer Vision Foundation / {IEEE}},
+  year      = {2019},
+  url       = {http://openaccess.thecvf.com/content\_CVPR\_2019/html/Su\_Unsupervised\_Multi-Modal\_Neural\_Machine\_Translation\_CVPR\_2019\_paper.html},
+  doi       = {10.1109/CVPR.2019.01073},
+  timestamp = {Fri, 02 Sep 2022 18:51:28 +0200},
+  biburl    = {https://dblp.org/rec/conf/cvpr/SuFBKH19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%127
+@inproceedings{127_huang-etal-2020-unsupervised-multimodal,
+    title = "Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting",
+    author = "Huang, Po-Yao  and
+      Hu, Junjie  and
+      Chang, Xiaojun  and
+      Hauptmann, Alexander",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.731",
+    doi = "10.18653/v1/2020.acl-main.731",
+    pages = "8226--8237",
+    abstract = "Unsupervised machine translation (MT) has recently achieved impressive results with monolingual corpora only. However, it is still challenging to associate source-target sentences in the latent space. As people speak different languages biologically share similar visual systems, the potential of achieving better alignment through visual content is promising yet under-explored in unsupervised multimodal MT (MMT). In this paper, we investigate how to utilize visual content for disambiguation and promoting latent space alignment in unsupervised MMT. Our model employs multimodal back-translation and features pseudo visual pivoting in which we learn a shared multilingual visual-semantic embedding space and incorporate visually-pivoted captioning as additional weak supervision. The experimental results on the widely used Multi30K dataset show that the proposed model significantly improves over the state-of-the-art methods and generalizes well when images are not available at the testing time.",
+}
 
 %---------------------------------------------------------------------------%
 
