@@ -5,7 +5,6 @@
 \subsection{翻译结果}
 \label{sec:5_translation_results}
 \input{Tex/6_mywork_3/table_2_ende}
-\input{Tex/6_mywork_3/table_3_enjp_enhi}
 表\ref{tab:5_ende}展示了本章提出的CAT方法在英德翻译上与其它方法的对比结果。
 
 （1）MMT与纯文本的Transformer的实验对比中发现，增加了图片输入的MMT并没有带来全面的翻译准确率提升。在增加了BDTT方法后，两个模型的翻译准确率均有所提升。其中MMT bi与Transformer bi相比的提升更多，但两者之间的差距并不大。该部分的实验说明，简单地将图片输入给神经翻译模型很难为翻译带来有效的提升。
@@ -14,6 +13,7 @@
 
 （3）采用了BDTT的CAT-MMT bi的实验中的整体表现最佳。值得注意的是，仅采用CAT时，CAT-MMT的整体表现是不如MMT的；仅采用BDTT时，MMT bi相比MMT有少许提升。如果在CAT-MMT bi中CAT没有起到额外的增益作用，那么CAT-MMT bi应该与MMT bi的结果相近。但实际结果是，当既采用CAT又采用BDTT时，CAT-MMT bi相比于MMT以及MMT bi均有着显著的提升效果。该结果说明仅采用对比对抗训练难以在小规模的数据上实现细粒度的语义表示聚类。BDTT方法通过解决目标语言与源语言之间训练不平衡的问题，使CAT能够更容易起到作用。
 
+\input{Tex/6_mywork_3/table_3_enjp_enhi}
 我们同样在英日翻译和英印翻译上进行了实验。表\ref{tab:5_enjp_enhi}展示了这部分的实验结果。区别于英德翻译，在英日翻译上采用BDTT的模型并没有得到更进一步的效果，在最终的模型结果上也仅得到了0.6个BLEU值的提升。在英印翻译上的实验效果与在英德翻译上的效果是相似的。从整体上看，对比对抗训练方法在与双向翻译训练方法的配合下，能够为模型带来稳定的翻译准确率的提升。
 
 \subsection{消融实验}
@@ -61,15 +61,15 @@
 
 （4）英印翻译的HVG数据集受到对抗样本的影响最大。这是因为HVG数据集中对图片的描述更简单也更短，使得模型更容易做到跨模态的信息融合。然而，该结果同样表明了模型对视觉信息越敏感，模型的鲁棒性也就越差。面对对抗样本的攻击时，输出错误结果的概率就越大。
 
-（5）尽管对抗样本降低了模型的翻译准确率，但是CAT-MMT bi的结果依然超过了表\ref{tab:5_ende}和表\ref{tab:5_enjp_enhi}中纯文本模型的结果。这同样说明了噪音输入具有通过为模型提升鲁棒性来提升翻译准确率的能力。这与文献【】中有着相似的结论。
+（5）尽管对抗样本降低了模型的翻译准确率，但是CAT-MMT bi的结果依然超过了表\ref{tab:5_ende}和表\ref{tab:5_enjp_enhi}中纯文本模型的结果。这同样说明了噪音输入具有通过为模型提升鲁棒性来提升翻译准确率的能力。这与文献\cite{23_elliott-2018-adversarial,22_li-etal-2021-vision,20_wu-etal-2021-good}中有着相似的结论。
 
 
 \subsection{样例分析}
+图\ref{fig:5_case_ende}、图\ref{fig:5_case_enjp}和图\ref{fig:5_case_enhi}分别展示了CAT-MMT bi模型在三个不同的数据集上的翻译案例。我们选择了带有歧义词的句子，歧义词包含“passing”、“reached”以及“stamp”。为了方便比较，我们将模型的结果通过Google翻译系统\footnote{https://translate.google.com}翻译到了英文，并在每个句子下面展示。该实验结果表明了图片信息能够在很大程度上影响歧义词的翻译。在图\ref{fig:5_case_ende}英德翻译和图\ref{fig:5_case_enhi}英印翻译在$X+\tilde{I}$作为输入情况下出现了漏翻的问题。说明错误的图片信息影响到了歧义词的翻译过程。当纯文本$X$作为模型输入时，几乎所有的翻译结果都是错的，并与原来的词义相差甚远。这验证了我们之前的想法，说明模型越依赖视觉信息，其鲁棒性反而越差。
+
 \input{Tex/6_mywork_3/figure_case_ende}
 \input{Tex/6_mywork_3/figure_case_enjp}
 \input{Tex/6_mywork_3/figure_case_enhi}
-图\ref{fig:5_case_ende}、图\ref{fig:5_case_enjp}和图\ref{fig:5_case_enhi}分别展示了CAT-MMT bi模型在三个不同的数据集上的翻译案例。我们选择了带有歧义词的句子，歧义词包含“passing”、“reached”以及“stamp”。为了方便比较，我们将模型的结果通过Google翻译系统\footnote{https://translate.google.com}翻译到了英文，并在每个句子下面展示。该实验结果表明了图片信息能够在很大程度上影响歧义词的翻译。在图\ref{fig:5_case_ende}英德翻译和图\ref{fig:5_case_enhi}英印翻译在$X+\tilde{I}$作为输入情况下出现了漏翻的问题。说明错误的图片信息影响到了歧义词的翻译过程。当纯文本$X$作为模型输入时，几乎所有的翻译结果都是错的，并与原来的词义相差甚远。这验证了我们之前的想法，说明模型越依赖视觉信息，其鲁棒性反而越差。
-
 我们同样测试了模型在输入退化文本情况下通过图片补全信息的能力。文本的退化方案与\ref{sec:5_cat}小节中介绍的针对对抗样本$\tilde{X}+\tilde{I}$的方法相同，即将句子中与视觉目标相对应的名词替换为“<mask>”。图图\ref{fig:5_case_ende}、图\ref{fig:5_case_enjp}和图\ref{fig:5_case_enhi}中所有源语言中带有下划线的词为选作退化的词。在$\tilde{X}+I$的翻译结果中重构出的对应词也同样带有下划线。图\ref{fig:5_case_ende}的结果展示出，在图中有明显目标的“water”和“bridge”成功地在翻译中被还原。然而，整体的翻译结果却非常差。这是因为这个句子中有太多的词被掩码替换，破坏了整个句子的语义完整性，仅依靠图片很难补全完整的语义信息。图\ref{fig:5_case_enjp}中，为了降低难度，我们只选择了两个词“mountain”和“rock”。结果中“mountain”成功地还原了出来。但是根据源语言的句子，其还原出来的位置是错的。图\ref{fig:5_case_enhi}展示了一个简单的句子，“boy”成功地得到了还原，“stamp”则没有。
 
 上述结果证明了我们的方法将视觉信息融合到文本表示中的能力。当文本中出现歧义词时，模型可以准确翻译这些歧义词。替换或删除输入图像会极大地影响翻译结果。

@@ -1,0 +1,19 @@
+
+\begin{table}[!htbp]
+    \bicaption{\centering{低频词与高频词的翻译准确率统计情况}}{Statistics about the translation accuracy of low-frequency words and high-frequency words}
+    \label{tab:4_freq_acc}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{4pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+    \begin{tabular}{c|cc|cc|cc|cc}
+    \hline
+    %& \multicolumn{4}{c}{文本实体} & \multicolumn{4}{c}{文本非实体} \\
+    %& Transformer & TNER-NMT & CER-NMT & CTER-NMT & Transformer & TNER-NMT & CER-NMT & CTER-NMT \\
+    & \multicolumn{2}{c}{Transformer} & \multicolumn{2}{c}{TNER-NMT} & \multicolumn{2}{c}{CER-NMT} & \multicolumn{2}{c}{CTR-NMT} \\\cline{2-9}
+      & 实体 & 非实体 & 实体 & 非实体 & 实体 & 非实体 & 实体 & 非实体 \\\hline
+    低频词（<8） & 22.8 & 22.2 & 19.7 & 23.7 & 30.0 & 21.6 & 25.7 & 21.5 \\
+    高频词（>=8）& 37.4 & 48.0 & 35.6 & 49.7 & 43.1 & 50.3 & 42.2 & 49.5 \\
+     \hline
+    \end{tabular}%
+\end{table}%

@@ -1,6 +1,30 @@
+%\begin{figure}[!htbp]
+%    \centering
+%    \includegraphics[scale=1.2]{Img/fig_4_searchw.pdf}
+%    \bicaption{超参数$\omega$对CER-NMT翻译准确率的影响}{Effect of hyperparameter $\omega$ on translation accuracy of CER-NMT}
+%    \label{fig:4_searchw}
+%\end{figure}
+
+
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[scale=1.2]{Img/fig_4_searchw.pdf}
+    \begin{subfigure}[b]{0.5\textwidth}
+      \includegraphics[width=\textwidth]{Img/fig_4_searchw_ende.pdf}
+      \caption{英德翻译}
+      \label{fig:4_searchw_ende}
+    \end{subfigure}%
+    ~% add desired spacing
+    \begin{subfigure}[b]{0.5\textwidth}
+      \includegraphics[width=\textwidth]{Img/fig_4_searchw_enfr.pdf}
+      \caption{英法翻译}
+      \label{fig:4_searchw_enfr}
+    \end{subfigure}
+    \\% line break
+    \begin{subfigure}[b]{0.5\textwidth}
+      \includegraphics[width=\textwidth]{Img/fig_4_searchw_encs.pdf}
+      \caption{英捷翻译}
+      \label{fig:4_searchw_encs}
+    \end{subfigure}%
     \bicaption{超参数$\omega$对CER-NMT翻译准确率的影响}{Effect of hyperparameter $\omega$ on translation accuracy of CER-NMT}
     \label{fig:4_searchw}
 \end{figure}

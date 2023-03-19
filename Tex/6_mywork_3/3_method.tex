@@ -23,7 +23,7 @@
 
 图\ref{fig:5_model}中可以看到，CAT-MMT的目标函数包含了两个部分：融合图片信息的神经机器翻译所需的交叉熵损失函数和CAT所需的对比损失函数。其中交叉熵损失函数为：
 \begin{equation}
-    L_{CE}(\phi, \theta, \psi)=-\sum_j^M \log p(y_j|y_{<j},X,I)
+    \mathcal{L}_{CE}(\phi, \theta, \psi)=-\sum_j^M \log p(y_j|y_{<j},X,I)
 \label{eq:5_cross_entropy}
 \end{equation}
 其中，$y_j \in Y,j=1,\cdots,M$，$\phi$为解码器参数，$\theta$为编码器参数，$\psi$为多模态嵌入层的参数。该损失函数与一般的融合图片信息的神经机器翻译模型的相似，均是通过源语言文本$X$和对应图片$I$为输入信息，生成翻译$Y$的形式。在我们的方案中，$I$代表了完整的图片与其中的多个视觉目标的组合。该损失函数无法反映出的信息是，本章的跨模态信息融合过程，仅发生在编码端。图\ref{fig:5_model}中除了平均池化（average pooling）层，其它参数均需要通过翻译任务来优化。

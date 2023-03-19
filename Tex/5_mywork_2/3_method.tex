@@ -5,11 +5,11 @@
 \input{Tex/5_mywork_2/figure_definations}
 为了更方便地对本章所提的CER方法进行介绍，首先需要对CER方法作用到的图片视觉目标和文本中的作用目标进行更恰当的定义：
 
-（1）{\sffamily 文本实体：}输入的源语言句子$X=\{t_1,t_2,\cdots,t_N\}$中，在对应图片有对应视觉目标的名词$t_a,t_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
+（1）{\sffamily 文本实体：}输入的源语言句子$X=\{x_1,x_2,\cdots,x_N\}$中，$x_i$代表句子中的每个单词，在对应图片有对应视觉目标的名词$t_a=x_a,t_b=x_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合，可见$T \subseteq X$。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
 
-（2）{\sffamily 视觉实体：}文本实体在对应图片$I$中的对应视觉目标${e_a,e_b,\cdots}$为视觉实体（visual entity），$E=\{e_a,e_b,\cdots\}$为它们的集合。图\ref{fig:4_definations}中的“男人”和“帽子”分别是名词实体“man”和“hat”在图片中对应的视觉目标，因此是视觉实体。
+（2）{\sffamily 视觉实体：}文本实体在对应图片$I$中的对应视觉目标$v_a,v_b,\cdots$为视觉实体（visual entity），$V=\{v_a,v_b,\cdots\}$为它们的集合。图\ref{fig:4_definations}中的“男人”和“帽子”分别是名词实体“man”和“hat”在图片中对应的视觉目标，因此是视觉实体。
 
-（3）{\sffamily 文本非实体：}在源语言句子中，所有非文本实体的单词均可称为文本非实体（textual none-entity）。$\tilde{X}=X-T$代表它们的集合、文本上下文或退化文本。例如图\ref{fig:4_definations}中，文本上下文中除“<mask>”外均为文本非实体。
+（3）{\sffamily 文本非实体：}在源语言句子中，所有不是文本实体的单词均可称为文本非实体（textual none-entity）。$\tilde{X}=X-T$代表它们的集合、文本上下文或退化文本。例如图\ref{fig:4_definations}中，文本上下文中除“<mask>”外均为文本非实体。
 
 %\subsection{跨模态编码}
 %\label{sec:4_cross_modal_encoding}
@@ -35,15 +35,15 @@
 {\sffamily 文本实体重构}
 
 \input{Tex/5_mywork_2/figure_ter}
-文本实体重构(Textual entity reconstruction，TER)与上一章相似，将视觉目标明确地作用到文本实体上。本章仅针对有对应视觉目标的名词采取实体替换，因此文本实体重构的输入为由文本上下文$\tilde{X}$和视觉实体$E$组合成的多模态混合序列：
+文本实体重构(textual entity reconstruction，TER)与上一章相似，将视觉目标明确地作用到文本实体上。本章仅针对有对应视觉目标的名词采取实体替换，因此文本实体重构的输入为由文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列：
 \begin{equation}
-Z={\rm{Combine}} \left( \tilde{X}, E \right)
+Z={\rm{Combine}} \left( \tilde{X}, V \right)
 \end{equation}
-如图\ref{fig:4_ter}所示，输入的文本上下文“A <M> with a <M>”与视觉实体$\{e_1,e_5\}$组合成多模态混合序列$Z=$“A $e_1$ with a $e_5$”，此时输入到模型中的是三个空心圆代表词向量和两个标记“V”的圆代表视觉特征。多模态混合序列经过编码器进行跨模态编码后，得到序列的跨模态表示：
+如图\ref{fig:4_ter}所示，输入的文本上下文“A <mask> with a <mask>”与视觉实体$\{v_2,v_5\}$组合成多模态混合序列$Z=$“A $v_2$ with a $v_5$”，此时输入到模型中的是三个空心圆代表词向量和两个标记“V”的圆代表$v_2$和$v_5$对应的视觉特征。多模态混合序列经过编码器进行跨模态编码后，得到序列的跨模态表示：
 \begin{equation}
-H_Z^L={\rm{MultiHead_{enc}^L}} \left( Z, Z, Z \right)
+\Vector{H_Z^L}={\rm{MultiHead_{enc}^L}} \left( Z, Z, Z \right)
 \end{equation}
-其中，$H_Z^L=\{{\boldsymbol{h}_1^l},{\boldsymbol{h}_2^l},\cdots,{\boldsymbol{h}_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\boldsymbol{h}_i^l$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图2中为两个标记“V”矩形隐层表示${\boldsymbol{h}_2^l}$和${\boldsymbol{h}_5^l}$，该过程需要优化以下损失函数：
+其中，$\Vector{H_Z^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\Vector{h_i^l}$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图2中为两个标记“V”矩形隐层表示${\Vector{h_2^l}}$和${\Vector{h_5^l}}$，该过程需要优化以下损失函数：
 \begin{equation}
 \mathcal{L}_{\rm{TER}} (\theta, \vartheta) =
     \frac{1}{{\vert}T{\vert}}
@@ -53,36 +53,36 @@ H_Z^L={\rm{MultiHead_{enc}^L}} \left( Z, Z, Z \right)
 \end{equation}
 \begin{equation}
 {\log}{\ }{\rm p} \left( Z {\vert} \theta, \vartheta \right) =
-    {\rm{g}} \left( {\boldsymbol h_i^l} \vert \vartheta \right)
+    {\rm{g}} \left( \Vector{h_i^l} \vert \vartheta \right)
 \end{equation}
-其中${\rm{OH}}\left(x_i\right)$代表$x_i$的独热编码(One-hot，OH)表示，$\theta$代表编码器一端的参数，$\vartheta$为生成器(Generator)参数，生成器${\rm{g}}\left(\cdot\right)$将位置$i$处的隐层向量${\boldsymbol{h}_i^l}$映射并得到词表中每个词的预测概率。
+其中${\rm{OH}}\left(x_i\right)$代表$x_i$的独热编码(One-hot，OH)表示，$\theta$代表编码器一端的参数，$\vartheta$为生成器(generator)参数，生成器${\rm{g}}\left(\cdot\right)$将位置$i$处的隐层向量${\Vector{h_i^l}}$映射并得到词表中每个词的预测概率。
 
 {\sffamily 视觉实体重构}
 
 \input{Tex/5_mywork_2/figure_ver}
-与文本实体重构不同的是，视觉实体重构(Visual entity reconstruction，VER)依赖于来自单一的文本模态信息$X$。例如图\ref{fig:4_ver}中，“A man with a hat”为重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_1,t_5\}$相对应的视觉实体$\{e_1,e_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{{\boldsymbol{e}_1},{\boldsymbol{e}_5}\}$。其中，$X$经过如下编码过程：
+与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一的文本模态信息$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
 \begin{equation}
-H_X^L={\rm{MultiHead_{enc}^L}}(X, X, X)
+\Vector{H_X^L}={\rm{MultiHead_{enc}^L}}(X, X, X)
 \end{equation}
-得到编码后的隐层表示$H_X^L=\{{\boldsymbol{h}_1^l},{\boldsymbol{h}_2^l},\cdots,{\boldsymbol{h}_N^l}\}$。然后经过如下解码过程：
+得到编码后的隐层表示$\Vector{H_X^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$。然后经过如下解码过程：
 \begin{equation}
-H_X^{2L}={\rm{MultiHead_{dec}^L}}(H_X^L, H_X^L, H_X^L)
+\Vector{H_X^{2L}}={\rm{MultiHead_{dec}^L}}(\Vector{H_X^L, H_X^L, H_X^L})
 \end{equation}
-得到$H_X^{2L}=\{{\boldsymbol{h}_1^{2l}},{\boldsymbol{h}_2^{2l}},\cdots,{\boldsymbol{h}_N^{2l}}\}$，${\rm MultiHead_{dec}^L}\left( \cdot,\cdot,\cdot \right)$为与${\rm MultiHead_{enc}^L}\left( \cdot,\cdot,\cdot \right)$具有相同结构的视觉实体解码器。然后利用$H_X^{2L}$生成与$\{{\boldsymbol{e}_a},{\boldsymbol{e}_b},\cdots\}$接近的向量表示，文本采用与文献\cite{37_elliott-kadar-2017-imagination}相近的方式实现该过程：
+得到$\Vector{H_X^{2L}}=\{\Vector{h_1^{2l},h_2^{2l},\cdots,h_N^{2l}}\}$，${\rm MultiHead_{dec}^L}\left( \cdot,\cdot,\cdot \right)$为与${\rm MultiHead_{enc}^L}\left( \cdot,\cdot,\cdot \right)$具有相同结构的视觉实体解码器。然后利用$\Vector{H_X^{2L}}$生成与$\{\Vector{v_a,v_b,\cdots}\}$接近的向量表示，文本采用与文献\cite{37_elliott-kadar-2017-imagination}相近的方式实现该过程：
 \begin{equation}
 \mathcal{L}_{\rm{VER}}(\theta, \varphi)=
     \frac{1}{{\vert}E{\vert}}
-    \mathop{\sum}_{j{\neq}i} {\max}\{0, \varepsilon - {\rm{cos}}\left( {\boldsymbol h_i^{2l}}, {\boldsymbol e_j} \right) + {\rm{cos}}\left( {\boldsymbol h_i^{2l}}, {\boldsymbol e_i} \right)\}
+    \mathop{\sum}_{i \neq j}{\max}\{0, \varepsilon - {\rm{cos}}\left( \Vector{h_i^{2l}}, \Vector{v_j} \right) + {\rm{cos}}\left( \Vector{h_i^{2l}}, \Vector{v_i} \right)\}
 \end{equation}
 %\onecolumn
 %\input{docs/model_pic.tex}
 %\begin{multicols}{2}
-其中$i,j{\in}\{a,b,\cdots\}$为实体在句子中对应的序号；$\varphi$为视觉实体解码器的参数；${\rm{cos}}(\cdot,\cdot)$计算向量间的余弦相似度，$\varepsilon$为最小边缘常量。显然，优化$L_{\rm{VER}}(\theta,\varphi)$能够缩减${\boldsymbol{h}_i^{2l}}$与相对应的视觉实体${\boldsymbol{e}_i}$之间的余弦距离，增加与其它非对应的视觉实体${\boldsymbol{e}_j}$之间的余弦距离。
+其中$i=a,b,\cdots$为实体在句子中对应的序号；$\varphi$为视觉实体解码器的参数；${\rm{cos}}(\cdot,\cdot)$计算向量间的余弦相似度，$\varepsilon$为最小边缘常量。显然，优化$\mathcal{L}_{\rm{VER}}(\theta,\varphi)$能够缩减$\Vector{h_i^{2l}}$与相对应的视觉实体$\Vector{v_i}$之间的余弦距离，增加与其它非对应的视觉实体$\Vector{v_j}$之间的余弦距离。
 
 {\sffamily 文本非实体重构}
 
 \input{Tex/5_mywork_2/figure_tner}
-文本非实体重构(Textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$E$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图2中，当选中对非实体词“A”进行重构时，模型所输入的多模态混合序列为$Z=$“<mask> $e_1$ with a $e_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
+文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图2中，当选中对非实体词“A”进行重构时，模型所输入的多模态混合序列为$Z=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
 %一个标记``N''的圆形词向量代表``$\langle$M$\rangle$''、两个圆形空心词向量和两个标记``V''的圆形视觉特征. 损失函数如下:
 \begin{equation}
 \mathcal{L}_{\rm{TNER}}(\theta, \vartheta) =
@@ -91,9 +91,9 @@ H_X^{2L}={\rm{MultiHead_{dec}^L}}(H_X^L, H_X^L, H_X^L)
     {\rm{OH}} \left( x_i \right)
     {\rm log}{\ }{\rm p} \left( \tilde{Z} {\vert} \theta, \vartheta \right)
 \end{equation}
-其中$\tilde{T}$代表待重构的非实体词集，并有$\tilde{T}\subseteq \tilde{X}$。在图2中用于预测非实体词“A”的隐层为一个标记“N”的矩形隐层表示${\boldsymbol{h}_1^l}$。
+其中$\tilde{T}$代表待重构的非实体词集，并有$\tilde{T}\subseteq \tilde{X}$。在图2中用于预测非实体词“A”的隐层为一个标记“N”的矩形隐层表示$\Vector{h_1^l}$。
 
-本文采用随机选取的方式选择待重构的非实体词。在执行TNER任务时，每个文本中的非实体词有$30\%$的概率会被选择到。该概率与所采用数据集中实体词占$32.6\%$的比例相近。
+本文采用随机选取的方式在句子中选择待重构的非实体词。在执行TNER任务时，每个文本中的非实体词有$30\%$的概率会被选择到。该概率与所采用数据集中实体词占$32.6\%$的比例相近。
 
 {\sffamily CER联合训练}
 

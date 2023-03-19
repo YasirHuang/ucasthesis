@@ -1,16 +1,16 @@
 \section{实验设置}
-为了验证所提方法的有效性，本章在基于RNN和基于Transformer的两种模型上进行了测试。本章选择了融合图片信息的神经机器翻译中最常用的Multi30K\cite{43_elliott-etal-2016-multi30k}数据集的英译德翻译对上进行实验。
+为了验证所提方法的有效性，本章在基于循环神经网络和基于Transformer的两种模型上进行了测试。本章选择了融合图片信息的神经机器翻译中最常用的Multi30K\cite{43_elliott-etal-2016-multi30k}数据集的英德翻译进行实验。
 
 \subsection{实验数据}
-本文使用了英-德图像描述的Multi30K翻译数据集。该数据集每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集和针对歧义词的ambiguous MSCOCO 2017测试集。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本文采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对数据进行分词(tokenization)和归一化(normalization)处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双节编码技术\cite{27_sennrich-etal-2016-neural}(byte pair encoding, BPE)或WordPiece\cite{28_DBLP:journals/corr/WuSCLNMKCGMKSJL16}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
+本文使用图像描述翻译的Multi30K翻译数据集英德翻译对。该数据集每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集和针对歧义词的ambiguous MSCOCO 2017测试集。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本文采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对数据进行分词(tokenization)和归一化(normalization)处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双节编码技术\cite{27_sennrich-etal-2016-neural}(byte pair encoding, BPE)或WordPiece\cite{28_DBLP:journals/corr/WuSCLNMKCGMKSJL16}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
 
 \subsection{实体提取}
 \label{sec:3_setup_entity_extraction}
 实体提取采用的是\ref{sec:3_entity_extraction}节介绍的方法。其中名词和名词短语提取模块采用的是spaCy\footnote{https://spacy.io/}提供的提取名词短语和词性标注功能。在采用词级替换规则时，所替换的名词占训练集和测试集单词统计量的32.6\%。采用短语级替换规则时，提取的名词短语占单词统计量的45.1\%。同时，我们观察了在词级和短语级替换规则中，所涉及单词的词频情况。两种替换规则下，所涉及单词的词频中位数都是2，这意味着这些词中多数都是低频词。提前视觉目标采用的是\cite{24_DBLP:conf/iccv/YangGWHYL19}所提方法。理论上，只有实体短语可以从图片中检测到，没有在图片中检测到对应视觉目标的名词短语不被列为短语实体。另一种得到对齐的名词短语与视觉目标的方法是使用已标注的数据，Flickr30K Entities\cite{29_DBLP:conf/iccv/PlummerWCCHL15,30_DBLP:journals/ijcv/PlummerWCCHL17}就是标注了图片与文本中实体对应关系的数据集。该数据集与Multi30K高度重合，因此可以直接利用到本章所提方法上。对于从图片中截取到的视觉目标图片，本章利用在ImageNet\cite{31_DBLP:journals/ijcv/RussakovskyDSKS15}上预训练的ResNet-50\cite{32_DBLP:conf/cvpr/HeZRS16}提取2048维的全局特征。
 
-\subsection{基于RNN的模型设置}
+\subsection{基于循环神经网络的模型设置}
 \label{sec:3_rnn_setup}
-对于基于RNN的翻译模型，本章采用的是带有注意力机制并基于编码器-解码器结构的神经翻译模型\cite{4_luong-etal-2015-effective}。其中，编码器是一个维度维500的单层双向的LSTM，重构模型和翻译模型的解码器都是单层500维的LSTM，词嵌入层的维度同样设置为500。编码器和解码器中的dropout均设置为0.3。模型参数是从$(-0.1,+0.1)$区间的均匀分布中采样初始化的，其中偏置项(bias)初始化为0。训练时采用Adam\cite{34_DBLP:journals/corr/KingmaB14}优化器优化模型参数，学习率设为定值0.002。批数据大小（batch size）为40。最终模型是根据验证集在BLEU4\cite{42_papineni-etal-2002-bleu}上的表现进行选择。在训练过程中，当模型在验证集上的BLEU4值超过10个迭代轮次不再提升，则停止训练并作为最终用于评测的模型。
+对于基于循环神经网络的翻译模型，本章采用的是带有注意力机制并基于编码器-解码器结构的神经翻译模型\cite{4_luong-etal-2015-effective}。其中，编码器是一个维度维500的单层双向的LSTM，重构模型和翻译模型的解码器都是单层500维的LSTM，词嵌入层的维度同样设置为500。编码器和解码器中的dropout均设置为0.3。模型参数是从$(-0.1,+0.1)$区间的均匀分布中采样初始化的，其中偏置项(bias)初始化为0。训练时采用Adam\cite{34_DBLP:journals/corr/KingmaB14}优化器优化模型参数，学习率设为定值0.002。批数据大小（batch size）为40。最终模型是根据验证集在BLEU4\cite{42_papineni-etal-2002-bleu}上的表现进行选择。在训练过程中，当模型在验证集上的BLEU4值超过10个迭代轮次不再提升，则停止训练并作为最终用于评测的模型。
 
 \subsection{基于Transformer的模型设置}
 \label{sec:3_transformer_setup}
@@ -20,7 +20,7 @@
 本章所提方法需要对重建任务和翻译任务采用多任务训练的方式进行模型优化。多任务训练采用的是两个任务随机交替训练的方式，并利用\ref{sec:3_multitask}节中所介绍的超参数$\omega$控制翻译任务的训练概率。因为两个任务所使用数据的比例相同，因此本章设置$\omega=0.5$。
 
 \subsection{对比模型}
-基于RNN的模型：
+基于循环神经网络的模型：
 \begin{itemize}
     \item \textbf{NMT：}基于LSTM的纯文本神经翻译模型，其模型配置与\ref{sec:3_rnn_setup}节中的描述保持一致。
     \item \textbf{pRCNNs\cite{35_huang-etal-2016-attention}：}该模型在编码阶段将每个视觉目标特征与源语言句子编码一次，在解码阶段，解码器选择关注与当前解码步骤相关的视觉目标所对应的文本序列。
@@ -31,7 +31,7 @@
 
 基于Transformer的模型：
 \begin{itemize}
-    \item \textbf{Transformer：}基于Transformer的纯文本神经翻译模型，其模型配置与\ref{sec:3_transformer_setup}节保持一致。
+    \item \textbf{Transformer：}基于Transformer的纯文本神经机器翻译模型，其模型配置与\ref{sec:3_transformer_setup}节保持一致。
     \item \textbf{DelMMT\cite{39_ive-etal-2019-distilling}：}该模型提出使用推敲做多模态二次接码。在二次解码中融合源语言、目标语言以及视觉信息。
     \item \textbf{MMT-TF\cite{40_yao-wan-2020-multimodal}：}该工作设计了一种多模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
     \item \textbf{GAMMT\cite{41_DBLP:journals/corr/abs-2103-08862}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
