@@ -32,12 +32,12 @@ LeNet-5是最早的卷积神经网络模型之一，设计之初被用于手写�
 
 \subsection{目标检测方法}
 \label{sec:2_object_detection}
+\input{Tex/3_RelatedWork/figure_visual_object_detection}
 %方法背景介绍
 目标检测是计算机视觉领域中一个应用范围非常广的任务，其目的是在图像或视频中自动地定位并识别出特定的视觉目标，从而满足对视觉目标的筛选、分类、追踪等需求。早期的目标检测算法需要手工设计特征和分类器来实现物体检测，并且运行速度较慢。随着深度学习的发展，目标检测算法开始采用卷积神经网络作为基础模型实现对视觉目标的检测，并取得了很好的性能与速度。对于融合图片信息的神经机器翻译任务，目标检测同样是非常重要的应用手段之一。与卷积神经网络能够提供图片的全局特征和栅格特征相比，目标检测的结果能够直接将图片中最有价值的前景信息提供给翻译模型。并且，每个视觉目标都能够提供排除与视觉目标不相关的更集中的视觉信息。
 
 根据各算法特点以及工作方式，可以将目前常用的目标检测算法可以分为三类：两阶段法、一阶段法、语义目标提取法（visual grounding）。其中两阶段法和一阶段法提取给定图片中的所有类别可知的目标，并将提取出的目标分到相应的类别。语义目标提取法是根据语义信息提取相应的视觉目标，因此可以与前两者区分开。
 
-\input{Tex/3_RelatedWork/figure_visual_object_detection}
 {\sffamily （1）两阶段法}
 
 两阶段法的代表方法有R-CNN（region-based convolutional neural networks）\cite{DBLP:conf/cvpr/GirshickDDM14}、Fast R-CNN\cite{DBLP:conf/iccv/Girshick15}以及Faster R-CNN\cite{DBLP:conf/nips/RenHGS15}，如图\ref{fig:2_rcnn}。这类算法在目标检测过程中通常分为提取候选区域（region proposal）和特征提取与分类回归两个阶段。
