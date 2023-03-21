@@ -16,7 +16,7 @@
 卷积神经网络是目前计算机视觉领域最重要且最流行的方法之一，可以在计算机视觉的多个研究任务中发挥重要作用，例如图像分类、目标检测、人脸识别、语义分割等。早在20世纪90年代，杨·乐坤（Yann LeCun）等人发表论文提出了LeNet-5，成为奠定了现代卷积神经网络方法的基础框架\cite{fukushima1980neocognitron,DBLP:journals/pieee/LeCunBBH98,lecun1989handwritten}。
 现有的卷积神经网络，如AlexNet\cite{DBLP:conf/nips/KrizhevskySH12}，VGGNet\cite{DBLP:journals/corr/SimonyanZ14a}，GoogLeNet\cite{DBLP:journals/corr/SzegedyLJSRAEVR14}，ResNet\cite{32_DBLP:conf/cvpr/HeZRS16}，DenseNet\cite{DBLP:conf/cvpr/HuangLMW17}等模型，均是在LeNet-5的基础上通过加深网络层数、增加或改变非线性激活层、增加批数据归一化、增加通道数量等手段提升网络的泛化性能和对图像的表征能力。卷积神经网络不仅在计算机视觉领域得到广泛应用，在语音识别和自然语言处理的某些特定任务上同样得到了关注。在融合图像信息的多模态任务上，卷积神经网络更是用于表征图片信息或视频信息的必然选择。本节将以LeNet-5为例，详细介绍卷积神经网络的基本结构，以及应用到跨模态信息融合时的使用方式。
 
-\input{Tex/3_RelatedWork/figure_lenet5}
+\input{Tex/2_RelatedWork/figure_lenet5}
 LeNet-5是最早的卷积神经网络模型之一，设计之初被用于手写数字识别任务。图\ref{fig:2_lenet5}展示了LeNet-5从输入图片到输出预测结果的模型工作简化图。LeNet-5共包含5层，包括两个卷积层（convolutional layer）C1、C3、C5，以及两个池化层（pooling layer）S2和S4。
 
 {\sffamily 卷积层：}卷积层是CNN模型的核心模块，包含了整个模型的大部分参数。它可以对输入图像的局部区域进行加权求和从而得到图片的特征（feature）或特征图（feature map，FM），例如示例中经过卷积层得到的特征或特征图有FM1、FM3和F5。卷积层中卷积核（convolution kernel）大小和形状的选择能够影响卷积的效果。例如，图\ref{fig:2_lenet5}中卷积层C1中有6个$5 \times 5 \times 1$的卷积核，每个卷积核将图片中每个$5 \times 5$大小区域内的像素点加权求和得到输出特征图中的一个像素点，那么一个$32 \times 32$大小的图片经过卷积层C1后得到的特征图FM1的大小为$6 \times 28 \times 28$。经过卷积层后，图片的通道数可能会增加，图片的尺寸也可能变小。卷积层的设计可以很简单也可以非常的复杂，例如卷积层C3中包含了16个卷积核，其中各卷积核的尺寸为$5 \times 5$，但选取的特征图数量（图中包含6，4，3三种数量的差别）却各不相同。这说明卷积层的设计可以是非常灵活的，也因此对模型设计与研究人员的考验也是巨大的。
@@ -32,7 +32,7 @@ LeNet-5是最早的卷积神经网络模型之一，设计之初被用于手写�
 
 \subsection{目标检测方法}
 \label{sec:2_object_detection}
-\input{Tex/3_RelatedWork/figure_visual_object_detection}
+\input{Tex/2_RelatedWork/figure_visual_object_detection}
 %方法背景介绍
 目标检测是计算机视觉领域中一个应用范围非常广的任务，其目的是在图像或视频中自动地定位并识别出特定的视觉目标，从而满足对视觉目标的筛选、分类、追踪等需求。早期的目标检测算法需要手工设计特征和分类器来实现物体检测，并且运行速度较慢。随着深度学习的发展，目标检测算法开始采用卷积神经网络作为基础模型实现对视觉目标的检测，并取得了很好的性能与速度。对于融合图片信息的神经机器翻译任务，目标检测同样是非常重要的应用手段之一。与卷积神经网络能够提供图片的全局特征和栅格特征相比，目标检测的结果能够直接将图片中最有价值的前景信息提供给翻译模型。并且，每个视觉目标都能够提供排除与视觉目标不相关的更集中的视觉信息。
 

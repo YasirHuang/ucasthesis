@@ -1,15 +1,15 @@
 \section{实验结果}
 
 \subsection{英德翻译结果}
-\input{Tex/4_mywork_1/table_1_rnn.tex}
+\input{Tex/3_mywork_1/table_1_rnn.tex}
 如\ref{sec:3_entity_replacement}和\ref{sec:3_parameter_sharing}节所述，本章共设置了两种实体替换规则：短语级和词级，以及三种模型参数共享策略：独享解码器重构源语言、共享解码器重构源语言以及共享解码器重构目标语言，并分别以“独享-源”、“共享-源”和“共享-目”作为简化表示，对以上实验配置进行组合后共得到6种模型设置方案。另外，本章还针对以上设置在基于RNN和基于Transformer的翻译模型上都做了实验，并在BLEU\cite{42_papineni-etal-2002-bleu}和Meteor\cite{46_denkowski-lavie-2014-meteor}两个指标上进行比较。
 
 {\sffamily 基于RNN的模型实验结果：}表\ref{tab:3_rnn_ende}展示了采用基于RNN的神经机器翻译模型在英译德翻译对上的实验结果，其中加粗项表示同列中最好的实验结果。本章与5个融合图片信息的神经机器翻译方法进行了对比，其中pRCNNs和DATT需要在测试过程中为模型输入图片，其它模型包括本章所设计的翻译模型在测试阶段不需要输入图片。该实验结果展示了本章所提方法在纯文本翻译的基础上得到了显著的提升，表明了我们的方法在基于RNN的模型上的有效性。该实验结果同样显示出了6中实验方案的优缺点。对于重构到源语言句子，实验结果中没有表现出采用共享解码器或独享解码器两种配置之间的明显差距，同样在采用词级替换规则或是短语级替换规则的差别也不大。对于重构到目标语言句子，可以观察到其实验结果明显的低于重构到源语言的方案。以上信息表明，为重构任务设置的语言方向是影响本章所提方法实验效果的最大因素。
 
-\input{Tex/4_mywork_1/table_2_transformer.tex}
+\input{Tex/3_mywork_1/table_2_transformer.tex}
 {\sffamily 基于Transformer的模型实验结果：}表\ref{tab:3_transformer_ende}展示了采用基于Transformer的神经机器翻译模型在英译德翻译对上的实验结果，其中加粗项表示同列中最好的实验结果。5个对比模型中，仅Transformer为纯文本神经机器翻译方法，其它4个模型均需要在测试阶段输入图片。而本章所提方法仅需要在训练阶段输入图片，在测试阶段并不需要。从模型结果的比较结果可以观察到，本章所提方法能够有效地提升基于纯文本的神经翻译模型的翻译准确率，在测试阶段没有输入图片的劣势情况下，本章所提方法依旧与其它方法是可比的。另外，在基于6中模型设置方案的结果比较中可以观察到与基于RNN的模型有相似的现象，即重构的语言方向是影响方法性能的主要因素。该实验结果中还可以发现，词级替换规则的实验结果略胜短语级。
 
-\input{Tex/4_mywork_1/table_3_flickr30k_entities.tex}
+\input{Tex/3_mywork_1/table_3_flickr30k_entities.tex}
 {\sffamily 基于标注实体的实验结果：}Flickr30K Entities数据集为Multi30K数据集标注了句子中名词短语与图片中视觉目标的对应关系。因此，为了将这些标注数据应用到本章的方法中，仅需要利用词性标注结果识别出这些短语中的名词。表\ref{tab:3_flickr30k_entities}为应用Flickr30K Entities在基于RNN和基于Transformer的模型上的实验结果。加粗项表示相比于表\ref{tab:3_rnn_ende}和表\ref{tab:3_transformer_ende}中相同模型配置下有翻译准确率提升的实验结果。可以观察到，在应用了标注数据后，多数模型都得到了少许翻译准确率的提升。此外还可以观察到，“独享-源”的实验结果普遍要略好于“共享-源”，即重构任务和翻译任务采用各自单独的解码器时效果更佳。
 
 综合以上结果，词级替换规则略优于短语级，应用单独的解码器略优于共享解码器，重构的语言方向影响最大，重构源语言句子带来的翻译准确率提升最多。
@@ -23,13 +23,13 @@
 
 （2）{\sffamily 掩码输入：}在该方案中，输入序列中视觉目标的位置替换为一个特殊的单词“<mask>”，此时的重构模型类似于一个掩码语言模型(masked language model)，区别在于重构模型采用了序列解码的方式。
 
-\input{Tex/4_mywork_1/table_4_adversarial_evaluation.tex}
+\input{Tex/3_mywork_1/table_4_adversarial_evaluation.tex}
 将该对抗评估方案应用于基于RNN的模型上，得到结果如表\ref{tab:3_adversarial_ablation}所示，加粗项代表同一配置的模型中的性能最佳，下划线项代表最差。从表\ref{tab:3_adversarial_ablation}可以观察到，输入为原图像的模型均取得了最佳的性能，同时两组对抗实验均表现出较差的结果。采用掩码输入的方式整体效果最差，说明多任务的方式带来的增益效果并不是主要因素。该实验结果表明本章所提方法确实能够捕捉到视觉信息，从而为翻译准确率带来提升。
 
 \subsection{重构模型的对抗评估与消融实验}
 \label{sec:3_adversarial_ablation_rec}
 
-\input{Tex/4_mywork_1/table_5_adversarial_evaluation_reconstruction.tex}
+\input{Tex/3_mywork_1/table_5_adversarial_evaluation_reconstruction.tex}
 本节还进一步地为重构模型设置了对抗评估与消融实验，如表\ref{tab:3_adversarial_ablation_rec}所示为实验结果。这些结果进一步支持了在翻译模型上得到的结论，表明重构任务是有效的。 另一方面，图片信息带来的增益效果似乎受到输入的视觉特征比例的影响。正如我们所看到的，短语级替换方案似乎扩大了我们的模型和对抗模型之间的质量差异。这表明在重构模型中虽然文本信息越少重构的质量越差，但视觉信息的作用却越大。
 
 词级替换规则和短语级替换规则之间的巨大性能差距是由\ref{sec:3_entity_replacement}小节中提到的修饰词难以预测引起的。从视觉对象中预测修饰词是极其困难的。这就是为什么短语级替换模型获得比单词级低得多的重构BLEU值的原因。除了修饰词外，词实体也包含在短语实体中。这些词实体确保了短语级方案获得与词级相似的翻译性能，因此两者虽然在重构的结果上有较大的差异，但在翻译的结果上没有太大的差别。
@@ -43,7 +43,7 @@
 
 （3）方法所带来的提升，应该体现在该方法与对应的纯文本基线模型的比较上。为此，还需要将方法的实体词或非实体词准确率减去对应纯文本基线模型的准确率，就得到了实体词与非实体词继续该方法的提升结果，我们称之为增量差（increment difference)。最后再在方法之间进行横向比较增量差，就可以对比出那些方法为实体词或非实体词带来的提升更多。
 
-\input{Tex/4_mywork_1/figure_analysis}
+\input{Tex/3_mywork_1/figure_analysis}
 由于基于RNN的方法提供的代码比较全，所以我们选择在基于RNN的模型上进行比较。该结果需要每个方法提供模型的解码结果以及对应的纯文本基线模型的解码结果。比较的结果基于4种类型方法：6个本章的基于RNN的方法，12个\ref{sec:3_adversarial_ablation}小节中的对抗模型，6个\ref{sec:3_adversarial_ablation}小节中的掩码模型，以及4个\ref{tab:3_rnn_ende}表中的对比模型。实验结果中，我们同样测量了“所有词”的准确率，即不区分实体词或非实体词的准确率。实验结果如图\ref{fig:3_analysis}所示，其中横轴代表不同的翻译系统，纵轴为增量差，蓝线代表实体词的增量值，红线代表非实体词的增量值，灰线代表所有词的增量值，直方图代表非实体词与实体词的增量值之差。
 
 {\sffamily 本章所提方法：}图中实线框内的方法为本章所提方法。图中一个值得注意的结果是，几乎所有的方法非实体词的增量值都大于实体词的增量值。正如\ref{sec:3_setup_entity_extraction}小节所提到，多数实体词都是低频词，这导致模型更难学习这部分词的表示，所以当一个方法对神经翻译模型带来增益时，对所有词的提升是普遍现象，该提升也主要表现在非实体词上，对实体词的提升就要看各类方法的特点了。从图中直方图可以看到，本章所提方法的增量值之差普遍偏小，这说明该方法能够拉小了实体词与非实体词之间增量差的差距，也就是为实体词带来的翻译准确率提升更多。
@@ -53,8 +53,8 @@
 {\sffamily 对比模型方法：}DATT、$ \mathrm{VMMT_C} $、$ \mathrm{VMMT_F} $以及Imagination并没有明显地表现出降低实体词与非实体词的增量值之差的能力，以上整体的对比结果表明本章所提的显式跨模态信息融合方法能够有效地提升实体词的翻译准确率。
 
 \subsection{样例分析}
-\input{Tex/4_mywork_1/figure_case_1}
-\input{Tex/4_mywork_1/figure_case_2}
-\input{Tex/4_mywork_1/figure_case_3}
-\input{Tex/4_mywork_1/figure_case_4}
+\input{Tex/3_mywork_1/figure_case_1}
+\input{Tex/3_mywork_1/figure_case_2}
+\input{Tex/3_mywork_1/figure_case_3}
+\input{Tex/3_mywork_1/figure_case_4}
 为了展示本章所提方法对句子翻译和实体词翻译带来的影响，我们在图\ref{fig:3_case_1}-\ref{fig:3_case_4}中展示了4个翻译案例。其中包含着实体词“pigeon”、“shirt”、“motorbike”和“umbrellas”的翻译。通过观察可以得到以下结论：输入正确的图片信息时，模型的性能表现较好；当实体词有多种释义时，其它模型的翻译结果在多个释义上容易表现出不稳定的结果，本章所提方法的表现更好。

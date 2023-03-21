@@ -4,7 +4,7 @@
 
 \subsection{翻译结果}
 \label{sec:5_translation_results}
-\input{Tex/6_mywork_3/table_2_ende}
+\input{Tex/5_mywork_3/table_2_ende}
 表\ref{tab:5_ende}展示了本章提出的CAT方法在英德翻译上与其它方法的对比结果。
 
 （1）MMT与纯文本的Transformer的实验对比中发现，增加了图片输入的MMT并没有带来全面的翻译准确率提升。在增加了BDTT方法后，两个模型的翻译准确率均有所提升。其中MMT bi与Transformer bi相比的提升更多，但两者之间的差距并不大。该部分的实验说明，简单地将图片输入给神经翻译模型很难为翻译带来有效的提升。
@@ -13,12 +13,12 @@
 
 （3）采用了BDTT的CAT-MMT bi的实验中的整体表现最佳。值得注意的是，仅采用CAT时，CAT-MMT的整体表现是不如MMT的；仅采用BDTT时，MMT bi相比MMT有少许提升。如果在CAT-MMT bi中CAT没有起到额外的增益作用，那么CAT-MMT bi应该与MMT bi的结果相近。但实际结果是，当既采用CAT又采用BDTT时，CAT-MMT bi相比于MMT以及MMT bi均有着显著的提升效果。该结果说明仅采用对比对抗训练难以在小规模的数据上实现细粒度的语义表示聚类。BDTT方法通过解决目标语言与源语言之间训练不平衡的问题，使CAT能够更容易起到作用。
 
-\input{Tex/6_mywork_3/table_3_enjp_enhi}
+\input{Tex/5_mywork_3/table_3_enjp_enhi}
 我们同样在英日翻译和英印翻译上进行了实验。表\ref{tab:5_enjp_enhi}展示了这部分的实验结果。区别于英德翻译，在英日翻译上采用BDTT的模型并没有得到更进一步的效果，在最终的模型结果上也仅得到了0.6个BLEU值的提升。在英印翻译上的实验效果与在英德翻译上的效果是相似的。从整体上看，对比对抗训练方法在与双向翻译训练方法的配合下，能够为模型带来稳定的翻译准确率的提升。
 
 \subsection{消融实验}
 \label{sec:5_ablation_study}
-\input{Tex/6_mywork_3/table_4_ablation_study}
+\input{Tex/5_mywork_3/table_4_ablation_study}
 为了分析本章为对比对抗训练所设计的负样本在模型中是否起到了作用，本节将针对CAT-MMT和CAT-MMT bi设置消融实验。
 
 实验结果如表\ref{tab:5_ablation_study}所示，其中“w/o $B_{\\X}$”代表同批数据下的其它样本从负样本集$N$中移除。该条件下，负样本集$N$的大小为$|N|=|N_{AS}|=2$。“w/o $N_{AS}$”代表将对抗样本从负样本集$N$中移除。没有了$N_{AS}$，CAT方法将退化为一般的对比学习方法，不再进行细粒度的语义聚类。
@@ -36,7 +36,7 @@
 \label{sec:5_bdtt_analysis}
 
 在前面小节的实验结果中，双向翻译训练方法为模型的翻译质量提升起到了关键的作用。因此，有必要针对BDTT实施进一步地分析，从而展示其真正的作用。为此，我们记录了CAT-MMT bi和CAT-MMT在训练过程中输入样本之间的余弦距离的变化情况。该实验在Multi30K的验证集上每2000步进行一次记录。在\ref{sec:5_cat}小节和\ref{sec:5_translation_results}小节中我们解释到，BDTT是通过优化编码器对目标语言句子$Y$的表示能力使CAT方法有效。因此，本小节将以$X+I$为基线，记录$X$、$Y$以及$X+\tilde{I}$这三者与$X+I$之间在训练过程中的余弦距离变化。
-\input{Tex/6_mywork_3/figure_training}
+\input{Tex/5_mywork_3/figure_training}
 
 实验结果如图\ref{fig:5_training}所示，其中$X+I$与$Y$之间的余弦距离在没有BDTT的情况下的收敛过程产生了急剧的波动。这表明BDTT方法确实能够帮助目标语言得到好的编码表示。在仅使用CAT方法的情况下，对比损失很难针对目标语言从开始训练一个好的表示向量。除以上观察外，该实验结果还可以得到以下结论：
 
@@ -50,7 +50,7 @@
 
 \subsection{对抗评估}
 \label{sec:5_adversarial_evaluation}
-\input{Tex/6_mywork_3/table_5_adversarial_evaluation}
+\input{Tex/5_mywork_3/table_5_adversarial_evaluation}
 图片辅助式的神经机器翻译普遍存在着对视觉信息不敏感的问题，所以使用对抗样本来评估模型对视觉信息的敏感度成为每种方法必须经过的测试。本节将针对本章所提出的方法通过改变输入的图片来测试模型对视觉信息的敏感度。其中“$X+I$”代表着为模型输入与原文对应的图片，“$X+\tilde{I}$”代表输入与原文不一致的图片，“$X$”代表只输入原文不输入图片。如表\ref{tab:5_adversarial_evaluation}所示为实验结果，从该实验结果中可以得到以下信息：
 
 （1）对抗评估对CAT-MMT bi带来的影响最大。这表明在BDTT的帮助下，CAT-MMT bi能够从图片中获取信息从而带来翻译质量的提升。对抗评估对CAT-MMT的影响也有，但相对更小。从CAT-MMT在$X+\tilde{I}$和$X$两种输入下的结果中看，模型似乎只是对是否有视觉信息感兴趣，但对视觉信息中的内容并不感兴趣。
@@ -67,9 +67,9 @@
 \subsection{样例分析}
 图\ref{fig:5_case_ende}、图\ref{fig:5_case_enjp}和图\ref{fig:5_case_enhi}分别展示了CAT-MMT bi模型在三个不同的数据集上的翻译案例。我们选择了带有歧义词的句子，歧义词包含“passing”、“reached”以及“stamp”。为了方便比较，我们将模型的结果通过Google翻译系统\footnote{https://translate.google.com}翻译到了英文，并在每个句子下面展示。该实验结果表明了图片信息能够在很大程度上影响歧义词的翻译。在图\ref{fig:5_case_ende}英德翻译和图\ref{fig:5_case_enhi}英印翻译在$X+\tilde{I}$作为输入情况下出现了漏翻的问题。说明错误的图片信息影响到了歧义词的翻译过程。当纯文本$X$作为模型输入时，几乎所有的翻译结果都是错的，并与原来的词义相差甚远。这验证了我们之前的想法，说明模型越依赖视觉信息，其鲁棒性反而越差。
 
-\input{Tex/6_mywork_3/figure_case_ende}
-\input{Tex/6_mywork_3/figure_case_enjp}
-\input{Tex/6_mywork_3/figure_case_enhi}
+\input{Tex/5_mywork_3/figure_case_ende}
+\input{Tex/5_mywork_3/figure_case_enjp}
+\input{Tex/5_mywork_3/figure_case_enhi}
 我们同样测试了模型在输入退化文本情况下通过图片补全信息的能力。文本的退化方案与\ref{sec:5_cat}小节中介绍的针对对抗样本$\tilde{X}+\tilde{I}$的方法相同，即将句子中与视觉目标相对应的名词替换为“<mask>”。图图\ref{fig:5_case_ende}、图\ref{fig:5_case_enjp}和图\ref{fig:5_case_enhi}中所有源语言中带有下划线的词为选作退化的词。在$\tilde{X}+I$的翻译结果中重构出的对应词也同样带有下划线。图\ref{fig:5_case_ende}的结果展示出，在图中有明显目标的“water”和“bridge”成功地在翻译中被还原。然而，整体的翻译结果却非常差。这是因为这个句子中有太多的词被掩码替换，破坏了整个句子的语义完整性，仅依靠图片很难补全完整的语义信息。图\ref{fig:5_case_enjp}中，为了降低难度，我们只选择了两个词“mountain”和“rock”。结果中“mountain”成功地还原了出来。但是根据源语言的句子，其还原出来的位置是错的。图\ref{fig:5_case_enhi}展示了一个简单的句子，“boy”成功地得到了还原，“stamp”则没有。
 
 上述结果证明了我们的方法将视觉信息融合到文本表示中的能力。当文本中出现歧义词时，模型可以准确翻译这些歧义词。替换或删除输入图像会极大地影响翻译结果。

@@ -4,7 +4,7 @@
 \subsection{数据}
 \label{sec:4_dataset}
 
-\input{Tex/5_mywork_2/table_1_dataset}
+\input{Tex/4_mywork_2/table_1_dataset}
 本章使用多模态机器翻译任务的常用数据集Multi30K\cite{43_elliott-etal-2016-multi30k}来测试本文所提方法。该数据集每张图片配有一个英文句子和其对应的德语、法语和捷克语的译文。该数据集的训练集包含29000个平行句对。其验证集和测试集Test2016的大小分别为1014和1000。本章还在常用的测试集Multi30K Test2017以及Ambiguous MSCOCO上进行了测试，其大小分别为1000和461。数据集的具体统计情况如表\ref{tab:4_datasets}所示。值得注意的是，在融合图片信息的神经机器翻译任务中，最常用的是英德翻译数据。其次是英法翻译数据，常用的测试数据为Test2016。而英捷翻译数据仅有很少的应用。
 
 本文采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对文本数据进行分词和归一化处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双字节编码\cite{27_sennrich-etal-2016-neural}（Byte pair encoding，BPE）进行分词处理。在数据的预处理阶段，本文采用上一章\ref{sec:3_entity_extraction}节所介绍的方法提取文本实体与视觉实体，并将它们对应起来。最后将视觉实体输入Resnet-50\cite{32_DBLP:conf/cvpr/HeZRS16}提取出2048维的全局图像特征，该特征向量在输入到CER模型的时候会通过一个全连接层映射到模型所需的维度。

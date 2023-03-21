@@ -3,7 +3,7 @@
 
 \subsection{实验数据}
 \label{sec:5_datasets}
-\input{Tex/6_mywork_3/table_1_datasets}
+\input{Tex/5_mywork_3/table_1_datasets}
 为了验证方法的有效性，本章分别在三个语言对上进行了测试，包括英德翻译（EN-DE）、英日翻译（EN-JP）和英印翻译（EN-HI）。这些数据集的数据统计情况如表\ref{tab:5_datasets}所示，其详细介绍如下：
 
 （1）{\sffamily 英德翻译：}Multi30K是融合图片信息的神经机器翻译任务普遍采用的数据集。该数据集中每张图片对应一句英文描述和一个德文翻译，并划分为训练集、验证集和测试集三部分，其中测试集又分为Test2016、Test2017和ambiguous MSCOCO 2017三个测试集。ambiguous MSCOCO 2017是专门针对歧义词问题设计的测试集。\ref{sec:5_architecture}小节中提到，可以为视觉目标与文本中的对应词提供相同的位置向量。针对Multi30K数据集，本章采用Flickr30K Entities提供的视觉目标与文本短语的实体对齐关系，文本中的对应词仅选择对应短语中的名词。由于Flickr30K Entities没有为Test2017和ambiguous MSCOCO 2017两个测试集提供实体对齐关系，因此我们采用\ref{sec:3_entity_extraction}节应用的视觉目标提取工具获得该对齐关系。本章采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉目标与名词对应关系的破坏，本章并没有采用双节编码技术\cite{27_sennrich-etal-2016-neural}（byte pair encoding, BPE）或WordPiece\cite{28_DBLP:journals/corr/WuSCLNMKCGMKSJL16}进行分词操作。

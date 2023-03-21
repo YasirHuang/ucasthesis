@@ -4,7 +4,7 @@
 
 \subsection{循环神经网络}
 \label{sec:2_rnn}
-\input{Tex/3_RelatedWork/figure_rnmt}
+\input{Tex/2_RelatedWork/figure_rnmt}
 神经机器翻译是一种序列到序列的生成任务，其源端序列与目标端序列的长度往往是不同的。因此，编码器-解码器结构成为了神经机器翻译的常用模型框架。编码器和解码器分别用于编码源端序列和解码到目标端序列。循环神经网络就是一种用于解决序列建模的一类方法。图\ref{fig:2_rnmt}为基于循环神经网络的神经机器翻译框架。编码器将不定长的源语言句子编码为单个固定维度的隐层向量，该隐层向量可作为整个句子语义的特征表示。解码器负责根据该特征表示生成目标语言句子。形式化地，给定待翻译的源语言句子$X=\{x_1,x_2,…,x_N\}$，在编码端首先需要将$X$中的词转化为词向量$E=\{\Vector{e_1,e_2,…,e_n}\}$，其中：
 \begin{equation}
     \Vector{e_i}=\mathrm{Emb}(x_i)
@@ -42,7 +42,7 @@ RNMT的解码器同样采用循环神经网络来生成目标语言文本。该�
 \label{sec:2_attention}
 基于编码器-解码器结构的神经翻译模型利用编码器将源语言编码为一个固定的特征向量，再利用解码器中的循环神经网络编码已生成的目标端单词，从而指导新的目标端单词的生成。在该过程中，编码的源语言特征向量作为句子级语义的完整表示，一方面丢失了源语言中的句长信息，另一方面无法指导在当前时刻$t$生成目标端单词时应该更多地关注源端的哪些信息。为了解决这个问题，文献\cite{3_DBLP:journals/corr/BahdanauCB14}提出在编码器与解码器之间增加注意力机制（attention mechanism）。
 
-\input{Tex/3_RelatedWork/figure_att_rnmt}
+\input{Tex/2_RelatedWork/figure_att_rnmt}
 图\ref{fig:2_att_rnmt}为增加了注意力机制的神经机器翻译，其编码器和解码器保留原来的工作方式，而两者之间的注意力模块为解码器提供了动态的源语言上下文信息。对于每个时刻$t$，源语言上下文向量$\Vector{c_t}$由固定的特征向量替换为与$t$相关的表示：
 \begin{equation}
     \Vector{c_t} = f_t(\Vector{H})=\sum_{i=1}^{N}{\alpha}_{ti}\Vector{h_i}
@@ -76,11 +76,11 @@ RNMT的解码器同样采用循环神经网络来生成目标语言文本。该�
 
 \subsection{Transformer}
 \label{sec:2_transformer}
-\input{Tex/3_RelatedWork/figure_transformer}
+\input{Tex/2_RelatedWork/figure_transformer}
 在注意力机制的帮助下，基于循环神经网络的神经机器翻译得到了显著的性能提升。这说明基于动态上下文的解码方法能够更准确地捕捉上下文信息，从而得到更忠于原文的译文。而注意力机制相当于二次编码，为下游模块提供动态上下文。既然注意力机制同样具有编码能力，那么是否可以用于替换循环神经网络呢？谷歌提出的Transformer\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}就是一种基于这种假设的模型。图\ref{fig:2_transformer}展示了Transformer的模型结构，其保留了编码器-解码器的基础框架，利用内置的多头注意力机制（multi-head attention mechanism）实现编码过程。
 
 
-\input{Tex/3_RelatedWork/figure_multihead}
+\input{Tex/2_RelatedWork/figure_multihead}
 区别于一般的注意力机制，多头注意力机制采用了一种更具泛化性的模型设计。如图\ref{fig:2_multihead}所示，多头注意力机制的输入分为查询（query，Q）、键（key，K）以及值（value，V）三部分，并结合了缩放点积注意力（scaled dot-product attention）和多头注意力（multi-head attention）两种方法。
 
 {\sffamily 缩放点积注意力：}与一般的点积法相比，缩放点积注意力增加了一个缩放因子$d_k^{-0.5}$：

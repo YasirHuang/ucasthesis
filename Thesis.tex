@@ -21,6 +21,7 @@
 %---------------------------------------------------------------------------%
 %->> Document settings
 %---------------------------------------------------------------------------%
+\usepackage{caption}
 \usepackage[numbers,list]{Style/artratex}% document settings
 %- usage: \usepackage[option1,option2,...,optionN]{artratex}
 %- Multiple optional arguments:
@@ -41,14 +42,7 @@
 %- [math]% enable some extra math packages
 %- [xlink]% disable link colors
 \usepackage{Style/artracom}% user defined commands
-\usepackage{multirow}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{xparse}
-\newcommand{\rarw}[1]{\overleftarrow{#1}}
-\newcommand{\larw}[1]{\overleftarrow{#1}}
-\newcommand{\rarwvec}[1]{\Vector{\overrightarrow{#1}}}
-\newcommand{\larwvec}[1]{\Vector{\overleftarrow{#1}}}
+\usepackage{Style/custom}
 %---------------------------------------------------------------------------%
 %->> Document inclusion
 %---------------------------------------------------------------------------%
@@ -59,7 +53,7 @@
 %-
 %-> Titlepage information
 %-
-\input{Tex/0_Frontinfo}%
+\input{Tex/Frontinfo}%
 \begin{document}
 %-
 %-> Frontmatter: title page, abstract, content list, symbol list, preface
@@ -80,13 +74,13 @@
 %-> Mainmatter
 %-
 \mainmatter% initialize the environment
-%\input{Tex/Mainmatter}% main content
-\input{Tex/2_Introduction.tex}
-\input{Tex/3_RelatedWork.tex}
-\input{Tex/4_mywork_1.tex}
-\input{Tex/5_mywork_2.tex}
-\input{Tex/6_mywork_3.tex}
-\input{Tex/7_future_work.tex}
+\input{Tex/Mainmatter}% main content
+%\input{Tex/1_Introduction.tex}
+%\input{Tex/2_RelatedWork.tex}
+%\input{Tex/3_mywork_1.tex}
+%\input{Tex/4_mywork_2.tex}
+%\input{Tex/5_mywork_3.tex}
+%\input{Tex/6_future_work.tex}
 %-
 %-> Appendix
 %-

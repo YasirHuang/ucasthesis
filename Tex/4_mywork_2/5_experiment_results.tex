@@ -4,14 +4,14 @@
 \label{sec:4_omega}
 本章提出的多任务训练方法包含了翻译和CER两个由超参数$\omega$控制训练比例的任务，而CER又包含了TER、VER和TNER三个由$\alpha$、$\beta$和$\gamma$三个超参数控制的子任务。因此如何平衡这些任务的训练比重是在模型训练过程中极为重要的问题。本章根据三个子任务的重要程度，将$\alpha$、$\beta$和$\gamma$三个超参数的比例固定为$2:2:1$，然后通过调节超参数$\omega$来寻找翻译和CER两个任务合适的训练比例。本节依据CER-NMT在英德翻译、英法翻译以及英捷翻译验证集的BLEU值结果来选取一个合适的$\omega$值。
 
-\input{Tex/5_mywork_2/figure_searchw}
+\input{Tex/4_mywork_2/figure_searchw}
 如图\ref{fig:4_searchw}所示实验结果，横轴代表$\omega$从0.4以0.05为间隔增加至0.9，纵轴为NMT模型在英译德验证集上的BLEU值。当$\omega=1.0$时，代表翻译任务的训练比例为$100\%$，此时是纯文本神经机器翻译。当$\omega=0.0$时，代表仅训练CER不做翻译。该图反映出，当$\omega \in [0.55,0.8]$时，模型普遍具有较好的BLEU值结果。超过这个范围时，CER-NMT的BLEU值将逐渐接近纯文本翻译模型。低于这个范围时，CER-NMT的翻译准确率发生了骤减。我们还测试了当$\omega=0.3$时的情况，此时英德翻译的BLEU值以骤减到9.86，英法骤减到8.62，英捷翻译骤减到3.94。以上实验结果说明在一个合适的范围内，CER方法能够帮助翻译模型提升翻译准确率。而这个范围应当使模型的训练过程主要以翻译任务为主以CER为辅。因此，本章选择$\omega=0.7$作为英德翻译模型的超参数，$\omega=0.65$作为英法翻译模型的超参数，$\omega=0.6$作为英捷翻译模型的超参数，即CER-NMT在验证集上达到最高的BLEU值时，作为后续试验中对超参数$\omega$的设置。
 
 
 \subsection{翻译结果}
 \label{sec:4_translation_results}
 
-\input{Tex/5_mywork_2/table_2_en-defrcs}
+\input{Tex/4_mywork_2/table_2_en-defrcs}
 
 表\ref{tab:4_ende_enfr_encs}显示了采用了CER方法的神经机器翻译系统的翻译结果。其中$\omega$按照4.1节的结论，针对英德翻译、英法翻译和英捷翻译的取值分别为0.7、0.65和0.6。对于VER、TER和TNER三个子任务，$\alpha$、$\beta$和$\gamma$的值分别设置为0.4、0.4和0.2。
 
@@ -34,7 +34,7 @@ GMMT、CTR-NMT和CER-NMT均是采用视觉目标作为视觉输入的方法，�
 \subsection{消融实验}
 \label{sec:4_ablation_study}
 为了探究VER、TER和TNER三个子任务对CER$-$NMT模型的影响，本节设置了12组消融实验。其中序号0代表\ref{sec:4_translation_results}节中CER-NMT的结果。序号1$-$3组各去掉一个子任务，并保持剩余子任务的训练权重。序号4$-$5组各去掉一个子任务，保持NMT的权重。序号7$-$9组各保留一个子任务，保持子任务的权重。序号10$-$12组保留一个子任务，保持NMT的权重。
-\input{Tex/5_mywork_2/table_3_ablation.tex}
+\input{Tex/4_mywork_2/table_3_ablation.tex}
 
 实验结果如表2所示，其中“-”代表所对应的子任务被去掉，可以获得如下信息:
 
@@ -66,7 +66,7 @@ Transformer的解码器采用的是交叉注意力机制，与一般的注意力
 %\item
 （2）图\ref{fig:4_fidelity_cer_baseorder}相比于图\ref{fig:4_fidelity_base}存在更多靠近1.0的小像素点。从图\ref{fig:4_fidelity_cer_selforder}中的均值结果（avg）可以看到，小像素点的均值从0.4238提升至0.4498，大圆点的均值从0.4024提升至0.4478，均具有较明显的提升。该数值结果表明CER方法能够明显地提升模型在翻译过程中对源语言文本实体的忠实度。
 
-\input{Tex/5_mywork_2/figure_fidelity}
+\input{Tex/4_mywork_2/figure_fidelity}
 %\item
 （3）图\ref{fig:4_fidelity_cer_selforder}经过重排序实体的顺序后可以更直观地从曲线的趋势看出采用CER方法所带来的忠实度的提升。
 
@@ -79,7 +79,7 @@ Transformer的解码器采用的是交叉注意力机制，与一般的注意力
 \subsection{基于词频的翻译准确率统计}
 \label{sec:4_freq_acc}
 
-\input{Tex/5_mywork_2/figure_freq_acc}
+\input{Tex/4_mywork_2/figure_freq_acc}
 上一节通过统计翻译过程中目标语言的文本实体相对于源语言的文本实体的忠实度，来反映实体重构方法对翻译过程带来的影响。并发现，文本实体在翻译过程中得到了更多的重视。
 为了进一步反映本章的重构方法对神经机器翻译带来的影响，我们首先统计了文本实体在所使用数据中的占比情况。统计发现，文本实体占训练集和测试集单词总数的32.6\%，文本实体在词表中的占比为59.9\%，文本实体平均词频为20.2，词频的中位数为2。根据该统计结果不难发现，大部分的实体词的词频小于等于2，反映出实体词主要分布于低频词中。这也说明了在神经机器翻译中，实体词的翻译更难。
 
@@ -87,7 +87,7 @@ Transformer的解码器采用的是交叉注意力机制，与一般的注意力
 
 图\ref{fig:4_freq_acc}展示了针对纯文本Transformer、本章的TNER-NMT、本章的CER-NMT以及上一章的CTR-NMT四个神经机器翻译系统中不同词频下的文本实体和非文本实体的翻译准确率统计情况。该统计结果基本满足随着词频的升高翻译准确率也随着升高的规律。词频较低的情况下，单词的翻译准确率的波动很大，这能够反映出模型对出现次数较少的单词的翻译置信程度较低。值得注意的是，CER-NMT和CTR-NMT都采用了明确的视觉信息作用方法，将视觉目标信息作用到文本实体上。因此这两种方法都对文本实体的翻译有较强的提升作用，这在图\ref{fig:4_freq_acc_cer}和\ref{fig:4_freq_acc_ctr}中反映在文本实体的翻译准确率在词频低于8时普遍高于文本非实体。当词频大于等于8时，虽然非实体的翻译准确率明显高于实体，但它们之间的差距明显小于Transformer和TNER-NMT的结果。
 
-\input{Tex/5_mywork_2/table_4_frequency_accuracy}
+\input{Tex/4_mywork_2/table_4_frequency_accuracy}
 图\ref{fig:4_freq_acc}反映出词频为8时，词的翻译准确率出现了一个明显的分水岭。因此，我们将词频低于8的单词作为低频词，大于等于8的为高频词，得到表\ref{tab:4_freq_acc}关于低频词和高频词的翻译准确率统计结果。从该结果中可以看出，采用显式融合方式的CER-NMT和CTR-NMT的实体词翻译准确率在低频词和高频词上均有较明显的提升，非实体词的差距并不大。CER-NMT相比于上一章的CTR-NMT有小幅度的提升，说明增加了视觉实体重构的双向实体重构方案相比于单独使用文本重构能够为实体词的翻译带来更进一步的性能提升。TNER-NMT采用了30\%的文本非实体重构，这也反映在表\ref{tab:4_freq_acc}中其低频非实体词的翻译准确率最高。
 
 综上所述，将视觉实体明确作用到文本实体上，并进行实体级的重构方法，能够有效提升不同词频下实体词的翻译准确率，其中对低频词的提升最为明显。

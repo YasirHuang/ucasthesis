@@ -5,7 +5,7 @@
 融合图片信息的神经机器翻译方法就是一种在基于编码器-解码器框架的翻译模型中，通过利用图片中的视觉信息改善文本翻译质量的一类方法。图片中往往包含着比文本更丰富、更完整或更准确的信息，因此在句子编码过程中加入图片信息以完善文本的表示，或是在解码过程中提供图片信息作为参考以指导译文的生成，都是图片能够为翻译带来的增益效果的有效途径之一。
 %尽管神经网络方法能够直接从数据中学习语言之间的对齐关系，但是纯文本翻译中仍然存在着一些挑战和局限性，
 % 存在哪些问题，大的问题，
-虽然神经网络方法能够直接从数据中提取特征，但是跨模态的信息融合与利用还有一些挑战。双语数据在翻译任务中具有高度的对齐性，而图片与文本之间的跨模态对齐则相对较弱。因此，如果将图片直接输入给普通的神经机器翻译模型，可能会导致模型在训练过程中忽略跨模态信息，而只关注更容易学习的跨语言对齐。
+虽然神经网络方法能够直接从数据中提取特征，但是跨模态的信息融合与利用还有一些挑战。双语数据在翻译任务中具有高度的对齐性，而图片与文本之间的跨模态对齐则相对较弱。因此，如果将图片直接输入给常规的神经机器翻译模型，可能会导致模型在训练过程中忽略跨模态信息，而只关注更容易学习的纯文本翻译。
 
 % 本文所围绕的问题
 本文围绕如何设计有效的图片与文本之间的跨模态信息融合方法提升神经机器翻译的质量，如通过明确图片信息在文本中的作用目标来规避模型对图片信息不敏感的问题，或强化图片信息在模型训练过程中的作用来提升模型对图片信息的敏感度。论文的主要工作和创新点归纳如下：
@@ -36,7 +36,7 @@ This paper focuses on how to design an effective cross-modal information fusion 
 
 \textbf{1. Neural machine translation based on cross-modal text reconstruction}
 
-Inputting pictures into neural machine translation models has the advantage of directly learning from data and fusing cross-modal information, but it is also difficult to clarify the specific role of picture information, so this type of method can be called implicit cross-modal information fusion. In order to explore whether explicit cross-modal information fusion is feasible, this paper proposes a neural machine translation method based on cross-modal text reconstruction. During training, the method explicitly replaces the positions of nouns or phrases in the source language sentences with the corresponding visual objects in the pictures, and inputs this sequence into the reconstruction model to generate sentences in the original or target language. Finally, the parameters of the reconstructed model are shared with the translation model through parameter sharing, so as to improve the translation quality. Experiments show that the method proposed in this paper achieves translation accuracy comparable to implicit methods without requiring input images during the test phase. And this method mainly improves the translation accuracy of entity words corresponding to visual targets.
+Inputting images into neural machine translation models has the advantage of directly learning from data and fusing cross-modal information, but it is also difficult to clarify the specific role of picture information, so this type of method can be called implicit cross-modal information fusion. In order to explore whether explicit cross-modal information fusion is feasible, this paper proposes a neural machine translation method based on cross-modal text reconstruction. During training, the method explicitly replaces the positions of nouns or phrases in the source language sentences with the corresponding visual objects in the pictures, and inputs this sequence into the reconstruction model to generate sentences in the original or target language. Finally, the parameters of the reconstructed model are shared with the translation model through parameter sharing, so as to improve the translation quality. Experiments show that the method proposed in this paper achieves translation accuracy comparable to implicit methods without requiring input images during the test phase. And this method mainly improves the translation accuracy of entity words corresponding to visual targets.
 
 \textbf{2. Bidirectional cross-modal entity reconstruction based neural machine translation}
 

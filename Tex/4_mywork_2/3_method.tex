@@ -2,7 +2,7 @@
 
 \subsection{图文实体}
 \label{sec:4_entities}
-\input{Tex/5_mywork_2/figure_definations}
+\input{Tex/4_mywork_2/figure_definations}
 为了更方便地对本章所提的CER方法进行介绍，首先需要对CER方法作用到的图片视觉目标和文本中的作用目标进行更恰当的定义：
 
 （1）{\sffamily 文本实体：}输入的源语言句子$X=\{x_1,x_2,\cdots,x_N\}$中，$x_i$代表句子中的每个单词，在对应图片有对应视觉目标的名词$t_a=x_a,t_b=x_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合，可见$T \subseteq X$。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
@@ -13,12 +13,12 @@
 
 %\subsection{跨模态编码}
 %\label{sec:4_cross_modal_encoding}
-%\input{Tex/5_mywork_2/figure_model}
+%\input{Tex/4_mywork_2/figure_model}
 %图\ref{fig:4_model}展示了CER模型与NMT模型相融合的简化过程，其中包含了视觉实体解码器、跨模态编码器以及翻译解码器三个主要组成部分。其中最核心的跨模态编码器负责在实体重构之前将视觉信息与文本信息编码融合。所编码的信息包含着实体重构主要依赖的三部分：
 
 %\begin{itemize}
 %\item
-%\input{Tex/5_mywork_2/figure_ter}
+%\input{Tex/4_mywork_2/figure_ter}
 %（1）{\sffamily 跨模态实体：}其中实体重构主要依赖于跨模态实体所提供的具体信息。如图【】所示，文本实体$t_1$的重构主要依赖于视觉实体$e_1$，视觉实体$e_1$的重构也主要依赖于文本实体$t_1$。
 
 %\item
@@ -29,12 +29,12 @@
 
 \subsection{跨模态实体重构}
 \label{sec:4_cer}
-\input{Tex/5_mywork_2/figure_model}
+\input{Tex/4_mywork_2/figure_model}
 图\ref{fig:4_model}展示了CER模型与NMT模型相融合的简化过程，其中包含了视觉实体解码器、跨模态编码器以及翻译解码器三个主要组成部分。其中最核心的跨模态编码器负责在实体重构之前将视觉信息与文本信息编码融合。解码器仅用于主任务翻译的目标文本解码。视觉实体解码器负责将跨模态编码器编码后的状态解码到视觉目标所代表的视觉语义空间，而其结构与编码器相同均为$L$层Transformer编码器。为了更详细地介绍CER方法是如何工作的，以及如何与神经机器翻译相结合，本节将CER方法分为：文本实体重构、视觉实体重构以及文本非实体重构三个子任务进行详细的介绍。
 
 {\sffamily 文本实体重构}
 
-\input{Tex/5_mywork_2/figure_ter}
+\input{Tex/4_mywork_2/figure_ter}
 文本实体重构(textual entity reconstruction，TER)与上一章相似，将视觉目标明确地作用到文本实体上。本章仅针对有对应视觉目标的名词采取实体替换，因此文本实体重构的输入为由文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列：
 \begin{equation}
 Z={\rm{Combine}} \left( \tilde{X}, V \right)
@@ -59,7 +59,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 
 {\sffamily 视觉实体重构}
 
-\input{Tex/5_mywork_2/figure_ver}
+\input{Tex/4_mywork_2/figure_ver}
 与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一的文本模态信息$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
 \begin{equation}
 \Vector{H_X^L}={\rm{MultiHead_{enc}^L}}(X, X, X)
@@ -81,7 +81,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 
 {\sffamily 文本非实体重构}
 
-\input{Tex/5_mywork_2/figure_tner}
+\input{Tex/4_mywork_2/figure_tner}
 文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图2中，当选中对非实体词“A”进行重构时，模型所输入的多模态混合序列为$Z=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
 %一个标记``N''的圆形词向量代表``$\langle$M$\rangle$''、两个圆形空心词向量和两个标记``V''的圆形视觉特征. 损失函数如下:
 \begin{equation}
