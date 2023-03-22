@@ -5,14 +5,14 @@
 \label{sec:4_dataset}
 
 \input{Tex/4_mywork_2/table_1_dataset}
-本章使用多模态机器翻译任务的常用数据集Multi30K\cite{43_elliott-etal-2016-multi30k}来测试本文所提方法。该数据集每张图片配有一个英文句子和其对应的德语、法语和捷克语的译文。该数据集的训练集包含29000个平行句对。其验证集和测试集Test2016的大小分别为1014和1000。本章还在常用的测试集Multi30K Test2017以及Ambiguous MSCOCO上进行了测试，其大小分别为1000和461。数据集的具体统计情况如表\ref{tab:4_datasets}所示。值得注意的是，在融合图片信息的神经机器翻译任务中，最常用的是英德翻译数据。其次是英法翻译数据，常用的测试数据为Test2016。而英捷翻译数据仅有很少的应用。
+本章使用多模态机器翻译任务的常用数据集Multi30K\pcite{elliott2016multi30k}来测试本文所提方法。该数据集每张图片配有一个英文句子和其对应的德语、法语和捷克语的译文。该数据集的训练集包含29000个平行句对。其验证集和测试集Test2016的大小分别为1014和1000。本章还在常用的测试集Multi30K Test2017以及Ambiguous MSCOCO上进行了测试，其大小分别为1000和461。数据集的具体统计情况如表\ref{tab:4_datasets}所示。值得注意的是，在融合图片信息的神经机器翻译任务中，最常用的是英德翻译数据。其次是英法翻译数据，常用的测试数据为Test2016。而英捷翻译数据仅有很少的应用。
 
-本文采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对文本数据进行分词和归一化处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双字节编码\cite{27_sennrich-etal-2016-neural}（Byte pair encoding，BPE）进行分词处理。在数据的预处理阶段，本文采用上一章\ref{sec:3_entity_extraction}节所介绍的方法提取文本实体与视觉实体，并将它们对应起来。最后将视觉实体输入Resnet-50\cite{32_DBLP:conf/cvpr/HeZRS16}提取出2048维的全局图像特征，该特征向量在输入到CER模型的时候会通过一个全连接层映射到模型所需的维度。
+本文采用Moses SMT\pcite{koehn2007moses}工具包对文本数据进行分词和归一化处理。为了防止对视觉实体与文本实体对应关系的破坏，本文并没有采用双字节编码\pcite{sennrich2016neural}（Byte pair encoding，BPE）进行分词处理。在数据的预处理阶段，本文采用上一章\ref{sec:3_entity_extraction}节所介绍的方法提取文本实体与视觉实体，并将它们对应起来。最后将视觉实体输入Resnet-50\pcite{he2016deep}提取出2048维的全局图像特征，该特征向量在输入到CER模型的时候会通过一个全连接层映射到模型所需的维度。
 
 \subsection{模型参数}
 \label{sec:4_model_setup}
 
-本文在基于Transformer\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}结构的模型上进行试验。由于数据集Multi30K的规模相对较小，很容易在Transformer-big或Transformer-base上过拟合，因此本章采用了更小规模的参数设置。本文所设置的参数与文献\cite{33_yin-etal-2020-novel}基本保持一致，其词嵌入层设置为128维，前馈层为256维。编码器、视觉实体解码器和翻译解码器均为4层，多头自注意力的头数为4。词表采用源语言与目标语言共享的方式，合并后英德翻译的共享词表大小为27226，英法翻译为19393，英捷翻译为29170。利用Adam\cite{34_DBLP:journals/corr/KingmaB14}优化器优化整个模型参数。本章与文献\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}相同采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000。训练目标中设置平滑标签$\epsilon_{ls}=0.1$。训练时，批数据大小为2000个单词。测试时，采用了搜索空间$b=4$的柱搜索算法。
+本文在基于Transformer\pcite{vaswani2017attention}结构的模型上进行试验。由于数据集Multi30K的规模相对较小，很容易在Transformer-big或Transformer-base上过拟合，因此本章采用了更小规模的参数设置。本文所设置的参数与\tcite{yin2020novel}基本保持一致，其词嵌入层设置为128维，前馈层为256维。编码器、视觉实体解码器和翻译解码器均为4层，多头自注意力的头数为4。词表采用源语言与目标语言共享的方式，合并后英德翻译的共享词表大小为27226，英法翻译为19393，英捷翻译为29170。利用Adam\pcite{kingma2014adam}优化器优化整个模型参数。本章与\tcite{vaswani2017attention}相同采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000。训练目标中设置平滑标签$\epsilon_{ls}=0.1$。训练时，批数据大小为2000个单词。测试时，采用了搜索空间$b=4$的柱搜索算法。
 
 多任务学习方法的训练方式为随机选择一个任务在当前批数据下对模型进行优化。本文所提CER方法一共包含三个子任务:VER、TER和TNER。这三个任务根据超参数$\alpha$、$\beta$和$\gamma$控制训练的比例。本章将三个子任务的训练比例设置为$\alpha=40\%$、$\beta=40\%$和$\gamma=20\%$。这样保证了CER在训练中将实体级的跨模态信息融合作为主任务，以$80\%$的比例用于跨模态实体重构，$20\%$的比例用于视觉实体与非实体上下文的语义融合。本文将翻译任务设置为主任务，并设置超参数$\omega$为控制翻译任务与CER之间的训练比重。例如当$\omega=0.5$时，NMT与CER的训练比例分别为$50\%$，其中VER、TER和TNER三个子任务的训练比重依据上文调整为$\omega\times\alpha=20\%$、$\omega\times\beta=20\%$和$\omega\times\gamma=10\%$。
 
@@ -27,19 +27,19 @@
 
 \begin{itemize}
 
-\item \textbf{SerialAtt\cite{47_DBLP:conf/wmt/LibovickyHM18}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
+\item \textbf{SerialAtt\pcite{libovicky2018input}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
 
-\item \textbf{DelMMT\cite{39_ive-etal-2019-distilling}}模型提出使用推敲网络做多模态二次解码。在第二次解码中融合源语言、目标语言以及视觉信息。
+\item \textbf{DelMMT\pcite{ive2019distilling}}模型提出使用推敲网络做多模态二次解码。在第二次解码中融合源语言、目标语言以及视觉信息。
 
-\item \textbf{GAMMT\cite{41_DBLP:journals/corr/abs-2103-08862}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
+\item \textbf{GAMMT\pcite{liu2021gumbel}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
 
-\item \textbf{GMMT\cite{33_yin-etal-2020-novel}：}该模型视源语言句子与图片中的视觉目标为一个多模态图结构，然后利用设计的基于图的跨模态编码器进行编码，最终解码出目标端句子。
+\item \textbf{GMMT\pcite{yin2020novel}：}该模型视源语言句子与图片中的视觉目标为一个多模态图结构，然后利用设计的基于图的跨模态编码器进行编码，最终解码出目标端句子。
 \end{itemize}
 
 图片信息增强式方法的介绍如下：
 \begin{itemize}
 \item \textbf{Transformer：}基于Transformer的纯文本神经机器翻译模型，其模型配置与\ref{sec:4_model_setup}小节保持一致。
-\item \textbf{Imagination\cite{37_elliott-kadar-2017-imagination}：}该方法将源语言句子编码后，利用编码后的隐层表示生成与图片的全局特征相近的向量表示，该过程称为“想象力”机制。该方法同样使用了多任务的方式。
-\item \textbf{ImagiT\cite{51_long-etal-2021-generative}：}该方法同样采用了“想象力”机制，区别在于ImagiT采用了生成对抗网络，尝试从对原文的编码中“想象”出像素级的图片。
+\item \textbf{Imagination\pcite{elliott2017imagination}：}该方法将源语言句子编码后，利用编码后的隐层表示生成与图片的全局特征相近的向量表示，该过程称为“想象力”机制。该方法同样使用了多任务的方式。
+\item \textbf{ImagiT\pcite{long2021generative}：}该方法同样采用了“想象力”机制，区别在于ImagiT采用了生成对抗网络，尝试从对原文的编码中“想象”出像素级的图片。
 \item \textbf{CTR-NMT：}该模型为本文第3章所设计的方法，采用了词级实体替换方案利用独享解码器重构源语言，是一种图片增强式神经翻译模型。
 \end{itemize}

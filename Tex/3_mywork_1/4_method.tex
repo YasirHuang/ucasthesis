@@ -37,7 +37,7 @@
     \mathcal{L}_T(\theta, \phi)=-\sum_j^M \log p(y_j|y_{<j},X)
     \label{eq:3_translation}
 \end{equation}
-其中$\phi$为神经翻译模型的解码器参数。为了结合重构任务和翻译任务，本章按照文献\cite{37_elliott-kadar-2017-imagination}的方式将两者的目标函数结合：
+其中$\phi$为神经翻译模型的解码器参数。为了结合重构任务和翻译任务，本章按照\tcite{elliott2017imagination}的方式将两者的目标函数结合：
 \begin{equation}
     \mathcal{L}(\theta, \psi, \phi)=\omega L_T(\theta, \phi) + (1-\omega)L_R(\theta, \psi)
     \label{eq:3_combine_sr}

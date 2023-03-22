@@ -6,28 +6,28 @@
 \input{Tex/5_mywork_3/table_1_datasets}
 为了验证方法的有效性，本章分别在三个语言对上进行了测试，包括英德翻译（EN-DE）、英日翻译（EN-JP）和英印翻译（EN-HI）。这些数据集的数据统计情况如表\ref{tab:5_datasets}所示，其详细介绍如下：
 
-（1）{\sffamily 英德翻译：}Multi30K是融合图片信息的神经机器翻译任务普遍采用的数据集。该数据集中每张图片对应一句英文描述和一个德文翻译，并划分为训练集、验证集和测试集三部分，其中测试集又分为Test2016、Test2017和ambiguous MSCOCO 2017三个测试集。ambiguous MSCOCO 2017是专门针对歧义词问题设计的测试集。\ref{sec:5_architecture}小节中提到，可以为视觉目标与文本中的对应词提供相同的位置向量。针对Multi30K数据集，本章采用Flickr30K Entities提供的视觉目标与文本短语的实体对齐关系，文本中的对应词仅选择对应短语中的名词。由于Flickr30K Entities没有为Test2017和ambiguous MSCOCO 2017两个测试集提供实体对齐关系，因此我们采用\ref{sec:3_entity_extraction}节应用的视觉目标提取工具获得该对齐关系。本章采用Moses SMT\cite{44_koehn-etal-2007-moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉目标与名词对应关系的破坏，本章并没有采用双节编码技术\cite{27_sennrich-etal-2016-neural}（byte pair encoding, BPE）或WordPiece\cite{28_DBLP:journals/corr/WuSCLNMKCGMKSJL16}进行分词操作。
+（1）{\sffamily 英德翻译：}Multi30K\pcite{elliott2016multi30k}是融合图片信息的神经机器翻译任务普遍采用的数据集。该数据集中每张图片对应一句英文描述和一个德文翻译，并划分为训练集、验证集和测试集三部分，其中测试集又分为Test2016、Test2017和ambiguous MSCOCO 2017三个测试集。ambiguous MSCOCO 2017是专门针对歧义词问题设计的测试集。\ref{sec:5_architecture}小节中提到，可以为视觉目标与文本中的对应词提供相同的位置向量。针对Multi30K数据集，本章采用Flickr30K Entities提供的视觉目标与文本短语的实体对齐关系，文本中的对应词仅选择对应短语中的名词。由于Flickr30K Entities没有为Test2017和ambiguous MSCOCO 2017两个测试集提供实体对齐关系，因此我们采用\ref{sec:3_entity_extraction}节应用的视觉目标提取工具获得该对齐关系。本章采用Moses SMT\pcite{koehn2007moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉目标与名词对应关系的破坏，本章并没有采用双节编码技术\pcite{sennrich2016neural}（byte pair encoding, BPE）或WordPiece\pcite{wu2016google}进行分词操作。
 
-（2）{\sffamily 英日翻译：}Flickr30KEnt-JP与Multi30K都是源自Flickr30K数据集。因此两者所使用的图片是一样的，区别在于Flickr30KEnt-JP是将Flickr30K的5个英文描述都翻译到了日文。所以该数据集中每张图片对应了5个英文描述和5个对应的日文翻译。相应地，也对该数据集的训练集、验证集和测试集的数据划分做了改变。
+（2）{\sffamily 英日翻译：}Flickr30KEnt-JP\pcite{nakayama2020flickr30kentjp}与Multi30K都是源自Flickr30K数据集。因此两者所使用的图片是一样的，区别在于Flickr30KEnt-JP是将Flickr30K的5个英文描述都翻译到了日文。所以该数据集中每张图片对应了5个英文描述和5个对应的日文翻译。相应地，也对该数据集的训练集、验证集和测试集的数据划分做了改变。
 
-（3）{\sffamily 英印翻译：}英语到印地语的翻译任务采用了HVG（Hindi Visual Genome）数据集。该数据集的图片来源于Visual Genome数据集。区别于Multi30K和Flickr30KEnt-JP，HVG中的每段英文描述是针对图片中的一个区域，这意味着其英文描述相对更短更简单。另外，该数据集提供了每段描述在图片中对应的区域。HVG的测试集分为一个普通的测试集和一个挑战集，该挑战集中包含了大量歧义词，专门为歧义词问题设计。在实验过程中，我们将完整的图片输入到“<img>”的对应位置，将与描述相关的图片区域输入到“<bbx>”对应的位置。
+（3）{\sffamily 英印翻译：}英语到印地语的翻译任务采用了HVG（Hindi Visual Genome）数据集\pcite{parida2019hindi}。该数据集的图片来源于Visual Genome数据集\pcite{krishna2017visual}。区别于Multi30K和Flickr30KEnt-JP，HVG中的每段英文描述是针对图片中的一个区域，这意味着其英文描述相对更短更简单。另外，该数据集提供了每段描述在图片中对应的区域。HVG的测试集分为一个普通的测试集和一个挑战集，该挑战集中包含了大量歧义词，专门为歧义词问题设计。在实验过程中，我们将完整的图片输入到“<img>”的对应位置，将与描述相关的图片区域输入到“<bbx>”对应的位置。
 
 \subsection{模型设置}
 \label{sec:5_model_setup}
 
-本章所提方法在基于Transformer的翻译模型基础上进行的实验。因模型参数规模受数据集的大小的限制，我们选择了小规模的参数设置。Transformer的词向量维度为128，隐层向量维度为256。编码器和解码器的层数均为4。多头注意力机制的头数为4。在训练过程中dropout设置为0.2。批数据大小设置为源语言以及目标语言最多不超过2000个单词。本章采用Adam优化器在模型的训练过程中进行参数优化其中$\beta_1=0.9$，$\beta_2=0.998$，$\epsilon=10^{-9}$。本章与文献\cite{5_DBLP:journals/corr/VaswaniSPUJGKP17}相同采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000，取训练完成后的模型参数用于测试。训练目标中设置平滑标签$\epsilon_{ls}=0.1$。以上模型参数与文献\cite{33_yin-etal-2020-novel}。
+本章所提方法在基于Transformer\pcite{vaswani2017attention}的翻译模型基础上进行的实验。因模型参数规模受数据集的大小的限制，我们选择了小规模的参数设置。Transformer的词向量维度为128，隐层向量维度为256。编码器和解码器的层数均为4。多头注意力机制的头数为4。在训练过程中dropout设置为0.2。批数据大小设置为源语言以及目标语言最多不超过2000个单词。本章采用Adam优化器在模型的训练过程中进行参数优化其中$\beta_1=0.9$，$\beta_2=0.998$，$\epsilon=10^{-9}$。本章与\tcite{vaswani2017attention}相同采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000，取训练完成后的模型参数用于测试。训练目标中设置平滑标签$\epsilon_{ls}=0.1$。以上模型参数与\tcite{yin2020novel}。
 
-公式\ref{eq:5_contrastive_learning}中的$\tau$设置为0.1，公式\ref{eq:5_combine_with_nmt}中的超参数$\lambda$设置为0.3。在评估英德翻译的结果时，采用BLEU4\cite{42_papineni-etal-2002-bleu}和METEOR\cite{46_denkowski-lavie-2014-meteor}两个评估指标。英日翻译和英印翻译仅采用BLEU4作为评估指标。
+公式\ref{eq:5_contrastive_learning}中的$\tau$设置为0.1，公式\ref{eq:5_combine_with_nmt}中的超参数$\lambda$设置为0.3。在评估英德翻译的结果时，采用BLEU4\pcite{papineni2002bleu}和Meteor\pcite{denkowski2014meteor}两个评估指标。英日翻译和英印翻译仅采用BLEU4作为评估指标。
 
 \subsection{对比模型}
 
 本章所选择的对比模型可分为两类：图片辅助式神经翻译模型和图片增强式神经翻译模型。图片辅助式神经翻译模型在生成翻译的过程中会以源语言句子和对应图片作为参考生成译文，图片主要起到辅助翻译过程的作用。图片增强式神经翻译模型则是利用图片中的视觉信息增强模型的表示能力，在测试阶段一般不需要图片输入。本章所选择的对比模型均是以Transformer作为基础模型结构：
 \begin{itemize}
-    \item \textbf{SerialAtt\cite{47_DBLP:conf/wmt/LibovickyHM18}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
-    \item \textbf{MMT-TF\cite{40_yao-wan-2020-multimodal}：}该工作设计了一种多模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
-    \item \textbf{OVC\cite{48_DBLP:conf/aaai/WangX21}：}该方法设计的模型以视觉目标作为图片输入，并设计了以针对视觉目标的损失函数，通过对输入视觉目标进行掩码操作使模型对具有相关信息的图片视觉目标敏感，并忽略那些不相关的视觉目标。
-    \item \textbf{GAMMT\cite{41_DBLP:journals/corr/abs-2103-08862}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
-    \item \textbf{GMMT\cite{33_yin-etal-2020-novel}：}该模型视源语言句子与图片中的视觉目标为一个多模态图结构，然后利用设计的基于图的跨模态编码器进行编码，最终解码出目标端句子。
+    \item \textbf{SerialAtt\pcite{libovicky2018input}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
+    \item \textbf{MMT-TF\pcite{yao2020multimodal}：}该工作设计了一种多模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
+    \item \textbf{OVC\pcite{wang2021efficient}：}该方法设计的模型以视觉目标作为图片输入，并设计了以针对视觉目标的损失函数，通过对输入视觉目标进行掩码操作使模型对具有相关信息的图片视觉目标敏感，并忽略那些不相关的视觉目标。
+    \item \textbf{GAMMT\pcite{liu2021gumbel}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
+    \item \textbf{GMMT\pcite{yin2020novel}：}该模型视源语言句子与图片中的视觉目标为一个多模态图结构，然后利用设计的基于图的跨模态编码器进行编码，最终解码出目标端句子。
     \item \textbf{CTR-NMT：}该模型为本文第3章所设计的方法，采用了词级实体替换方案利用独享解码器重构源语言，是一种图片增强式神经翻译模型。
     \item \textbf{CER-NMT：}该模型为本文第4章所设计的方法，采用了双向实体重构方法，是一种图片增强式神经翻译模型。
     \item \textbf{Transformer：}基于Transformer的单向纯文本神经翻译模型，其模型配置与\ref{sec:5_model_setup}节保持一致。

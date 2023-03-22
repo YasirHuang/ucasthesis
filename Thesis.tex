@@ -22,7 +22,7 @@
 %->> Document settings
 %---------------------------------------------------------------------------%
 \usepackage{caption}
-\usepackage[numbers,list,table,math]{Style/artratex}
+\usepackage[super,list,table,math]{Style/artratex}
 %- usage: \usepackage[option1,option2,...,optionN]{artratex}
 %- Multiple optional arguments:
 %- [bibtex|biber]% set bibliography processor and package
@@ -92,7 +92,7 @@
 
 \intotoc*{\cleardoublepage}{\bibname}% add link to toc
 \artxifstreq{\artxbib}{bibtex}{% enable bibtex
-    \bibliography{Biblio/ref}% bibliography
+    \bibliography{Biblio/references}% bibliography
 }{%
     \printbibliography% bibliography
 }
