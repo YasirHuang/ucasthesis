@@ -77,6 +77,13 @@
     pages = "304--323",
     abstract = "We present the results from the third shared task on multimodal machine translation. In this task a source sentence in English is supplemented by an image and participating systems are required to generate a translation for such a sentence into German, French or Czech. The image can be used in addition to (or instead of) the source sentence. This year the task was extended with a third target language (Czech) and a new test set. In addition, a variant of this task was introduced with its own test set where the source sentence is given in multiple languages: English, French and German, and participating systems are required to generate a translation in Czech. Seven teams submitted 45 different systems to the two variants of the task. Compared to last year, the performance of the multimodal submissions improved, but text-only systems remain competitive.",
 }
+@article{bengio2000neural,
+  title={A neural probabilistic language model},
+  author={Bengio, Yoshua and Ducharme, R{\'e}jean and Vincent, Pascal},
+  journal={Advances in neural information processing systems},
+  volume={13},
+  year={2000}
+}
 %85
 %85_DBLP:conf/icassp/BerardBKP18
 @inproceedings{berard2018end,
@@ -368,22 +375,13 @@
     doi = "10.3115/v1/D14-1179",
     pages = "1724--1734",
 }
-
-%21
-%21_dutta-chowdhury-elliott-2019-understanding
-@inproceedings{duttachowdhury2019understanding,
-    title = "Understanding the Effect of Textual Adversaries in Multimodal Machine Translation",
-    author = "Dutta Chowdhury, Koel  and
-      Elliott, Desmond",
-    booktitle = "Proceedings of the Beyond Vision and LANguage: inTEgrating Real-world kNowledge (LANTERN)",
-    month = nov,
-    year = "2019",
-    address = "Hong Kong, China",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/D19-6406",
-    doi = "10.18653/v1/D19-6406",
-    pages = "35--40",
-    abstract = "It is assumed that multimodal machine translation systems are better than text-only systems at translating phrases that have a direct correspondence in the image. This assumption has been challenged in experiments demonstrating that state-of-the-art multimodal systems perform equally well in the presence of randomly selected images, but, more recently, it has been shown that masking entities from the source language sentence during training can help to overcome this problem. In this paper, we conduct experiments with both visual and textual adversaries in order to understand the role of incorrect textual inputs to such systems. Our results show that when the source language sentence contains mistakes, multimodal translation systems do not leverage the additional visual signal to produce the correct translation. We also find that the degradation of translation performance caused by textual adversaries is significantly higher than by visual adversaries.",
+@inproceedings{collobert2011deep,
+  title={Deep learning for efficient discriminative parsing},
+  author={Collobert, Ronan},
+  booktitle={Proceedings of the fourteenth international conference on artificial intelligence and statistics},
+  pages={224--232},
+  year={2011},
+  organization={JMLR Workshop and Conference Proceedings}
 }
 
 %--------------------------------start with d--------------------------------%
@@ -490,6 +488,22 @@
   timestamp = {Wed, 23 Jun 2021 17:36:39 +0200},
   biburl    = {https://dblp.org/rec/conf/iclr/DosovitskiyB0WZ21.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+%21
+%21_dutta-chowdhury-elliott-2019-understanding
+@inproceedings{duttachowdhury2019understanding,
+    title = "Understanding the Effect of Textual Adversaries in Multimodal Machine Translation",
+    author = "Dutta Chowdhury, Koel  and
+      Elliott, Desmond",
+    booktitle = "Proceedings of the Beyond Vision and LANguage: inTEgrating Real-world kNowledge (LANTERN)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-6406",
+    doi = "10.18653/v1/D19-6406",
+    pages = "35--40",
+    abstract = "It is assumed that multimodal machine translation systems are better than text-only systems at translating phrases that have a direct correspondence in the image. This assumption has been challenged in experiments demonstrating that state-of-the-art multimodal systems perform equally well in the presence of randomly selected images, but, more recently, it has been shown that masking entities from the source language sentence during training can help to overcome this problem. In this paper, we conduct experiments with both visual and textual adversaries in order to understand the role of incorrect textual inputs to such systems. Our results show that when the source language sentence contains mistakes, multimodal translation systems do not leverage the additional visual signal to produce the correct translation. We also find that the degradation of translation performance caused by textual adversaries is significantly higher than by visual adversaries.",
 }
 %45
 %45_dyer-etal-2013-simple
@@ -605,6 +619,23 @@
     doi = "10.18653/v1/2022.acl-long.390",
     pages = "5687--5698",
     abstract = "Multimodal machine translation (MMT) aims to improve neural machine translation (NMT) with additional visual information, but most existing MMT methods require paired input of source sentence and image, which makes them suffer from shortage of sentence-image pairs. In this paper, we propose a phrase-level retrieval-based method for MMT to get visual information for the source input from existing sentence-image data sets so that MMT can break the limitation of paired sentence-image input. Our method performs retrieval at the phrase level and hence learns visual information from pairs of source phrase and grounded region, which can mitigate data sparsity. Furthermore, our method employs the conditional variational auto-encoder to learn visual representations which can filter redundant visual information and only retain visual information related to the phrase. Experiments show that the proposed method significantly outperforms strong baselines on multiple MMT datasets, especially when the textual context is limited.",
+}
+@article{farabet2013learning,
+  author       = {Cl{\'{e}}ment Farabet and
+                  Camille Couprie and
+                  Laurent Najman and
+                  Yann LeCun},
+  title        = {Learning Hierarchical Features for Scene Labeling},
+  journal      = {{IEEE} Trans. Pattern Anal. Mach. Intell.},
+  volume       = {35},
+  number       = {8},
+  pages        = {1915--1929},
+  year         = {2013},
+  url          = {https://doi.org/10.1109/TPAMI.2012.231},
+  doi          = {10.1109/TPAMI.2012.231},
+  timestamp    = {Wed, 14 Nov 2018 10:51:18 +0100},
+  biburl       = {https://dblp.org/rec/journals/pami/FarabetCNL13.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 @article{fukushima1980neocognitron,
   title={Neocognitron: A self-organizing neural network model for a mechanism of pattern recognition unaffected by shift in position},
@@ -796,6 +827,16 @@
   timestamp = {Wed, 25 Jan 2023 11:01:16 +0100},
   biburl    = {https://dblp.org/rec/conf/cvpr/HeZRS16.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+@article{hinton2012deep,
+  title={Deep neural networks for acoustic modeling in speech recognition: The shared views of four research groups},
+  author={Hinton, Geoffrey and Deng, Li and Yu, Dong and Dahl, George E and Mohamed, Abdel-rahman and Jaitly, Navdeep and Senior, Andrew and Vanhoucke, Vincent and Nguyen, Patrick and Sainath, Tara N and others},
+  journal={IEEE Signal processing magazine},
+  volume={29},
+  number={6},
+  pages={82--97},
+  year={2012},
+  publisher={IEEE}
 }
 %116
 %116_DBLP:conf/naacl/HirasawaYMK19
@@ -1130,7 +1171,7 @@
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 %DBLP:conf/nips/KrizhevskySH12
-@inproceedings{Krizhevsky2012imagenet,
+@inproceedings{krizhevsky2012imagenet,
   author    = {Alex Krizhevsky and
                Ilya Sutskever and
                Geoffrey E. Hinton},
@@ -1194,6 +1235,16 @@
   journal={Advances in neural information processing systems},
   volume={2},
   year={1989}
+}
+@article{lecun2015deep,
+  title={Deep learning},
+  author={LeCun, Yann and Bengio, Yoshua and Hinton, Geoffrey},
+  journal={nature},
+  volume={521},
+  number={7553},
+  pages={436--444},
+  year={2015},
+  publisher={Nature Publishing Group UK London}
 }
 %57 visual_bert
 %7_visual_bert
@@ -1509,6 +1560,26 @@
 }
 
 %--------------------------------start with m--------------------------------%
+@inproceedings{mikolov2011strategies,
+  author       = {Tom{\'{a}}s Mikolov and
+                  Anoop Deoras and
+                  Daniel Povey and
+                  Luk{\'{a}}s Burget and
+                  Jan Cernock{\'{y}}},
+  editor       = {David Nahamoo and
+                  Michael Picheny},
+  title        = {Strategies for training large scale neural network language models},
+  booktitle    = {2011 {IEEE} Workshop on Automatic Speech Recognition {\&} Understanding,
+                  {ASRU} 2011, Waikoloa, HI, USA, December 11-15, 2011},
+  pages        = {196--201},
+  publisher    = {{IEEE}},
+  year         = {2011},
+  url          = {https://doi.org/10.1109/ASRU.2011.6163930},
+  doi          = {10.1109/ASRU.2011.6163930},
+  timestamp    = {Thu, 14 Oct 2021 10:19:44 +0200},
+  biburl       = {https://dblp.org/rec/conf/asru/MikolovDPBC11.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
 %108
 %108_DBLP:journals/corr/abs-2211-11812
 @article{mo2022riccnn,
@@ -1807,6 +1878,14 @@
     pages = "109--118",
     abstract = "Interlingua based Machine Translation (MT) aims to encode multiple languages into a common linguistic representation and then decode sentences in multiple target languages from this representation. In this work we explore this idea in the context of neural encoder decoder architectures, albeit on a smaller scale and without MT as the end goal. Specifically, we consider the case of three languages or modalities X, Z and Y wherein we are interested in generating sequences in Y starting from information available in X. However, there is no parallel training data available between X and Y but, training data is available between X {\&} Z and Z {\&} Y (as is often the case in many real world applications). Z thus acts as a pivot/bridge. An obvious solution, which is perhaps less elegant but works very well in practice is to train a two stage model which first converts from X to Z and then from Z to Y. Instead we explore an interlingua inspired solution which jointly learns to do the following (i) encode X and Z to a common representation and (ii) decode Y from this common representation. We evaluate our model on two tasks: (i) bridge transliteration and (ii) bridge captioning. We report promising results in both these applications and believe that this is a right step towards truly interlingua inspired encoder decoder architectures.",
 }
+@inproceedings{sainath2013improvements,
+  title={Improvements to deep convolutional neural networks for LVCSR},
+  author={Sainath, Tara N and Kingsbury, Brian and Mohamed, Abdel-rahman and Dahl, George E and Saon, George and Soltau, Hagen and Beran, Tomas and Aravkin, Aleksandr Y and Ramabhadran, Bhuvana},
+  booktitle={2013 IEEE workshop on automatic speech recognition and understanding},
+  pages={315--320},
+  year={2013},
+  organization={IEEE}
+}
 %87
 %87_DBLP:journals/corr/abs-1811-00347
 @article{sanabria2018how2,
@@ -1828,6 +1907,26 @@
   biburl    = {https://dblp.org/rec/journals/corr/abs-1811-00347.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
+@article{schwenk2007continuous,
+  title={Continuous space language models},
+  author={Schwenk, Holger},
+  journal={Computer Speech \& Language},
+  volume={21},
+  number={3},
+  pages={492--518},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{schwenk2010continuous,
+  title={Continuous-Space Language Models for Statistical Machine Translation.},
+  author={Schwenk, Holger},
+  journal={Prague Bull. Math. Linguistics},
+  volume={93},
+  pages={137--146},
+  year={2010},
+  publisher={Citeseer}
+}
+\
 %27
 %27_sennrich-etal-2016-neural
 @inproceedings{sennrich2016neural,
@@ -2013,7 +2112,6 @@
   biburl    = {https://dblp.org/rec/journals/corr/SzegedyLJSRAEVR14.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
-
 %--------------------------------start with t--------------------------------%
 %62 lxmert
 %62_lxmert
@@ -2047,6 +2145,28 @@
     url = "https://aclanthology.org/2022.wat-1.11",
     pages = "89--98",
     abstract = "Recently, numbers of works shows that the performance of neural machine translation (NMT) can be improved to a certain extent with using visual information. However, most of these conclusions are drawn from the analysis of experimental results based on a limited set of bilingual sentence-image pairs, such as Multi30K.In these kinds of datasets, the content of one bilingual parallel sentence pair must be well represented by a manually annotated image,which is different with the actual translation situation. we propose an open-vocabulary image retrieval methods to collect descriptive images for bilingual parallel corpus using image search engine, and we propose text-aware attentive visual encoder to filter incorrectly collected noise images. Experiment results on Multi30K and other two translation datasets show that our proposed method achieves significant improvements over strong baselines.",
+}
+@inproceedings{tompson2014joint,
+  author       = {Jonathan Tompson and
+                  Arjun Jain and
+                  Yann LeCun and
+                  Christoph Bregler},
+  editor       = {Zoubin Ghahramani and
+                  Max Welling and
+                  Corinna Cortes and
+                  Neil D. Lawrence and
+                  Kilian Q. Weinberger},
+  title        = {Joint Training of a Convolutional Network and a Graphical Model for
+                  Human Pose Estimation},
+  booktitle    = {Advances in Neural Information Processing Systems 27: Annual Conference
+                  on Neural Information Processing Systems 2014, December 8-13 2014,
+                  Montreal, Quebec, Canada},
+  pages        = {1799--1807},
+  year         = {2014},
+  url          = {https://proceedings.neurips.cc/paper/2014/hash/e744f91c29ec99f0e662c9177946c627-Abstract.html},
+  timestamp    = {Mon, 16 May 2022 15:41:51 +0200},
+  biburl       = {https://dblp.org/rec/conf/nips/TompsonJLB14.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 %--------------------------------start with v--------------------------------%
 %5

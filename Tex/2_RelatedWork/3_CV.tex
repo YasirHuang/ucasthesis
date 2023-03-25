@@ -14,7 +14,7 @@
 \label{sec:2_cnn}
 
 卷积神经网络是目前计算机视觉领域最重要且最流行的方法之一，可以在计算机视觉的多个研究任务中发挥重要作用，例如图像分类、目标检测、人脸识别、语义分割等。早在20世纪90年代，杨·乐坤（Yann LeCun）等人发表论文提出了LeNet-5，成为奠定了现代卷积神经网络方法的基础框架\pcite{fukushima1980neocognitron,lecun1989handwritten,lecun1998gradient}。
-现有的卷积神经网络，如AlexNet\pcite{Krizhevsky2012imagenet}，VGGNet\pcite{simonyan2015very}，GoogLeNet\pcite{szegedy2014going}，ResNet\pcite{he2016deep}，DenseNet\pcite{huang2017densely}等模型，均是在LeNet-5的基础上通过加深网络层数、增加或改变非线性激活层、增加批数据归一化、增加通道数量等手段提升网络的泛化性能和对图像的表征能力。卷积神经网络不仅在计算机视觉领域得到广泛应用，在语音识别和自然语言处理的某些特定任务上同样得到了关注。在融合图像信息的多模态任务上，卷积神经网络更是用于表征图片信息或视频信息的必然选择。本节将以LeNet-5为例，详细介绍卷积神经网络的基本结构，以及应用到跨模态信息融合时的使用方式。
+现有的卷积神经网络，如AlexNet\pcite{krizhevsky2012imagenet}，VGGNet\pcite{simonyan2015very}，GoogLeNet\pcite{szegedy2014going}，ResNet\pcite{he2016deep}，DenseNet\pcite{huang2017densely}等模型，均是在LeNet-5的基础上通过加深网络层数、增加或改变非线性激活层、增加批数据归一化、增加通道数量等手段提升网络的泛化性能和对图像的表征能力。卷积神经网络不仅在计算机视觉领域得到广泛应用，在语音识别和自然语言处理的某些特定任务上同样得到了关注。在融合图像信息的多模态任务上，卷积神经网络更是用于表征图片信息或视频信息的必然选择。本节将以LeNet-5为例，详细介绍卷积神经网络的基本结构，以及应用到跨模态信息融合时的使用方式。
 
 \input{Tex/2_RelatedWork/figure_lenet5}
 LeNet-5是最早的卷积神经网络模型之一，设计之初被用于手写数字识别任务。图\ref{fig:2_lenet5}展示了LeNet-5从输入图片到输出预测结果的模型工作简化图。LeNet-5共包含5层，包括两个卷积层（convolutional layer）C1、C3、C5，以及两个池化层（pooling layer）S2和S4。
