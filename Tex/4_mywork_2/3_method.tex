@@ -3,13 +3,13 @@
 \subsection{图文实体}
 \label{sec:4_entities}
 \input{Tex/4_mywork_2/figure_definations}
-为了更方便地对本章所提的CER方法进行介绍，首先需要对CER方法作用到的图片视觉目标和文本中的作用目标进行更恰当的定义：
+为了更方便地对本章所提CER方法进行介绍，首先需要对CER方法作用到的视觉目标和文本中的作用目标进行更恰当的定义：
 
-（1）{\sffamily 文本实体：}输入的源语言句子$X=\{x_1,x_2,\cdots,x_N\}$中，$x_i$代表句子中的每个单词，在对应图片有对应视觉目标的名词$t_a=x_a,t_b=x_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合，可见$T \subseteq X$。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
+（1）{\sffamily 文本实体：}输入的源语言句子$X=\{x_1,x_2,\cdots,x_N\}$中，$x_i$代表句子中的每个单词，在句子的对应图片中有对应视觉目标的名词$t_a=x_a,t_b=x_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合，可见$T \subseteq X$。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
 
-（2）{\sffamily 视觉实体：}文本实体在对应图片$I$中的对应视觉目标$v_a,v_b,\cdots$为视觉实体（visual entity），$V=\{v_a,v_b,\cdots\}$为它们的集合。图\ref{fig:4_definations}中的“男人”和“帽子”分别是名词实体“man”和“hat”在图片中对应的视觉目标，因此是视觉实体。
+（2）{\sffamily 视觉实体：}文本实体在对应图片$I$中的对应视觉目标$v_a,v_b,\cdots$为视觉实体（visual entity），$V=\{v_a,v_b,\cdots\}$为它们的集合。图\ref{fig:4_definations}中的“男人”和“帽子”分别是文本实体“man”和“hat”在图片中对应的视觉目标，因此是视觉实体。
 
-（3）{\sffamily 文本非实体：}在源语言句子中，所有不是文本实体的单词均可称为文本非实体（textual none-entity）。$\tilde{X}=X-T$代表它们的集合、文本上下文或退化文本。例如图\ref{fig:4_definations}中，文本上下文中除“<mask>”外均为文本非实体。
+（3）{\sffamily 文本非实体：}在源语言句子中，所有不是文本实体的单词均可称为文本非实体（textual none-entity）。$\tilde{X}=X-T$代表它们的集合、文本上下文或退化文本。例如图\ref{fig:4_definations}中，文本上下文中除了特殊单词“<mask>”均为文本非实体。
 
 %\subsection{跨模态编码}
 %\label{sec:4_cross_modal_encoding}
@@ -39,11 +39,11 @@
 \begin{equation}
 Z={\rm{Combine}} \left( \tilde{X}, V \right)
 \end{equation}
-如图\ref{fig:4_ter}所示，输入的文本上下文“A <mask> with a <mask>”与视觉实体$\{v_2,v_5\}$组合成多模态混合序列$Z=$“A $v_2$ with a $v_5$”，此时输入到模型中的是三个空心圆代表词向量和两个标记“V”的圆代表$v_2$和$v_5$对应的视觉特征。多模态混合序列经过编码器进行跨模态编码后，得到序列的跨模态表示：
+如图\ref{fig:4_ter}所示，输入的文本上下文“A <mask> with a <mask>”与视觉实体$\{v_2,v_5\}$组合成多模态混合序列$Z=$“A $v_2$ with a $v_5$”，此时输入到模型中的是三个空心圆代表的词向量和两个标记“V”的圆代表的$v_2$和$v_5$对应的视觉特征。跨模态混合序列经过编码器进行跨模态编码后，得到序列的跨模态表示：
 \begin{equation}
 \Vector{H_Z^L}={\rm{MultiHead_{enc}^L}} \left( Z, Z, Z \right)
 \end{equation}
-其中，$\Vector{H_Z^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\Vector{h_i^l}$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图2中为两个标记“V”矩形隐层表示${\Vector{h_2^l}}$和${\Vector{h_5^l}}$，该过程需要优化以下损失函数：
+其中，$\Vector{H_Z^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\Vector{h_i^l}$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图2中为两个标记“V”的矩形隐层表示${\Vector{h_2^l}}$和${\Vector{h_5^l}}$，该过程需要优化以下损失函数：
 \begin{equation}
 \mathcal{L}_{\rm{TER}} (\theta, \vartheta) =
     \frac{1}{{\vert}T{\vert}}
@@ -60,7 +60,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 {\sffamily （2）视觉实体重构}
 
 \input{Tex/4_mywork_2/figure_ver}
-与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一的文本模态信息$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
+与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一文本模态的$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
 \begin{equation}
 \Vector{H_X^L}={\rm{MultiHead_{enc}^L}}(X, X, X)
 \end{equation}
@@ -71,7 +71,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 得到$\Vector{H_X^{2L}}=\{\Vector{h_1^{2l},h_2^{2l},\cdots,h_N^{2l}}\}$，${\rm MultiHead_{dec}^L}\left( \cdot,\cdot,\cdot \right)$为与${\rm MultiHead_{enc}^L}\left( \cdot,\cdot,\cdot \right)$具有相同结构的视觉实体解码器。然后利用$\Vector{H_X^{2L}}$生成与$\{\Vector{v_a,v_b,\cdots}\}$接近的向量表示，文本采用与\tcite{elliott2017imagination}相近的方式实现该过程：
 \begin{equation}
 \mathcal{L}_{\rm{VER}}(\theta, \varphi)=
-    \frac{1}{{\vert}E{\vert}}
+    \frac{1}{{\vert}V{\vert}}
     \mathop{\sum}_{i \neq j}{\max}\{0, \varepsilon - {\rm{cos}}\left( \Vector{h_i^{2l}}, \Vector{v_j} \right) + {\rm{cos}}\left( \Vector{h_i^{2l}}, \Vector{v_i} \right)\}
 \end{equation}
 %\onecolumn
@@ -82,7 +82,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 {\sffamily （3）文本非实体重构}
 
 \input{Tex/4_mywork_2/figure_tner}
-文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图2中，当选中对非实体词“A”进行重构时，模型所输入的多模态混合序列为$Z=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
+文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图\ref{fig:4_tner}中，当选择对非实体词“A”进行重构时，模型所输入的跨模态混合序列为$\tilde{Z}=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
 %一个标记``N''的圆形词向量代表``$\langle$M$\rangle$''、两个圆形空心词向量和两个标记``V''的圆形视觉特征. 损失函数如下:
 \begin{equation}
 \mathcal{L}_{\rm{TNER}}(\theta, \vartheta) =
@@ -95,24 +95,24 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 
 本文采用随机选取的方式在句子中选择待重构的非实体词。在执行TNER任务时，每个文本中的非实体词有$30\%$的概率会被选择到。该概率与所采用数据集中实体词占$32.6\%$的比例相近。
 
-{\sffamily CER联合训练}
+{\sffamily （4）CER联合训练}
 
-联合以上所有重构方法的目标函数，可得到本文所提CER方法的联合损失函数为：
+联合以上所有重构方法的目标函数，可得到本章所提CER方法的联合损失函数为：
 \begin{equation}
 \mathcal{L}_{\rm{CER}} \left( \theta, \varphi, \vartheta \right) = \alpha \mathcal{L}_{\rm{VER}} \left( \theta, \varphi \right) + \beta \mathcal{L}_{\rm{TER}} \left( \theta, \vartheta \right) + \gamma \mathcal{L}_{\rm{TNER}} \left( \theta, \vartheta \right)
 \label{eq:4_combined_cer}
 \end{equation}
-其中，$\alpha$、$\beta$和$\gamma$为控制三种重构方法训练比例的超参数。值得注意的是，本文没有设置利用纯文本上下文$\tilde{X}$重构文本词的方案。这是因为该方案与一般的预训练方法相似，用于建立纯文本的语言模型。而机器翻译模型的编码端本身就是一个很好的纯文本语言模型，因此不必再设置纯文本的重构方案。
+其中，$\alpha$、$\beta$和$\gamma$为控制三种重构方法训练比例的超参数。值得注意的是，本章没有设置利用纯文本上下文$\tilde{X}$重构文本词的方案。这是因为该方案与一般的预训练方法相似，用于建立纯文本的语言模型。而机器翻译模型的编码端本身就是一个很好的纯文本语言模型，因此不必再设置纯文本的重构方案。
 
 \subsection{与机器翻译相结合}
-构建CER模型的目的是辅助翻译模型提升翻译质量。本文采用多任务训练方法将CER方法中的跨模态编码器与神经翻译模型的文本编码器进行参数共享，从而实现对神经机器翻译模型参数优化的目的。翻译任务所要优化的目标函数为：
+构建CER模型的目的是辅助翻译模型提升翻译质量。本章采用多任务训练方法将CER方法中的跨模态编码器与神经翻译模型的文本编码器进行参数共享，从而实现对神经机器翻译模型参数优化的目的。翻译任务所要优化的目标函数为：
 \begin{equation}
 \mathcal{L}_{\rm{NMT}} \left( \theta, \phi \right) =
     -\mathop{\sum}_j^M {\rm log}{\ }{\rm P} \left(y_j \vert y_{<j}, X \vert \theta, \phi \right)
 \label{eq:4_nmt}
 \end{equation}
-其中$Y=\{y_1,y_2,\cdots,y_M\}$为目标语言的文本序列；$\phi$为解码器一端的参数，值得注意的是，在文本实体重构与文本非实体重构中所应用的生成器参数$\vartheta$是$\phi$的一部分，即采用的是同一个生成器。将公式\ref{eq:4_nmt}与CER模型的损失函数公式\ref{eq:4_combined_cer}相结合得到联合目标函数为：
+其中$Y=\{y_1,y_2,\cdots,y_M\}$为目标语言的文本序列；$\phi$为解码器一端的参数，值得注意的是，在文本实体重构与文本非实体重构中所应用的生成器参数$\vartheta$是$\phi$的一部分，即采用的是同一个生成器。将公式(\ref{eq:4_nmt})与CER模型的损失函数公式(\ref{eq:4_combined_cer})相结合得到联合目标函数为：
 \begin{equation}
-\mathcal{L} \left( \theta, \phi, \varphi, \right) = \omega\mathcal{L}_{\rm{NMT}} \left( \theta, \phi \right) + \left( 1-\omega \right) \mathcal{L}_{\rm{CER}} \left( \theta, \varphi, \vartheta \right)
+\mathcal{L} \left( \theta, \phi, \varphi \right) = \omega\mathcal{L}_{\rm{NMT}} \left( \theta, \phi \right) + \left( 1-\omega \right) \mathcal{L}_{\rm{CER}} \left( \theta, \varphi, \vartheta \right)
 \end{equation}
 其中，用超参数$\omega$调节神经机器翻译与CER方法的训练比例。

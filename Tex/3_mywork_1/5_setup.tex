@@ -2,29 +2,29 @@
 为了验证所提方法的有效性，本章在基于循环神经网络和基于Transformer的两种模型上进行了测试。本章选择了融合图片信息的神经机器翻译中最常用的Multi30K\pcite{elliott2016multi30k}数据集的英德翻译进行实验。
 
 \subsection{实验数据}
-本文使用图像描述翻译的Multi30K翻译数据集英德翻译对。该数据集每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集和针对歧义词的ambiguous MSCOCO 2017测试集。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本文采用Moses SMT\pcite{koehn2007moses}(byte pair encoding, BPE)或WordPiece\pcite{wu2016google}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
+Multi30K英德翻译数据集的每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集（Test2016）三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集（Test2017）和针对歧义词的ambiguous MSCOCO 2017测试集（MSCOCO）。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本文采用Moses SMT\pcite{koehn2007moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉实体与文本实体对应关系的破坏，本文没有采用字节对编码技术（byte pair encoding, BPE）或WordPiece\pcite{wu2016google}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
 
 \subsection{实体提取}
 \label{sec:3_setup_entity_extraction}
-实体提取采用的是\ref{sec:3_entity_extraction}节介绍的方法。其中名词和名词短语提取模块采用的是spaCy\footnote{https://spacy.io/}提供的提取名词短语和词性标注功能。在采用词级替换规则时，所替换的名词占训练集和测试集单词统计量的32.6\%。采用短语级替换规则时，提取的名词短语占单词统计量的45.1\%。同时，我们观察了在词级和短语级替换规则中，所涉及单词的词频情况。两种替换规则下，所涉及单词的词频中位数都是2，这意味着这些词中多数都是低频词。提前视觉目标采用的是\tcite{yang2019a}所提方法。理论上，只有实体短语可以从图片中检测到，没有在图片中检测到对应视觉目标的名词短语不被列为短语实体。另一种得到对齐的名词短语与视觉目标的方法是使用已标注的数据，Flickr30K Entities\pcite{plummer2015flickr30k,plummer2017flickr30k}就是标注了图片与文本中实体对应关系的数据集。该数据集与Multi30K高度重合，因此可以直接利用到本章所提方法上。对于从图片中截取到的视觉目标图片，本章利用在ImageNet\pcite{russakovsky2015imagenet}上预训练的ResNet-50\pcite{he2016deep}提取2048维的全局特征。
+实体提取采用的是\ref{sec:3_entity_extraction}节介绍的方法。其中名词和名词短语提取模块采用的是spaCy\footnote{https://spacy.io/}提供的提取名词短语和词性标注功能。在采用词级替换规则时，所替换的名词占训练集和测试集单词统计量的32.6\%。采用短语级替换规则时，提取的名词短语占单词统计量的45.1\%。同时，我们观察了在词级和短语级替换规则中，所涉及单词的词频情况。两种替换规则下，所涉及单词的词频中位数都是2，这意味着这些词中多数都是低频词。提取视觉目标采用的是\tcite{yang2019a}所提方法。理论上，只有短语实体可以从图片中检测到，没有在图片中检测到对应视觉目标的名词短语不被列为短语实体。另一种得到对齐的名词短语与视觉目标的方法是使用已标注的数据，Flickr30K Entities\pcite{plummer2015flickr30k,plummer2017flickr30k}就是标注了图片与文本中实体对应关系的数据集。该数据集与Multi30K高度重合，因此可以直接利用到本章所提方法上。对于从图片中截取到的视觉目标图片，本章利用在ImageNet\pcite{russakovsky2015imagenet}上预训练的ResNet-50\pcite{he2016deep}提取2048维的全局特征。
 
 \subsection{基于循环神经网络的模型设置}
 \label{sec:3_rnn_setup}
-对于基于循环神经网络的翻译模型，本章采用的是带有注意力机制并基于编码器-解码器结构的神经翻译模型\pcite{luong2015effective}。其中，编码器是一个维度维500的单层双向的LSTM，重构模型和翻译模型的解码器都是单层500维的LSTM，词嵌入层的维度同样设置为500。编码器和解码器中的dropout均设置为0.3。模型参数是从$(-0.1,+0.1)$区间的均匀分布中采样初始化的，其中偏置项(bias)初始化为0。训练时采用Adam\pcite{kingma2014adam}优化器优化模型参数，学习率设为定值0.002。批数据大小（batch size）为40。最终模型是根据验证集在BLEU4\pcite{papineni2002bleu}上的表现进行选择。在训练过程中，当模型在验证集上的BLEU4值超过10个迭代轮次不再提升，则停止训练并作为最终用于评测的模型。
+对于基于循环神经网络的机器翻译模型，本章采用的是带有注意力机制并基于编码器-解码器结构的神经翻译模型\pcite{luong2015effective}。其中，编码器是一个维度为500的单层双向的LSTM\pcite{hochreiter1997long}，重构模型和翻译模型的解码器都是单层500维的LSTM，词嵌入层的维度同样设置为500。编码器和解码器中的dropout均设置为0.3。模型参数是从$(-0.1,+0.1)$区间的均匀分布中进行采样并初始化的，其中偏置项（bias）初始化为0。训练时采用Adam\pcite{kingma2014adam}优化器优化模型参数，学习率设为定值0.002。批数据大小（batch size）为40。最终模型是根据验证集在BLEU4\pcite{papineni2002bleu}上的表现进行选择。在训练过程中，当模型在验证集上的BLEU4值超过10个迭代轮次不再提升，则停止训练并作为最终用于测试的模型。
 
 \subsection{基于Transformer的模型设置}
 \label{sec:3_transformer_setup}
-对于基于Transformer\pcite{vaswani2017attention}的翻译模型，本章将词向量的维度设置为128，隐层状态维度设置为256，自注意力的头数为4，模型编码器和解码器的层数均为4，dropout设置为0.2，批数据大小为2000个单词。区别于基于RNN的模型，Transformer采用的是合并的词表，因此词表大小始终设置为合并词表的大小27226。模型优化采用的是Adam优化器，其中$\beta_1=0.9$，$\beta_2=0.998$，$\epsilon=10^{-9}$。本章与\tcite{vaswani2017attention}相同采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000。训练目标中设置平滑标签(label smoothing)$\epsilon_{ls}=0.1$。测试时，采用了搜索空间$b=4$的柱搜索算法。以上模型参数与\tcite{yin2020novel}中的模型设置基本一致。
+对于基于Transformer\pcite{vaswani2017attention}的翻译模型，本章将词向量的维度设置为128，隐层状态维度设置为256，自注意力的头数为4，模型编码器和解码器的层数均为4，dropout设置为0.2，批数据大小为2000个单词。区别于基于RNN的模型，Transformer采用的是合并的词表，因此词表大小始终设置为合并词表的大小27226。模型优化采用的同样是Adam优化器，其中$\beta_1=0.9$，$\beta_2=0.998$，$\epsilon=10^{-9}$。本章与\tcite{vaswani2017attention}相同，采用预热和衰减策略来提高学习率，预热步骤为4000，总训练步骤为80000。训练目标中设置平滑标签（label smoothing）$\epsilon_{ls}=0.1$。测试时，采用了搜索空间$b=4$的柱搜索算法。以上模型参数与\tcite{yin2020novel}的模型设置基本一致。
 
 \subsection{多任务训练}
-本章所提方法需要对重建任务和翻译任务采用多任务训练的方式进行模型优化。多任务训练采用的是两个任务随机交替训练的方式，并利用\ref{sec:3_multitask}节中所介绍的超参数$\omega$控制翻译任务的训练概率。因为两个任务所使用数据的比例相同，因此本章设置$\omega=0.5$。
+本章所提方法需要对重构任务和翻译任务采用多任务训练的方式进行模型优化。多任务训练采用的是两个任务随机交替训练的方式，并利用\ref{sec:3_multitask}节中所介绍的超参数$\omega$控制翻译任务的训练概率。因为两个任务所使用数据的比例相同，因此本章设置$\omega=0.5$。
 
 \subsection{对比模型}
 基于循环神经网络的模型：
 \begin{itemize}
     \item \textbf{NMT：}基于LSTM的纯文本神经翻译模型，其模型配置与\ref{sec:3_rnn_setup}节中的描述保持一致。
     \item \textbf{pRCNNs\pcite{huang2016attention}：}该模型在编码阶段将每个视觉目标特征与源语言句子编码一次，在解码阶段，解码器选择关注与当前解码步骤相关的视觉目标所对应的文本序列。
-    \item \textbf{DATT\pcite{calixto2017doubly}：}该模型设置了两个注意力机制模块，其中一个用于关注文本信息，另一个用于关注图片的栅格特征。并设置了一个门控值控制图片信息输入的量。
+    \item \textbf{DATT\pcite{calixto2017doubly}：}该方法采用基于门控循环单元（gate recurrent unit，GRU）\pcite{chung2014empirical}的神经翻译模型。该模型设置了两个注意力机制模块，其中一个用于关注文本信息，另一个用于关注图片的栅格特征。并设置了一个门控值控制图片信息输入的量。
     \item \textbf{Imagination\pcite{elliott2017imagination}：}该方法将源语言句子编码后，利用编码后的隐层表示预测输入句子所对应的图片。该方法同样使用了多任务的方式。
     \item \textbf{VMMT\pcite{calixto2019latent}：}该方法中的$ \mathrm{VMMT_C} $与$ \mathrm{VMMT_F} $采用隐变量建模语义信息，在翻译过程中利用视觉信息与文本信息使变分编码器融合跨模态语义。
 \end{itemize}
@@ -32,8 +32,8 @@
 基于Transformer的模型：
 \begin{itemize}
     \item \textbf{Transformer：}基于Transformer的纯文本神经机器翻译模型，其模型配置与\ref{sec:3_transformer_setup}节保持一致。
-    \item \textbf{DelMMT\pcite{ive2019distilling}：}该模型提出使用推敲做多模态二次接码。在二次解码中融合源语言、目标语言以及视觉信息。
-    \item \textbf{MMT-TF\pcite{yao2020multimodal}：}该工作设计了一种多模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
+    \item \textbf{DelMMT\pcite{ive2019distilling}：}该模型提出使用推敲网络进行跨模态二次解码。在二次解码中融合源语言信息、目标语言信息以及视觉信息。
+    \item \textbf{MMT-TF\pcite{yao2020multimodal}：}该工作设计了一种跨模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
     \item \textbf{GAMMT\pcite{liu2021gumbel}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。
     \item \textbf{GMMT\pcite{yin2020novel}：}该模型视源语言句子与图片中的视觉目标为一个多模态图结构，然后利用设计的基于图的跨模态编码器进行编码，最终解码出目标端句子。
 \end{itemize}

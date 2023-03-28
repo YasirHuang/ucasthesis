@@ -18,12 +18,12 @@
 \subsection{文本重构模型}
 \label{sec:3_sentence_reconstruction}
 \input{Tex/3_mywork_1/figure_reconstruction_model}
-为了充分利用文本模态和视觉模态的信息，本章设计了文本重构模型使显式跨模态信息融合方法有效。如图\ref{fig:3_reconstruction_model}所示，左侧为利用图\ref{fig:3_entity_extraction}中的方法提取出视觉目标后，再通过预训练的卷积神经网络提取得视觉目标的全局特征，并利用一个前馈神经网络（feedforward neural network, FNN）映射到所需要的维度。图\ref{fig:3_reconstruction_model}右侧的 “文本重构模型”是一个与“翻译模型”相似的序列到序列的生成模型。其多模态输入序列$Z_{w}$是利用WRR得到的退化文本与视觉目标图像的混合序列。该序列的向量表示为$\{\Vector{e_1,v_2,e_3,e_4,v_5,e_6}\}$。重建任务负责从$Z_{w}$重构回原始文本$X=\{x_1,x_2,…,x_N\}$。模型因此可以分别在编码阶段的视觉特征空间和在解码阶段从语言特征空间学习到实体信息。重建模型的训练方式为最小化以下对数似然方程：
+为了充分融合来自文本模态和视觉模态的信息，本章设计了文本重构模型使显式跨模态信息融合方法有效。如图\ref{fig:3_reconstruction_model}所示，左侧展示的是利用图\ref{fig:3_entity_extraction}中的方法提取出视觉目标后，再通过预训练的卷积神经网络提取得视觉目标的全局特征，并利用一个前馈神经网络（feedforward neural network，FNN）映射到与词向量相同的维度。图\ref{fig:3_reconstruction_model}右侧的 “文本重构模型”是一个与“翻译模型”相似的序列到序列的生成式模型。模型的多模态输入序列$Z_{w}$是利用WRR得到的退化文本与视觉目标图像的混合序列。该序列的向量表示为$\{\Vector{e_1,v_2,e_3,e_4,v_5,e_6}\}$。重构任务负责从$Z_{w}$生成原始文本$X=\{x_1,x_2,…,x_N\}$。模型因此可以分别在编码阶段的视觉特征空间和解码阶段从语言特征空间学习到实体信息。重构模型的训练方式为最小化以下对数似然损失：
 \begin{equation}
     \mathcal{L}_R(\theta, \psi)=-\sum_i^N \log p(x_i|x_{<i},Z)
     \label{eq:3_reconstruction_x}
 \end{equation}
-其中$Z$可以是使用WRR的$Z_{w}$或是采用了PRR的$Z_{p}$，$\theta$为重构模型的编码器参数，$\psi$为重构模型的解码器参数。
+其中$Z$可以是使用WRR的$Z_{w}$也可以是采用了PRR的$Z_{p}$，$\theta$为重构模型的编码器参数，$\psi$为重构模型的解码器参数。
 考虑到重构目标语言$Y=\{y_1,y_2,\cdots,y_M\}$也是一种可行方案。此时，目标函数调整为：
 \begin{equation}
     \mathcal{L}_R(\theta, \psi)=-\sum_j^M \log p(y_j|y_{<j},Z)
@@ -32,17 +32,17 @@
 
 \subsection{与机器翻译相结合}
 \label{sec:3_multitask}
-图\ref{fig:3_reconstruction_model}中所展示的重构模型与一般的神经机器翻译模型相似，都是基于编码器-解码器结构的端到端生成模型。其中翻译模型的目标函数也与公式\ref{eq:3_reconstruction_x}和公式\ref{eq:3_reconstruction_y}相近：
+图\ref{fig:3_reconstruction_model}中所展示的重构模型与一般的神经机器翻译模型相似，都是基于编码器-解码器结构的端到端生成模型。其中翻译模型的目标函数也与公式(\ref{eq:3_reconstruction_x})和公式(\ref{eq:3_reconstruction_y})相近：
 \begin{equation}
     \mathcal{L}_T(\theta, \phi)=-\sum_j^M \log p(y_j|y_{<j},X)
     \label{eq:3_translation}
 \end{equation}
-其中$\phi$为神经翻译模型的解码器参数。为了结合重构任务和翻译任务，本章按照\tcite{elliott2017imagination}的方式将两者的目标函数结合：
+其中$\phi$为神经翻译模型的解码器参数。为了将重构任务和翻译任务结合，本章按照\tcite{elliott2017imagination}的方式将两者的目标函数结合：
 \begin{equation}
     \mathcal{L}(\theta, \psi, \phi)=\omega L_T(\theta, \phi) + (1-\omega)L_R(\theta, \psi)
     \label{eq:3_combine_sr}
 \end{equation}
-其中$\omega$是调节多任务训练比例的超参数，即当前批数据用于更新翻译模型参数的概率。相对应的，用于更新文本重构模型参数的概率为$1-\omega$。当前的多任务学习通过共享编码器参数来达到知识迁移的目的。
+其中$\omega$是调节两个任务训练比例的超参数，即当前批数据（batch）用于更新翻译模型参数的概率。相对应的，用于更新文本重构模型参数的概率为$1-\omega$。当前的多任务学习通过共享编码器参数来达到知识迁移的目的。
 
 \subsection{参数共享策略}
 \label{sec:3_parameter_sharing}
@@ -52,12 +52,12 @@
 （1）{\sffamily 独享解码器重构源语言}
 \input{Tex/3_mywork_1/figure_sr}
 
-由于视觉信息要在编码的过程中学习特征表示，因此在所有的参数共享策略中，都要包含共享编码器。解码器的参数共享则是可选的。在利用独享解码器重建源语言的策略中，为源语言和目标语言设立独立的解码器，即重构模型和翻译模型的编码器是共享的，解码器参数是独享的。联合目标函数如公式\ref{eq:3_combine_sr}，在后面的实验中，本文用“源-独享”表示应用该策略。
+由于视觉信息要在编码的过程中学习特征表示，因此在所有的参数共享策略中，都要包含共享编码器。解码器的参数共享则是可选的。在利用独享解码器重构源语言的策略中，为源语言和目标语言设立独立的解码器，即重构模型和翻译模型的编码器是共享的，解码器参数是独享的。联合目标函数为公式(\ref{eq:3_combine_sr})，在后面的实验中，本文用“源-独享”表示应用该策略。
 
 （2）{\sffamily 共享解码器重构源语言}
 \input{Tex/3_mywork_1/figure_ss}
 
-通过融合源语言和目标语言的词表，以及在编码器和解码器之间共享词嵌入层的方式，可以实现重构模型和翻译模型的共享解码器的设置。同时，需要在解码过程目标语言句子输入时，在句首引入一个“识别词”（例如，“<en\_sos>”表示解码到英语，“<de\_sos>”表示解码到德语）用于表示当前解码器用于重构到源语言还是翻译到目标语言。在该设置中，公式\ref{eq:3_combine_sr}中有$\psi=\phi$。这表明该策略中翻译模型和重建模型是全参数共享的。因此，将联合目标函数调整为：
+通过融合源语言和目标语言的词表，以及在编码器和解码器之间共享词嵌入层的方式，可以实现重构模型和翻译模型的共享解码器的设置。同时，需要在解码过程中，目标语言句子在解码端的输入需要在句首引入一个“识别词”（例如，“<en\_sos>”表示解码到英语，“<de\_sos>”表示解码到德语）用于表示当前解码器用于重构到源语言还是翻译到目标语言。在该设置中，对于公式(\ref{eq:3_combine_sr})有$\psi=\phi$。这表明该策略中翻译模型和重构模型是全参数共享的。因此，将联合目标函数调整为：
 \begin{equation}
     \mathcal{L}(\theta, \phi)=\omega \mathcal{L}_T(\theta, \phi) + (1-\omega)\mathcal{L}_R(\theta, \phi)
     \label{eq:3_combine_ss}
@@ -67,4 +67,4 @@
 （3）{\sffamily 共享解码器重构目标语言}
 \input{Tex/3_mywork_1/figure_t}
 
-不同于重构源语言，解码器的参数共享策略在重建目标语言的方向上则很容易实现。在该策略中，重构任务的工作方式与一般的MMT模型相似，区别在于输入的文本是退化文本。并且其联合目标函数与公式\ref{eq:3_combine_ss}相同。本文将用“目-共享”来表示该参数共享策略。
+不同于重构源语言，解码器的参数共享策略在重建目标语言的方向上则很容易实现。在该策略中，重构任务的工作方式与一般的ImgNMT模型相似，区别在于输入的文本是文本信息不完整的退化文本。并且其联合目标函数与公式(\ref{eq:3_combine_ss})相同。本文将用“目-共享”来表示该参数共享策略。
