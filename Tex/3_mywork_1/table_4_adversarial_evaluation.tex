@@ -6,16 +6,16 @@
     \footnotesize% fontsize
     \setlength{\tabcolsep}{4pt}% column separation
     \renewcommand{\arraystretch}{1.2}%row space 
-    \begin{tabular}{clcccc}
+    \begin{tabular}{llcccc}
     \hline
     \multicolumn{2}{c}{\multirow{2}{*}{基于RNN}} & \multicolumn{4}{c}{BLEU} \\ \cline{3-6}
      &        & 原图片          & 随机图片           & 随机单词            & 掩码 \\
     \hline
-    \multirow{3}*{词级} & 
+    \multirow{3}*{~~词级} & 
        独享-源 & \textbf{37.8}  & 37.4              & 37.1             & \underline{36.8} \\%              & 37.5 \\ 
      & 共享-源 & \textbf{38.0}  & 37.8              & \underline{37.6} & \underline{37.6} \\%              & 38.2 \\
      & 共享-目 & \textbf{36.3}  & \textbf{36.3}     & \underline{35.0} & 35.6 \\\hline%              & 37.4 \\ \hline
-    \multirow{3}*{短语级} & 
+    \multirow{3}*{~~短语级} & 
        独享-源 & \textbf{38.0}  & 37.2              & 37.3             & \underline{36.9} \\%              & 37.2 \\
      & 共享-源 & \textbf{37.8}  & \underline{37.5}  & 37.6             & 37.6 \\%              & 38.2 \\
      & 共享-目 & \textbf{36.8}  & 36.2              & 35.9             & \underline{35.3} \\%              & 37.3 \\ 

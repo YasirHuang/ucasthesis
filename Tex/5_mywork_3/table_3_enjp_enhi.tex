@@ -6,19 +6,19 @@
     \footnotesize% fontsize
     \setlength{\tabcolsep}{4pt}% column separation
     \renewcommand{\arraystretch}{1.2}%row space 
-    \begin{tabular}{c|c|cc}
+    \begin{tabular}{llccc}
     \hline
-    \multirow{2}*{模型} & 英日翻译 & \multicolumn{2}{c}{英印翻译}\\\cline{2-4}%\cmidrule(r){2-2} \cmidrule(r){3-4}%\cline{2-4}
-                   & 测试集  & 测试集  & 挑战集  \\\hline
+    \multicolumn{2}{c}{\multirow{2}{*}{模型}} & 英日翻译~~~~ & \multicolumn{2}{c}{英印翻译}\\\cmidrule(r){3-3} \cmidrule(r){4-5}%\cline{3-5}
+           &        & 测试集  & 测试集  & 挑战集~~~~  \\\hline
     
-    Transformer    & 38.7           & 47.8           & 44.2  \\
-    Transformer bi & 38.6           & 49.4           & 45.5   \\
-    MMT            & 38.6           & 50.2           & 45.7  \\
-    MMT bi         & 38.4           & 50.6           & 45.7  \\
-    CAT-MMT        & 38.8           & 50.4           & 44.8  \\
-    CAT-MMT bi     & \textbf{39.3}  & \textbf{52.0}  & \textbf{47.0}  \\
+    \multicolumn{2}{l}{~~~~Transformer}    & 38.7           & 47.8           & 44.2~~~~  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT} & 38.6           & 49.4           & 45.5~~~~   \\\hline
+    \multicolumn{2}{l}{~~~~IGNMT}            & 38.6           & 50.2           & 45.7~~~~  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT}        & 38.4           & 50.6           & 45.7~~~~  \\\hline
+    \multicolumn{2}{l}{~~~~CAT-NMT}       & 38.8           & 50.4           & 44.8~~~~  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT}     & \textbf{39.3}  & \textbf{52.0}  & \textbf{47.0}~~~~  \\
 %    CLT-MMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
-%    CAT-MMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
+%    CAT-NMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
      \hline
     \end{tabular}%
 \end{table}%

@@ -7,26 +7,26 @@
     \footnotesize% fontsize
     \setlength{\tabcolsep}{4pt}% column separation
     \renewcommand{\arraystretch}{1.2}%row space 
-    \begin{tabular}{ccccccc}
+    \begin{tabular}{llcccccc}
     \hline
-    \multirow{2}*{模型} & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} \\\cline{2-7}
-         & BLEU         & METEOR        & BLEU         & METEOR        & BLEU         & METEOR   \\\hline
-    SerialAtt \pcite{libovicky2018input} & 38.7 & 57.2 & - & - & - & - \\
-    MMT-TF \pcite{yao2020multimodal} & 39.5 & 56.9 & - & - & - & - \\
-    OVC \pcite{wang2021efficient} & - & - & 32.4 & 52.3 & 28.6 & \textbf{48.0} \\
-    GAMMT \pcite{liu2021gumbel} & 39.2  & 57.8  & 31.4  & 51.2  & 26.9  & 46.0  \\
-    GMMT \pcite{yin2020novel}          & 39.8  & 57.6  & 32.2  & 51.9  & 28.7  & 47.6  \\
-    CTR-NMT        & 39.7  & 57.5  & 32.9  & 51.7  & \textbf{29.1}  & 47.5  \\
-    CER-NMT        & 40.2  & 57.8  & 32.5  & 52.0  & 28.3  & 47.1  \\\hline
-    \multicolumn{7}{c}{本章所提方法} \\\hline
-    Transformer\pcite{vaswani2017attention}       & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
-    Transformer bi    & 39.4  & 57.1  & 31.3  & 50.6  & 26.7  & 46.1  \\
-    MM-Transformer    & 39.7  & 57.5  & 30.6  & 50.5  & 27.2  & 46.0  \\
-    MM-Transformer bi & 40.0  & 57.7  & 31.6  & 51.0  & 27.7  & 46.8  \\
-    CAT-MMT           & 39.8  & 57.6  & 30.6  & 50.3  & 26.6  & 45.6  \\
-    CAT-MMT bi        & \textbf{40.6}  & \textbf{58.7}  & \textbf{33.5}  & \textbf{52.6}  & 29.0  & 47.8  \\
+    \multicolumn{2}{c}{\multirow{2}{*}{模型}} & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} \\\cline{3-8}
+      &   & BLEU         & METEOR        & BLEU         & METEOR        & BLEU         & METEOR   \\\hline
+    \multicolumn{2}{l}{~~~~SerialAtt \pcite{libovicky2018input}} & 38.7 & 57.2 & - & - & - & - \\
+    \multicolumn{2}{l}{~~~~MMT-TF \pcite{yao2020multimodal}} & 39.5 & 56.9 & - & - & - & - \\
+    \multicolumn{2}{l}{~~~~OVC \pcite{wang2021efficient}} & - & - & 32.4 & 52.3 & 28.6 & \textbf{48.0} \\
+    \multicolumn{2}{l}{~~~~GAMMT \pcite{liu2021gumbel}} & 39.2  & 57.8  & 31.4  & 51.2  & 26.9  & 46.0  \\
+    \multicolumn{2}{l}{~~~~GMMT \pcite{yin2020novel}}          & 39.8  & 57.6  & 32.2  & 51.9  & 28.7  & 47.6  \\
+    \multicolumn{2}{l}{~~~~CTR-NMT}        & 39.7  & 57.5  & 32.9  & 51.7  & \textbf{29.1}  & 47.5  \\
+    \multicolumn{2}{l}{~~~~CER-NMT}        & 40.2  & 57.8  & 32.5  & 52.0  & 28.3  & 47.1  \\\hline
+    \multicolumn{8}{c}{本章所提方法} \\\hline
+    \multicolumn{2}{l}{~~~~Transformer} & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT} & 39.4  & 57.1  & 31.3  & 50.6  & 26.7  & 46.1  \\\hline
+    \multicolumn{2}{l}{~~~~IGNMT} & 39.7  & 57.5  & 30.6  & 50.5  & 27.2  & 46.0  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT} & 40.0  & 57.7  & 31.6  & 51.0  & 27.7  & 46.8  \\\hline
+    \multicolumn{2}{l}{~~~~CAT-NMT} & 39.8  & 57.6  & 30.6  & 50.3  & 26.6  & 45.6  \\
+    \multicolumn{2}{l}{~~~~~~~~~~~~+BDTT} & \textbf{40.6}  & \textbf{58.7}  & \textbf{33.5}  & \textbf{52.6}  & 29.0  & 47.8  \\
 %    CLT-MMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
-%    CAT-MMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
+%    CAT-NMT bi $\cup B_{\setminus X}$ & 38.5  & 57.5  & 31.0  & 51.9  & 27.5  & 47.4  \\
      \hline
     \end{tabular}%
 \end{table}%

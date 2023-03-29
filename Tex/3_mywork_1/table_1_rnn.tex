@@ -6,26 +6,26 @@
     \footnotesize% fontsize
     \setlength{\tabcolsep}{4pt}% column separation
     \renewcommand{\arraystretch}{1.2}%row space 
-    \begin{tabular}{cccccccc}
+    \begin{tabular}{lccccccc}
         \hline
         \multicolumn{2}{c}{\multirow{2}{*}{基于RNN}} & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} \\ \cline{3-8}
                   & & BLEU        & Meteor      & BLEU         & Meteor        & BLEU         & Meteor   \\ %\hline
     \hline
-    \multicolumn{2}{c}{NMT}                                                 & 35.9  & 54.9   & 28.8   & 49.5   & 25.9   & 45.7  \\ %\hline
+    \multicolumn{2}{l}{~~~~NMT}                                                 & 35.9  & 54.9   & 28.8   & 49.5   & 25.9   & 45.7  \\ %\hline
     \hline
-    \multicolumn{2}{c}{pRCNNs \pcite{huang2016attention}}             & 36.5   & 54.1   & -           & -           & -           & -           \\
-    \multicolumn{2}{c}{DATT \pcite{calixto2017doubly}}                & 36.5        & 55.0        & -           & -           & -           & -           \\
-    \multicolumn{2}{c}{Imagination \pcite{elliott2017imagination}}   & 36.8   & 55.8   & -           & -           & -           & -           \\
-    \multicolumn{2}{c}{$ \mathrm{VMMT_C} $ \pcite{calixto2019latent}} & 37.5   & 55.7   & 26.1   & 45.4   & 21.8   & 41.2   \\
-    \multicolumn{2}{c}{$ \mathrm{VMMT_F} $ \pcite{calixto2019latent}} & 37.7   & 56.0   & 30.0   & 49.9   & 25.5   & 44.8   \\ \hline%\hline
+    \multicolumn{2}{l}{~~~~pRCNNs \pcite{huang2016attention}}             & 36.5   & 54.1   & -           & -           & -           & -           \\
+    \multicolumn{2}{l}{~~~~DATT \pcite{calixto2017doubly}}                & 36.5        & 55.0        & -           & -           & -           & -           \\
+    \multicolumn{2}{l}{~~~~Imagination \pcite{elliott2017imagination}}   & 36.8   & 55.8   & -           & -           & -           & -           \\
+    \multicolumn{2}{l}{~~~~$ \mathrm{VMMT_C} $ \pcite{calixto2019latent}} & 37.5   & 55.7   & 26.1   & 45.4   & 21.8   & 41.2   \\
+    \multicolumn{2}{l}{~~~~$ \mathrm{VMMT_F} $ \pcite{calixto2019latent}} & 37.7   & 56.0   & 30.0   & 49.9   & 25.5   & 44.8   \\ \hline%\hline
     \multicolumn{8}{c}{CTR-NMT}\\\hline
 
-    \multirow{3}*{词级} & 
+    \multirow{3}*{~~词级} & 
        独享-源   & 37.8           & 56.1           & 30.1           & \textbf{50.3}  & \textbf{27.0}  & \textbf{46.4}  \\
      & 共享-源   & \textbf{38.0}  & 56.2           & 30.3           & 50.1           & 26.1           & 45.6  \\
      & 共享-目    & 36.3           & 55.0           & 28.4           & 48.6           & 25.3           & 44.3  \\ %\hline
     \hline
-    \multirow{3}*{短语级} & 
+    \multirow{3}*{~~短语级} & 
         独享-源  & \textbf{38.0}  & \textbf{56.5}  & 30.2           & \textbf{50.3}  & 26.8           & 46.1  \\
      &  共享-源  & 37.8           & 56.1           & \textbf{30.5}  & 50.1           & 26.0           & 45.5  \\
      &  共享-目  & 36.8           & 55.0           & 29.4           & 49.0           & 26.3           & 45.3  \\ 
