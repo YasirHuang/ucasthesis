@@ -1,16 +1,16 @@
 \section{神经机器翻译模型}
 \label{sec:2_nmt}
-在融合图片信息的神经机器翻译中，平行翻译句对的源语言句子与目标语言句子之间一般具有很强的语义对齐关系，而图片主要起到补充信息的作用。因此，ImgNMT所使用的模型多数是以神经机器翻译模型作为基础框架，视觉特征作为模型的额外输入。本节将介绍ImgNMT在模型设计发展过程中所应用到的神经机器翻译基础模型框架，这其中包含：基于循环神经网络（recurrent neural network，RNN）方法的神经机器翻译（RNN-based neural machine translation，RNMT）模型\pcite{sutskever2014sequence,cho2014learning}、增加注意力机制的RNMT模型\pcite{bahdanau2015neural,luong2015effective}以及基于自注意力机制的Transformer\pcite{vaswani2017attention}。另外，还有基于卷积神经网络（convolutional neural networks，CNN）的NMT模型\pcite{gehring2017convolutional}，但其很快被自注意力机制取代，也没有在ImgNMT任务上得到应用，因此本节忽略这部分内容的介绍。
+在融合图片信息的神经机器翻译中，平行翻译句对的源语言句子与目标语言句子之间一般具有很强的语义对齐关系，而图片主要起到补充信息的作用。因此，ImgNMT所使用的模型多数是以神经机器翻译模型作为基础框架，视觉特征作为模型的额外输入。本节将介绍ImgNMT在模型设计发展过程中所应用到的神经机器翻译基础模型框架，这其中包含：基于循环神经网络（recurrent neural networks，RNN）方法的神经机器翻译（RNN-based neural machine translation，RNMT）模型\pcite{sutskever2014sequence,cho2014learning}、增加注意力机制的RNMT模型\pcite{bahdanau2015neural,luong2015effective}以及基于自注意力机制的Transformer\pcite{vaswani2017attention}。另外，还有基于卷积神经网络（convolutional neural networks，CNN）的NMT模型\pcite{gehring2017convolutional}，但其很快被自注意力机制取代，也没有在ImgNMT任务上得到应用，因此本节忽略这部分内容的介绍。
 
 \subsection{循环神经网络}
 \label{sec:2_rnn}
 \input{Tex/2_RelatedWork/figure_rnmt}
-神经机器翻译是一种序列到序列的生成任务，其源端序列与目标端序列的长度往往是不同的。因此，编码器-解码器结构成为了神经机器翻译的常用模型框架。编码器和解码器分别用于编码源端序列和解码到目标端序列。循环神经网络就是一种用于解决序列建模的方法。图\ref{fig:2_rnmt}为基于循环神经网络的神经机器翻译框架。编码器将不定长的源语言句子编码为单个固定维度的隐层向量，该隐层向量可作为整个句子语义的特征表示。解码器负责根据该特征表示生成目标语言句子。形式化地，给定待翻译的源语言句子$X=\{x_1,x_2,…,x_N\}$，在编码端首先需要将$X$中的词转化为词向量$E=\{\Vector{e_1,e_2,…,e_n}\}$，其中：
+神经机器翻译是一种序列到序列的生成任务，其源端序列与目标端序列的长度往往是不同的。因此，编码器-解码器结构成为了神经机器翻译的常用模型框架。编码器和解码器分别用于编码源端序列和解码到目标端序列。循环神经网络就是一种用于解决序列建模问题的方法。图\ref{fig:2_rnmt}为基于循环神经网络的神经机器翻译框架。编码器将不定长的源语言句子编码为单个固定维度的隐层向量，该隐层向量可作为整个句子语义的特征表示。解码器负责根据该特征表示生成目标语言句子。形式化地，给定待翻译的源语言句子$X=\{x_1,x_2,…,x_N\}$，在编码端首先需要将$X$中的词转化为词向量$E=\{\Vector{e_1,e_2,…,e_n}\}$，其中：
 \begin{equation}
     \Vector{e_i}=\mathrm{Emb}(x_i)
 \end{equation}
 
-源语言句子中的每个词$x_i$均有一个对应的词向量表示$\Vector{e_i}$。然后编码器按照句子中词的顺序将句子编码到一个隐层状态序列$\rarwvec{H}={\rarwvec{h}_1,\rarwvec{h}_2,…,\rarwvec{h}_N}$，其中，$\rarwvec{h}_i$中编码了输入序列中前$i$项的信息，即：
+源语言句子中的每个词$x_i$均有一个对应的词向量表示$\Vector{e_i}$。然后编码器按照句子中词的顺序将句子编码到一个隐层状态序列$\rarwvec{H}=\{\rarwvec{h}_1,\rarwvec{h}_2,…,\rarwvec{h}_N\}$，其中，$\rarwvec{h}_i$中编码了输入序列中前$i$项的信息，即：
 \begin{equation}
     \rarwvec{h}_i=\mathrm{RNN}(\rarwvec{h}_{i-1},\rarwvec{e}_i)
 \end{equation}
@@ -96,7 +96,7 @@ RNMT的解码器同样采用循环神经网络生成目标语言文本。该生�
 \begin{equation}
     \Vector{head_i} = \mathrm{Attention}(\Vector{Q W_i^Q,K W_i^K,V W_i^V})
 \end{equation}
-其中，$\Vector{W_O}$，$\Vector{W_i^Q}$，$\Vector{W_i^K}$和$\Vector{W_i^V}$是模型参数。$\Vector{Q}$、$\Vector{K}$和$\Vector{V}$经过不同的参数映射到不同的表示空间，再由注意力机制编码得到的不同的上下文特征表示。该过程相当于在不增加额外参数的情况下，将多个模型集成到一个模型中，从而提升模型的学习能力。
+其中，$\Vector{W^O}$，$\Vector{W_i^Q}$，$\Vector{W_i^K}$和$\Vector{W_i^V}$是模型参数。$\Vector{Q}$、$\Vector{K}$和$\Vector{V}$经过不同的参数映射到不同的表示空间，再由注意力机制编码得到的不同的上下文特征表示。该过程相当于在不增加额外参数的情况下，将多个模型集成到一个模型中，从而提升模型的学习能力。
 
 多头注意力机制在Transformer中的用途分为三种：
 \begin{itemize}
@@ -105,7 +105,7 @@ RNMT的解码器同样采用循环神经网络生成目标语言文本。该生�
     \item 连接编码器与解码器的多头交叉注意力机制的作用和一般的注意力机制相似。此时$\Vector{Q}$为解码器中带有掩码的多头自注意力机制的输出，$\Vector{K}$和$\Vector{V}$为编码器的隐层输出。交叉注意力机制输出的是融合了源端信息的目标端句子的表示。
 \end{itemize}
 
-值得注意的是，基于注意力机制的编码过程与循环神经网络相比丢失了对输入序列位置信息的建模。因此，\tcite{vaswani2017attention}提出了位置编码（positional encoding），为每个词向量增加位置信息。%文献\cite{DBLP:journals/corr/GehringAGYD17}则提出了更为方便的位置词向量的方案。
+值得注意的是，基于多头自注意力机制的编码过程与循环神经网络相比丢失了对输入序列位置信息的建模。因此，\tcite{vaswani2017attention}提出了位置编码（positional encoding），为每个词向量增加位置信息。%文献\cite{DBLP:journals/corr/GehringAGYD17}则提出了更为方便的位置词向量的方案。
 
 尽管近年来针对Transformer框架的改动层出不穷，但广泛应用的模型基本保持了最原始的设计方案。常见的改动如\tcite{devlin2019bert}提出了使用位置词向量（positional embedding）的方式替换位置编码，以及为了加强Transformer对长序列的编码能力提出相对位置编码\pcite{shaw2018self,dai2019transformerxl}。而这些创新性的改动基本都保留了Transformer中的自注意力机制和交叉注意力机制的基本结构。除了机器翻译等生成式任务外，在大规模预训练任务的表现上，Transformer更是充分展现了其应用场景的灵活性\citep{radfordimproving,devlin2019bert,liu2019roberta,lewis2020bart,raffel2020exploring}。针对不同规模的数据，通过增减参数规模的方式就可以使其适应相应的任务。相比于基于循环神经网络的模型，Transformer能够容纳更长的输入序列和更大规模的网络参数。
 

@@ -12,7 +12,7 @@
 
 {\sffamily （2）视觉语言预训练方法}
 
-图片信息与文本信息相融合的方法广泛应用于基于视觉语言预训练模型（vision-language pre-trained model）的自然语言理解任务（natural language understanding，NLU）中。
+图片信息与文本信息相融合的方法广泛应用于基于视觉语言预训练模型（vision-language pre-trained models）的自然语言理解任务（natural language understanding，NLU）中。
 %文献【】采用了句子与图片的视觉目标序列的组合输入方式，在BERT的初始化参数基础上，通过对文本序列和视觉目标序列
 常见方法采用BERT\pcite{devlin2019bert}与Faster R-CNN\pcite{ren2015faster}的组合方式，首先将输入图片输入到Faster R-CNN中提取多个视觉目标特征，然后将这些视觉目标特征当作图片序列同文本序列一起输入到以BERT为初始化参数的编码器中，最后通过多种预训练任务实现跨模态信息的融合\pcite{li2019visualbert,li2020unicodervl,su2020vlbert,chen2020uniter}。这其中常见的预训练任务有：（1）掩码语言模型（masked language modeling），该任务能够以文本为上下文，通过视觉目标所提供的视觉信息预测被掩码的单词，该过程能够将视觉信息融合到文本语义中；（2）图文匹配（image-text matching），该任务需要模型判断当前输入的句子和图片的内容是否一致。
 \tcite{lu2019vilbert}和\tcite{tan2019lxmert}则采用了双流模型（dual-stream model）的结构，即图片和文本两个模态的序列需要各自编码再交叉编码的方式，试图通过模态内（intra-modality）和模态间（cross-modality）编码组合，加强跨模态信息融合的能力。

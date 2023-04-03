@@ -3,7 +3,7 @@
 \subsection{图文实体}
 \label{sec:4_entities}
 \input{Tex/4_mywork_2/figure_definations}
-为了更方便地对本章所提CER方法进行介绍，首先需要对CER方法作用到的视觉目标和文本中的作用目标进行更恰当的定义：
+为了更方便地对本章所提CER方法进行介绍，首先需要对CER方法作用到的视觉目标和文本中的作用目标进行恰当的定义：
 
 （1）{\sffamily 文本实体：}输入的源语言句子$X=\{x_1,x_2,\cdots,x_N\}$中，$x_i$代表句子中的每个单词，在句子的对应图片中有对应视觉目标的名词$t_a=x_a,t_b=x_b,\cdots$为文本实体（textual entity），$T=\{t_a,t_b,\cdots\}$为它们的集合，可见$T \subseteq X$。如图\ref{fig:4_definations}所示，名词“man”和“hat”在图片中均有与其对应的视觉目标，因此符合文本实体的定义。从该定义同样可知，文本实体与上一章\ref{sec:3_entity_replacement}小节所介绍的词实体本质上是相同的。本章不再将名词短语划为实体范畴进行考虑，只针对名词融合视觉信息。
 
@@ -30,7 +30,7 @@
 \subsection{跨模态实体重构}
 \label{sec:4_cer}
 \input{Tex/4_mywork_2/figure_model}
-图\ref{fig:4_model}展示了CER模型与NMT模型相融合的简化过程，其中包含了视觉实体解码器、跨模态编码器以及翻译解码器三个主要组成部分。其中最核心的跨模态编码器负责在实体重构之前将视觉信息与文本信息编码融合。解码器仅用于主任务翻译的目标文本解码。视觉实体解码器负责将跨模态编码器编码后的状态解码到视觉目标所代表的视觉语义空间，而其结构与编码器相同均为$L$层Transformer编码器。为了更详细地介绍CER方法是如何工作的，以及如何与神经机器翻译相结合，本节将CER方法分为：文本实体重构、视觉实体重构以及文本非实体重构三个子任务进行详细的介绍。
+图\ref{fig:4_model}展示了CER模型与NMT模型相结合的简化结构，其中包含了视觉实体解码器、跨模态编码器以及翻译解码器三个主要组成部分。其中最核心的跨模态编码器负责在实体重构之前将视觉信息与文本信息编码融合。解码器仅用于主任务翻译的目标文本解码。视觉实体解码器负责将跨模态编码器编码后的状态解码到视觉目标所代表的视觉语义空间，而其结构与编码器相同均为$L$层Transformer编码器。为了更详细地介绍CER方法是如何工作的，以及如何与神经机器翻译相结合，本节将CER方法分为：文本实体重构、视觉实体重构以及文本非实体重构三个子任务展开详细的介绍。
 
 {\sffamily （1）文本实体重构}
 
@@ -43,7 +43,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 \begin{equation}
 \Vector{H_Z^L}={\rm{MultiHead_{enc}^L}} \left( Z, Z, Z \right)
 \end{equation}
-其中，$\Vector{H_Z^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\Vector{h_i^l}$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图2中为两个标记“V”的矩形隐层表示${\Vector{h_2^l}}$和${\Vector{h_5^l}}$，该过程需要优化以下损失函数：
+其中，$\Vector{H_Z^L}=\{\Vector{h_1^l,h_2^l,\cdots,h_N^l}\}$；${\rm{MultiHead_{enc}^L}} \left( \cdot,\cdot,\cdot \right)$代表$L$层采用多头注意力机制的编码器；$\Vector{h_i^l}$中的$l$与$L$相同，代表第$l$层的编码结果。然后依据对应位置的隐层表示生成文本实体，在图\ref{fig:4_ter}中为两个标记“V”的矩形隐层表示${\Vector{h_2^l}}$和${\Vector{h_5^l}}$，该过程需要优化以下损失函数：
 \begin{equation}
 \mathcal{L}_{\rm{TER}} (\theta, \vartheta) =
     \frac{1}{{\vert}T{\vert}}
@@ -55,12 +55,12 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 {\log}{\ }{\rm p} \left( Z {\vert} \theta, \vartheta \right) =
     {\rm{g}} \left( \Vector{h_i^l} \vert \vartheta \right)
 \end{equation}
-其中${\rm{OH}}\left(x_i\right)$代表$x_i$的独热编码(One-hot，OH)表示，$\theta$代表编码器一端的参数，$\vartheta$为生成器(generator)参数，生成器${\rm{g}}\left(\cdot\right)$将位置$i$处的隐层向量${\Vector{h_i^l}}$映射并得到词表中每个词的预测概率。
+其中${\rm{OH}}\left(x_i\right)$代表$x_i$的独热编码(one-hot，OH)表示，$\theta$代表编码器一端的参数，$\vartheta$为生成器(generator)参数，生成器${\rm{g}}\left(\cdot\right)$将位置$i$处的隐层向量${\Vector{h_i^l}}$映射并得到词表中每个词的预测概率。
 
 {\sffamily （2）视觉实体重构}
 
 \input{Tex/4_mywork_2/figure_ver}
-与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一文本模态的$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本文仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
+与文本实体重构不同的是，视觉实体重构(visual entity reconstruction，VER)依赖于来自单一文本模态的$X$。例如图\ref{fig:4_ver}中，“A man with a hat”是重构视觉实体时模型的输入序列，此时图中输入到模型中的是5个空心圆代表的词向量。该句子经过$L$层的编码器进行文本编码，再利用$L$层视觉实体解码器解码出与文本实体$\{t_2,t_5\}$相对应的视觉实体$\{v_2,v_5\}$。由于文本无法完整的描述图片，只是针对图片中的个别属性的描述，由文本直接还原像素级的图片或图片中的视觉实体几乎是不可能的。因此本章仅尝试生成与视觉实体相近的向量表示$\{\Vector{v_2,v_5}\}$。其中，$X$经过如下编码过程：
 \begin{equation}
 \Vector{H_X^L}={\rm{MultiHead_{enc}^L}}(X, X, X)
 \end{equation}
@@ -77,12 +77,12 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 %\onecolumn
 %\input{docs/model_pic.tex}
 %\begin{multicols}{2}
-其中$i=a,b,\cdots$为实体在句子中对应的序号；$\varphi$为视觉实体解码器的参数；${\rm{cos}}(\cdot,\cdot)$计算向量间的余弦相似度，$\varepsilon$为最小边缘常量。显然，优化$\mathcal{L}_{\rm{VER}}(\theta,\varphi)$能够缩减$\Vector{h_i^{2l}}$与相对应的视觉实体$\Vector{v_i}$之间的余弦距离，增加与其它非对应的视觉实体$\Vector{v_j}$之间的余弦距离。
+其中$i=a,b,\cdots$为实体在句子中对应的序号；$\varphi$为视觉实体解码器的参数；${\rm{cos}}(\cdot,\cdot)$用于计算向量间的余弦相似度，$\varepsilon$为最小边缘常量。显然，优化$\mathcal{L}_{\rm{VER}}(\theta,\varphi)$能够缩减$\Vector{h_i^{2l}}$与相对应的视觉实体$\Vector{v_i}$之间的余弦距离，增加与其它非对应的视觉实体$\Vector{v_j}$之间的余弦距离。
 
 {\sffamily （3）文本非实体重构}
 
 \input{Tex/4_mywork_2/figure_tner}
-文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体的输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的多模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图\ref{fig:4_tner}中，当选择对非实体词“A”进行重构时，模型所输入的跨模态混合序列为$\tilde{Z}=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
+文本非实体重构(textual none-entity reconstruction，TNER)方法与文本实体重构方法相似，区别在于非实体重构的目的是使视觉实体与文本上下文进行充分的句子级语义融合，而实体的重构方法更侧重实体在两个模态之间的实体级语义融合。文本非实体重构时的模型输入同样是文本上下文$\tilde{X}$和视觉实体$V$组合成的跨模态混合序列，但是在$\tilde{X}$中除对实体的位置进行退化还要将待重构的非实体词退化。例如图\ref{fig:4_tner}中，当选择对非实体词“A”进行重构时，模型所输入的跨模态混合序列为$\tilde{Z}=$“<mask> $v_2$ with a $v_5$”，此时输入到模型中的是一个标记“N”的圆形，代表“<mask>”的词向量，以及两个空心圆形所代表的词向量和两个标记“V”的圆形所代表的视觉特征。损失函数如下：
 %一个标记``N''的圆形词向量代表``$\langle$M$\rangle$''、两个圆形空心词向量和两个标记``V''的圆形视觉特征. 损失函数如下:
 \begin{equation}
 \mathcal{L}_{\rm{TNER}}(\theta, \vartheta) =
@@ -91,9 +91,9 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
     {\rm{OH}} \left( x_i \right)
     {\rm log}{\ }{\rm p} \left( \tilde{Z} {\vert} \theta, \vartheta \right)
 \end{equation}
-其中$\tilde{T}$代表待重构的非实体词集，并有$\tilde{T}\subseteq \tilde{X}$。在图2中用于预测非实体词“A”的隐层为一个标记“N”的矩形隐层表示$\Vector{h_1^l}$。
+其中$\tilde{T}$代表待重构的非实体词集，并有$\tilde{T}\subseteq \tilde{X}$。在图\ref{fig:4_tner}中用于预测非实体词“A”的隐层为一个标记“N”的矩形隐层表示$\Vector{h_1^l}$。
 
-本文采用随机选取的方式在句子中选择待重构的非实体词。在执行TNER任务时，每个文本中的非实体词有$30\%$的概率会被选择到。该概率与所采用数据集中实体词占$32.6\%$的比例相近。
+本章采用随机选取的方式在句子中选择待重构的非实体词。在执行TNER任务时，每个文本中的非实体词有$30\%$的概率会被选择到。该概率与所采用数据集中实体词占$32.6\%$的比例相近。
 
 {\sffamily （4）CER联合训练}
 
@@ -105,7 +105,7 @@ Z={\rm{Combine}} \left( \tilde{X}, V \right)
 其中，$\alpha$、$\beta$和$\gamma$为控制三种重构方法训练比例的超参数。值得注意的是，本章没有设置利用纯文本上下文$\tilde{X}$重构文本词的方案。这是因为该方案与一般的预训练方法相似，用于建立纯文本的语言模型。而机器翻译模型的编码端本身就是一个很好的纯文本语言模型，因此不必再设置纯文本的重构方案。
 
 \subsection{与机器翻译相结合}
-构建CER模型的目的是辅助翻译模型提升翻译质量。本章采用多任务训练方法将CER方法中的跨模态编码器与神经翻译模型的文本编码器进行参数共享，从而实现对神经机器翻译模型参数优化的目的。翻译任务所要优化的目标函数为：
+构建CER模型的目的是辅助翻译模型提升翻译质量。本章采用多任务训练方法将CER方法中的跨模态编码器与神经翻译模型的文本编码器进行参数共享，从而达到对神经机器翻译模型参数优化的目的。翻译任务所要优化的目标函数为：
 \begin{equation}
 \mathcal{L}_{\rm{NMT}} \left( \theta, \phi \right) =
     -\mathop{\sum}_j^M {\rm log}{\ }{\rm P} \left(y_j \vert y_{<j}, X \vert \theta, \phi \right)
