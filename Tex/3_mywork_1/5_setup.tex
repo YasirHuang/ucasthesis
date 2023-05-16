@@ -1,8 +1,9 @@
 \section{实验设置}
-为了验证所提方法的有效性，本章在基于循环神经网络和基于Transformer的两种模型上进行了测试。本章选择了融合图片信息的神经机器翻译中最常用的Multi30K\pcite{elliott2016multi30k}数据集的英德翻译进行实验。
+为了验证所提方法的有效性，本章在基于循环神经网络和基于Transformer的两种模型上进行了测试。本章选择了融合图片信息的神经机器翻译中最常用的Multi30K\pcite{elliott2016multi30k}数据集进行实验。
 
 \subsection{实验数据}
-Multi30K英德翻译数据集的每张图片配有一个英文句子和与其对应的德文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集（Test2016）三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集（Test2017）和针对歧义词的ambiguous MSCOCO 2017测试集（MSCOCO）。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本章采用Moses SMT\pcite{koehn2007moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉实体与文本实体对应关系的破坏，本章没有采用字节对编码技术（byte pair encoding, BPE）或WordPiece\pcite{wu2016google}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，合并后的双语词表大小为27226。
+\input{Tex/3_mywork_1/table_0_datasets}
+Multi30K数据集的每张图片配有一个英文句子和与其对应的德文、法文和捷克文翻译。该数据集共包含31014张图片，并划分为训练集、验证集和测试集（Test2016）三部分，对应的图片数量分别为：29000，1014和1000。另外，本章还采用了WMT17发布的测试集，包含Multi30K 2017测试集（Test2017）和针对歧义词的ambiguous MSCOCO 2017测试集（MSCOCO）。这两个测试集同样是每张图片配有一个英文句子和德文翻译，对应的图片数量分别为：1000和461。本章采用Moses SMT\pcite{koehn2007moses}工具包对数据进行分词（tokenization）和归一化（normalization）处理。为了防止对视觉实体与文本实体对应关系的破坏，本章没有采用字节对编码技术（byte pair encoding, BPE）或WordPiece\pcite{wu2016google}进行分词操作。经过以上预处理后，得到英文词表大小为10209，德文词表为18674，法文词表为11213，捷克文词表为20000， 合并后的英德、英法和英捷双语词表大小为27226、19393和29170。数据集的具体统计情况如表\ref{tab:3_datasets}所示。值得注意的是，在融合图片信息的神经机器翻译任务中，最常用的是英德翻译数据。其次是英法翻译数据，常用的测试数据为 Test2016。而英捷翻译数据仅有很少的应用。
 
 \subsection{实体提取}
 \label{sec:3_setup_entity_extraction}
@@ -24,7 +25,7 @@ Multi30K英德翻译数据集的每张图片配有一个英文句子和与其对
 \begin{itemize}
     \item \textbf{NMT：}基于LSTM的纯文本神经翻译模型，其模型配置与\ref{sec:3_rnn_setup}节中的描述保持一致。
     \item \textbf{pRCNNs\pcite{huang2016attention}：}该模型在编码阶段将每个视觉目标特征与源语言句子编码一次，在解码阶段，解码器选择关注与当前解码步骤相关的视觉目标所对应的文本序列。
-    \item \textbf{DATT\pcite{calixto2017doubly}：}该方法采用基于门控循环单元（gate recurrent unit，GRU）\pcite{chung2014empirical}的神经翻译模型。该模型设置了两个注意力机制模块，其中一个用于关注文本信息，另一个用于关注图片的栅格特征。并设置了一个门控值控制图片信息输入的量。
+    \item \textbf{DATT\pcite{calixto2017doubly}：}该方法采用基于门控循环单元（gate recurrent unit，GRU）\pcite{chung2014empirical}的翻译模型。该模型设置了两个注意力机制模块，一个用于关注文本信息，另一个用于关注图片的栅格特征。并设置了一个门控值控制图片信息输入的量。
     \item \textbf{Imagination\pcite{elliott2017imagination}：}该方法将源语言句子编码后，利用编码后的隐层表示预测输入句子所对应的图片。该方法同样使用了多任务的方式。
     \item \textbf{VMMT\pcite{calixto2019latent}：}该方法中的$ \mathrm{VMMT_C} $与$ \mathrm{VMMT_F} $采用隐变量建模语义信息，在翻译过程中利用视觉信息与文本信息使变分编码器融合跨模态语义。
 \end{itemize}
@@ -32,6 +33,8 @@ Multi30K英德翻译数据集的每张图片配有一个英文句子和与其对
 基于Transformer的模型：
 \begin{itemize}
     \item \textbf{Transformer：}基于Transformer的纯文本神经机器翻译模型，其模型配置与\ref{sec:3_transformer_setup}节保持一致。
+    \item \textbf{SerialAtt\pcite{libovicky2018input}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
+    %\item \textbf{GatedMMT\pcite{wu2021good}：}该模型将图片的全局特征与句子中每个单词对应的隐层表示通过一个门控机制加权求和。
     \item \textbf{DelMMT\pcite{ive2019distilling}：}该模型提出使用推敲网络进行跨模态二次解码。在二次解码中融合源语言信息、目标语言信息以及视觉信息。
     \item \textbf{MMT-TF\pcite{yao2020multimodal}：}该工作设计了一种跨模态注意力模块，该模块需要链接源语言句子的表示和图像特征作为自注意力模块的查询。
     \item \textbf{GAMMT\pcite{liu2021gumbel}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域。

@@ -1,0 +1,36 @@
+
+\begin{table}[!htbp]
+    \bicaption{基于RNN的神经翻译模型在Multi30K数据集的实验结果}{Experiment results of RNN-based NMT on the Multi30K dataset.}
+    \label{tab:3_rnn_ende}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{4pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+    \begin{tabular}{cccccccccccc}
+        \hline
+        \multicolumn{2}{c}{\multirow{3}{*}{基于RNN}} & \multicolumn{6}{c}{英德翻译} & \multicolumn{2}{c}{英法翻译} & \multicolumn{2}{c}{英捷翻译} \\
+\cmidrule(r){3-8} \cmidrule(r){9-10} \cmidrule(r){11-12}%\hline
+       &  & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2016} \\ \cline{3-12}
+                  & & BLEU        & Meteor      & BLEU         & Meteor        & BLEU         & Meteor & BLEU        & Meteor & BLEU        & Meteor   \\ %\hline
+    \hline
+    \multicolumn{2}{l}{~~~~NMT}                                                 & 35.9  & 54.9   & 28.8   & 49.5   & 25.9   & 45.7 & 58.7 & 73.8 & 29.6 & 29.1 \\ %\hline
+    \hline
+    \multicolumn{2}{l}{~~~~pRCNNs \pcite{huang2016attention}}             & 36.5   & 54.1   & -           & -           & -           & -   & - & - & - & -        \\
+    \multicolumn{2}{l}{~~~~DATT \pcite{calixto2017doubly}}                & 36.5        & 55.0        & -           & -           & -           & -    & - & - & - & -       \\
+    \multicolumn{2}{l}{~~~~Imagination \pcite{elliott2017imagination}}   & 36.8   & 55.8   & -           & -           & -           & -    & - & - & - & -        \\
+    \multicolumn{2}{l}{~~~~$ \mathrm{VMMT_C} $ \pcite{calixto2019latent}} & 37.5   & 55.7   & 26.1   & 45.4   & 21.8   & 41.2   & - & - & - & - \\
+    \multicolumn{2}{l}{~~~~$ \mathrm{VMMT_F} $ \pcite{calixto2019latent}} & 37.7   & 56.0   & 30.0   & 49.9   & 25.5   & 44.8  & - & - & - & - \\ \hline%\hline
+    \multicolumn{12}{c}{CTR-NMT}\\\hline
+
+    \multirow{3}*{~~词级} & 
+       独享-源   & 37.8           & 56.1           & 30.1           & \textbf{50.3}  & \textbf{27.0}  & \textbf{46.4} & 59.3 & 74.1 & \textbf{30.7} & \textbf{29.7}  \\
+     & 共享-源   & \textbf{38.0}  & 56.2           & 30.3           & 50.1           & 26.1           & 45.6  & 58.4 & 73.5 & 30.3 & 29.6 \\
+     & 共享-目    & 36.3           & 55.0           & 28.4           & 48.6           & 25.3           & 44.3 & 57.8 & 72.9 & 29.2 & 28.6 \\ %\hline
+    \hline
+    \multirow{3}*{~~短语级} & 
+        独享-源  & \textbf{38.0}  & \textbf{56.5}  & 30.2           & \textbf{50.3}  & 26.8           & 46.1 & \textbf{59.4} & \textbf{74.4} & 30.6 & \textbf{29.7} \\
+     &  共享-源  & 37.8           & 56.1           & \textbf{30.5}  & 50.1           & 26.0           & 45.5 & 59.1 & 74.1 & 30.5 & \textbf{29.7} \\
+     &  共享-目  & 36.8           & 55.0           & 29.4           & 49.0           & 26.3           & 45.3 & 58.9 & 73.7 & 29.3 & 28.5 \\ 
+        \hline
+    \end{tabular}
+\end{table}

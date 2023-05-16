@@ -1,0 +1,34 @@
+\begin{table}[!htbp]
+    \bicaption{CAT-NMT在Fashion-MMT数据集上的BLEU值结果}{BLEU results of CAT-NMT on Fashion-MMT dataset}
+    \label{tab:5_product_data}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{4pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+    \begin{tabular}{l|ccc|c|c}
+    \hline
+    ~~~~~~~~模型 & $X+I$ & $X$ & $X+\tilde{I}$ & -w/o $B_{\setminus X}$ & -w/o $N_{AS}$ \\\hline
+    
+    ~~~~Transformer   & -     & 38.36 & - & - & - \\
+    ~~~~~~~~~~~~+BDTT & -     & 38.89 & - & - & - \\\hline
+    ~~~~IGNMT         & 39.41 & 39.37 & 39.46 & - & - \\
+    ~~~~~~~~~~~~+BDTT & 39.54 & 39.43 & 39.55 & - & - \\\hline
+    ~~~~CAT-NMT       & 39.52 & 39.21 & 39.39 & 39.63 & 39.47 \\
+    ~~~~~~~~~~~~+BDTT & 40.33 & 39.62 & 39.74 & 39.68 & 39.51 \\
+     \hline
+    \end{tabular}%
+\end{table}%
+
+    % ~~~~Transformer   & -    & 38.3 & - & - & - \\
+    % ~~~~~~~~~~~~+BDTT & -    & 38.9 & - & - & - \\\hline
+    % ~~~~IGNMT         & 39.4 & 39.1 & 39.2 & - & - \\
+    % ~~~~~~~~~~~~+BDTT & 39.5 & 39.4 & 39.3 & - & - \\\hline
+    % ~~~~CAT-NMT       & 39.5 & 39.2 & 39.4 & 39.6 & 39.3 \\
+    % ~~~~~~~~~~~~+BDTT & 40.3 & 39.6 & 39.7 & 39.7 & 39.5 \\
+    
+    % ~~~~Transformer   & -    & 38.4 & - & - & - \\
+    % ~~~~~~~~~~~~+BDTT & -    & 38.9 & - & - & - \\\hline
+    % ~~~~IGNMT         & 39.7 & 39.4 & 39.6 & - & - \\
+    % ~~~~~~~~~~~~+BDTT & 40.0 & 39.6 & 39.9 & - & - \\\hline
+    % ~~~~CAT-NMT       & 39.8 & 38.9 & 39.4 & 39.6 & 39.8 \\
+    % ~~~~~~~~~~~~+BDTT & 40.6 & 40.3 & 40.4 & 40.0 & 39.9 \\

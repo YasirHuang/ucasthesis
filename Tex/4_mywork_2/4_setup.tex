@@ -29,6 +29,8 @@
 
 \item \textbf{SerialAtt\pcite{libovicky2018input}：}该模型在解码过程中采用了多个交叉注意力串联的形式，每个交叉注意力模块对应了不同的信息来源。在融合图片信息的模型中，两个交叉注意力模块分别用于采集源语言和图片中的信息。
 
+%\item \textbf{GatedMMT\pcite{wu2021good}：}该模型将图片的全局特征与句子中每个单词对应的隐层表示通过一个门控机制加权求和。
+
 \item \textbf{DelMMT\pcite{ive2019distilling}}模型提出使用推敲网络进行跨模态二次解码。在第二次解码中融合源语言信息、目标语言信息以及视觉信息。
 
 \item \textbf{GAMMT\pcite{liu2021gumbel}：}使用Gumbel-Sigmoid改造注意力机制，帮助翻译模型关注到图片中与文本内容更相关的区域，并排除图片中的噪音。

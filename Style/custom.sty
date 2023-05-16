@@ -2,9 +2,28 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{xparse}
+\usepackage{soul}
+\usepackage{xcolor}
+\usepackage{color}
+%\usepackage{framed}
+%\usepackage[normalem]{ulem} % use normalem to protect \emph
+%\newcommand{\hl}{\bgroup\markoverwith
+%    {\textcolor{yellow}{\rule[-.5ex]{.1pt}{2.5ex}}}\ULon}
 \newcommand{\rarw}[1]{\overleftarrow{#1}}
 \newcommand{\larw}[1]{\overleftarrow{#1}}
 \newcommand{\rarwvec}[1]{\Vector{\overrightarrow{#1}}}
 \newcommand{\larwvec}[1]{\Vector{\overleftarrow{#1}}}
 \newcommand{\tcite}[1]{\citet{#1}}
 \newcommand{\pcite}[1]{\citep{#1}}
+%\newcommand{\HL}[1]{\sethlcolor{yellow}\hl{#1}}
+\newcommand{\HL}[1]{\colorbox {yellow}{#1}}
+%\newcommand{\HL}[1]{{\textcolor{yellow}{#1}}}
+
+
+%\soulregister{\cite}7 % 注册\cite命令
+%\soulregister{\citep}7 % 注册\citep命令
+%\soulregister{\pcite}7 % 注册\citep命令
+%\soulregister{\tcite}7 % 注册\citep命令
+%\soulregister{\citet}7 % 注册\citet命令
+%\soulregister{\ref}7 % 注册\ref命令
+%\soulregister{\pageref}7 % 注册\pageref命令

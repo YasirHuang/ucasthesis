@@ -1,0 +1,34 @@
+
+\begin{table}[!htbp]
+    \bicaption{基于Transformer的神经翻译模型在Multi30K数据集上的实验结果}{Experiment results of Transformer-based NMT on the Multi30K dataset.}
+    \label{tab:3_transformer_ende}
+    \centering
+    \footnotesize% fontsize
+    \setlength{\tabcolsep}{4pt}% column separation
+    \renewcommand{\arraystretch}{1.2}%row space 
+    \begin{tabular}{cccccccccccc}
+        \hline
+        \multicolumn{2}{c}{\multirow{3}{*}{基于Transformer}} & \multicolumn{6}{c}{英德翻译} & \multicolumn{2}{c}{英法翻译} & \multicolumn{2}{c}{英捷翻译} \\
+\cmidrule(r){3-8} \cmidrule(r){9-10} \cmidrule(r){11-12}%\hline
+       &  & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2017} & \multicolumn{2}{c}{MSCOCO} & \multicolumn{2}{c}{Test2016} & \multicolumn{2}{c}{Test2016} \\ \cline{3-12}
+                  & & BLEU        & Meteor      & BLEU         & Meteor        & BLEU         & Meteor & BLEU         & Meteor & BLEU         & Meteor   \\ %\hline
+    \hline
+    \multicolumn{2}{l}{~~~~Transformer}                                     & 38.5       & 57.5      & 31.0   & 51.9   & 27.5   & 47.4  & 60.5 & 75.6 & 30.8 & 29.8  \\\hline
+    \multicolumn{2}{l}{~~~~SerialAtt\pcite{libovicky2018input}}      & 38.7 & 57.2 & - & - & - & - & 60.8 & 75.1 & 31.0 & 29.9 \\
+    \multicolumn{2}{l}{~~~~DelMMT \pcite{ive2019distilling}}          & 38.0            & 55.6           & -           & -           & -           & -   & - & - & - & -           \\
+    \multicolumn{2}{l}{~~~~MMT-TF \pcite{yao2020multimodal}}           & 38.7            & 55.7           & -           & -           & -           & -   & - & - & - &-            \\
+    \multicolumn{2}{l}{~~~~GAMMT \pcite{liu2021gumbel}}  & 39.2            & \textbf{57.8}  & 31.4        & 51.2        & 26.9        & 46.0  & - & - & - & -         \\
+    \multicolumn{2}{l}{~~~~GMMT \pcite{yin2020novel}}                 & \textbf{39.8}   & 57.6           & 32.2        & 51.9        & 28.7        & \textbf{47.6}  & - & - & - & - \\ \hline%\hline
+    \multicolumn{12}{c}{CTR-NMT}\\\hline
+    \multirow{3}*{~~词级} & 
+       独享-源   & 39.7       & 57.5             & \textbf{32.9}    & 51.7             & \textbf{29.1}    & 47.5    & \textbf{61.1} & \textbf{75.8} & \textbf{32.7} & \textbf{30.7} \\
+     & 共享-源   & 39.4       & \textbf{57.8}    & 32.4             & \textbf{52.1}    & 28.3             & 47.5    & 60.7 & 75.6 & 32.5 & 30.5 \\
+     & 共享-目   & 38.7       & 56.2             & 31.0             & 49.6             & 26.5             & 44.9    & 60.1 & 74.9 & 29.7 & 28.6 \\ %\hline
+    \hline
+    \multirow{3}*{~~短语级} & 
+        独享-源  & 39.3       & 57.4             & 32.7             & 51.8             & 28.7             & 47.5    & 61.0 & \textbf{75.8} & 32.6 & 30.4 \\
+     &  共享-源  & 39.0       & 57.3             & 32.4             & 51.6             & 28.3             & 47.2    & 60.7 & 75.6 & 31.7 & 30.4 \\
+     &  共享-目  & 38.5       & 56.2             & 30.5             & 49.7             & 26.8             & 45.6    & 60.1 & 75.0 & 29.8 & 28.8 \\
+        \hline
+    \end{tabular}
+\end{table}
